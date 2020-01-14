@@ -1,0 +1,42 @@
+.custom-color {
+  .pagination .page-item.active .page-link,
+  .blue-color,
+  .pagination .page-link:hover,
+  .date-info .profile-link:hover,
+  .article-title:hover,
+  .copy-link i,
+  .date-info.bottom-line {
+    color: var(--chanelColor);
+  }
+
+  .progress-bar,
+  .article-mini-card .divider,
+  .push-badge,
+  .box-date,
+  .last-comment-item:before,
+  .article-button-action .btn-silver-light .badge-counter,
+  .video-channel .channel-play-box {
+    background-color: var(--chanelColor);
+  }
+
+
+  .copy-link,
+  .date-info.bottom-line {
+    border-bottom-color: var(--chanelColor);
+  }
+
+  .channel-video-list,
+  .horizontal-overflow,
+  .inline-block-pc,
+  .vertical-scroll,
+  .inline-blocks {
+    scrollbar-color: var(--chanelColor) #f6f6f6;
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--chanelColor);
+      border: 2px solid var(--chanelColor)
+    }
+  }
+
+
+
+}

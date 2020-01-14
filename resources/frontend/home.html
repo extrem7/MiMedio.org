@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <title>Home</title>
+    <style>
+        :root {
+            --chanelColor: red;
+        }
+    </style>
+</head>
+<body>
+<!--Header
+<header class="header header-logged-user">
+    <div class="container d-flex align-items-center justify-content-between">
+        <a href="" class="logo"><img src="assets/img/logo.jpg" class="img-fluid" alt="logo-site"></a>
+        <a href="" class="button btn-silver-light mx-164 btn-transform d-none d-md-block">Settings RSS channel</a>
+        <a href="" class="button btn-blue mx-164 btn-transform">My Feed Channel</a>
+        <div class="search-box">
+            <input type="text" class="control-form" placeholder="Search news">
+            <button type="submit" class="button btn-silver-light"><i class="fas fa-search"></i></button>
+            <button class="icon close-btn"><img src="https://ligainform.net/wp-content/themes/ligainform.ua/assets/img/icons/close.svg" alt=""></button>
+        </div>
+        <div class="d-flex align-items-center">
+            <button class="button btn-silver-light btn-mobile-search ml-25" id="search-btn"><i class="fas fa-search"></i></button>
+            <nav class="d-none d-lg-block">
+                <ul class="menu">
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Following</a></li>
+                </ul>
+            </nav>
+            <div class="dropdown">
+                <a href="" class="profile-link ml-25 dropdown-toggle" data-toggle="dropdown">
+                    <img src="https://avatars1.githubusercontent.com/u/24792876?s=460&v=4" alt="name-person">
+                    <span class="profile-name">Yurii Kinakh</span>
+                </a>
+                <div class="dropdown-menu dropdown-account dropdown-menu-right">
+                    <a href="" class="dropdown-item">Settings</a>
+                    <a href="" class="dropdown-item">Create own media</a>
+                    <a href="" class="dropdown-item d-block d-lg-none">Settings</a>
+                    <a href="" class="dropdown-item d-block d-lg-none">Settings</a>
+                    <a href="" class="dropdown-item d-block d-lg-none">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+            <a href="" class="push-bell-notifications ml-25">
+                <i class="far fa-bell"></i>
+                <span class="push-badge">12</span>
+            </a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="category-menu">
+            <ul class="horizontal-overflow br-0">
+                <li><a href="">Politics</a></li>
+                <li><a href="">Scienes</a></li>
+                <li><a href="">Interview</a></li>
+                <li><a href="">Music</a></li>
+            </ul>
+            <a href="" class="button btn-yellow btn-transform">Create post</a>
+        </div>
+    </div>
+</header>
+-->
+<!--Header when not-logged-->
+<header class="header ">
+    <div class="container d-flex align-items-center justify-content-between">
+        <a href="" class="logo"><img src="assets/img/logo.jpg" class="img-fluid" alt="logo-site"></a>
+        <a href="" class="button btn-yellow b-lg sm-size mx-164 btn-transform d-none d-md-block">Create my own media</a>
+        <div class="search-box">
+            <input type="text" class="control-form" placeholder="Search news">
+            <button type="submit" class="button btn-silver-light"><i class="fas fa-search"></i></button>
+            <button class="icon close-btn"><img src="https://ligainform.net/wp-content/themes/ligainform.ua/assets/img/icons/close.svg" alt=""></button>
+        </div>
+        <div class="d-flex align-items-center">
+            <button class="button btn-silver-light btn-mobile-search ml-25" id="search-btn"><i class="fas fa-search"></i></button>
+            <nav class="menu-container">
+                <ul class="menu">
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Users RSS Feeds</a></li>
+                </ul>
+                <a href="" class="button btn-yellow b-lg sm-size mx-164 btn-transform d-block d-md-none">Create my own media</a>
+                <button class="icon close-btn"><img src="https://ligainform.net/wp-content/themes/ligainform.ua/assets/img/icons/close.svg" alt=""></button>
+            </nav>
+            <a href="" class="button btn-silver-light ml-25"><span class="d-block d-lg-none"><i class="fas fa-sign-in-alt"></i></span><span class="d-none d-lg-block">Login/Registration</span></a>
+            <button class="mobile-btn ml-25" id="mobile-btn"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+</header>
+<main class="content container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-center mb-5">
+                <ul class="category-tab-list horizontal-scroll horizontal-overflow">
+                    <li><a href="">Politics</a></li>
+                    <li><a href="">Scienes</a></li>
+                    <li><a href="">Interview</a></li>
+                    <li><a href="">Music</a></li>
+                    <li><a href="">Sports</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="article-card card-lg">
+                <a href="" class="article-img mb-3">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyCTUFDq2yLfY8ZGid4uxoFLxLeRAJBRH9o_rvMiXd5uSfDlXM&s" alt="name-article">
+                </a>
+                <a href="" class="article-title title-nowrap mb-2">Mexico suma otro periodista asesinado</a>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="date-info bottom-line d-flex align-items-center">
+                        29.12.2019   <a href="" class="profile-link title-nowrap">Maria De Jesus</a>
+                    </div>
+                    <div class="copy-link" data-container="body" data-toggle="popover" data-placement="top" data-content="Copy post URL">
+                        <i class="far fa-copy"></i>
+                    </div>
+                </div>
+                <div class="article-short-text title-line-cap">
+                    El secretario general de la Organización de Estados Americanos (OEA), Luis Almagro, llegará a Bolivia este viernes 17 de mayo y desde ya acapara toda la atención en la nación sudamericana.
+                    El secretario general de la Organización de Estados Americanos (OEA), Luis Almagro, llegará a Bolivia este viernes 17 de mayo y desde ya acapara toda la atención en la nación sudamericana.
+                </div>
+                <div class="article-button-action mt-3 position-relative">
+                    <div class="d-inline-flex">
+                        <button class="button btn-silver-light"><i class="far fa-thumbs-up"></i></button>
+                        <button class="button btn-silver-light"><i class="far fa-thumbs-down"></i></button>
+                        <button class="button btn-silver-light dropdown-toggle" data-toggle="dropdown"><i class="far fa-comment-alt"></i><span class="badge-counter">25</span></button>
+                        <div class="dropdown-menu dropdown-last-comment">
+                            <div class="semi-bold blue-color mb-2">Last Comments</div>
+                            <div class="last-comment">
+                                <div class="last-comment-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="name title-nowrap">Gerry robins</div>
+                                        <div class="date">8 days ago</div>
+                                    </div>
+                                    <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                </div>
+                                <div class="last-comment-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="name title-nowrap">Gerry robins</div>
+                                        <div class="date">8 days ago</div>
+                                    </div>
+                                    <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                </div>
+                                <div class="last-comment-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="name title-nowrap">Gerry robins</div>
+                                        <div class="date">8 days ago</div>
+                                    </div>
+                                    <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="text-muted ml-15 mr-2">Share:</div>
+                        <div class="btn-group">
+                            <button class="button btn-silver-light extra-bold dropdown-toggle" data-toggle="dropdown">Mi</button>
+                            <div class="dropdown-menu dropdown-light">
+                                <a href="" class="">Share in My Feed</a>
+                                <a href="" class="">Share in Message</a>
+                            </div>
+                            <button class="button btn-silver-light"><i class="fab fa-twitter"></i></button>
+                            <button class="button btn-silver-light"><i class="fab fa-facebook-f"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article-card card-lg">
+                <a href="" class="article-img mb-3">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyCTUFDq2yLfY8ZGid4uxoFLxLeRAJBRH9o_rvMiXd5uSfDlXM&s" alt="name-article">
+                </a>
+                <a href="" class="article-title title-nowrap mb-1">Mexico suma otro periodista asesinado</a>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="date-info bottom-line d-flex align-items-center">
+                        29.12.2019   <a href="" class="profile-link title-nowrap">Maria De Jesus</a>
+                    </div>
+                    <div class="copy-link" data-container="body" data-toggle="popover" data-placement="top" data-content="Copy post URL">
+                        <i class="far fa-copy"></i>
+                    </div>
+                </div>
+                <div class="article-short-text title-line-cap">
+                    El secretario general de la Organización de Estados Americanos (OEA), Luis Almagro, llegará a Bolivia este viernes 17 de mayo y desde ya acapara toda la atención en la nación sudamericana.
+                    El secretario general de la Organización de Estados Americanos (OEA), Luis Almagro, llegará a Bolivia este viernes 17 de mayo y desde ya acapara toda la atención en la nación sudamericana.
+                </div>
+                <div class="article-button-action mt-3 position-relative">
+                    <div class="d-inline-flex">
+                        <button class="button btn-silver-light"><i class="far fa-thumbs-up"></i></button>
+                        <button class="button btn-silver-light"><i class="far fa-thumbs-down"></i></button>
+                        <button class="button btn-silver-light dropdown-toggle" data-toggle="dropdown"><i class="far fa-comment-alt"></i><span class="badge-counter">25</span></button>
+                        <div class="dropdown-menu dropdown-last-comment">
+                            <div class="semi-bold blue-color mb-2">Last Comments</div>
+                            <div class="last-comment">
+                                <div class="last-comment-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="name title-nowrap">Gerry robins</div>
+                                        <div class="date">8 days ago</div>
+                                    </div>
+                                    <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                </div>
+                                <div class="last-comment-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="name title-nowrap">Gerry robins</div>
+                                        <div class="date">8 days ago</div>
+                                    </div>
+                                    <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                </div>
+                                <div class="last-comment-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="name title-nowrap">Gerry robins</div>
+                                        <div class="date">8 days ago</div>
+                                    </div>
+                                    <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="text-muted ml-15 mr-2">Share:</div>
+                        <div class="btn-group">
+                            <button class="button btn-silver-light extra-bold dropdown-toggle" data-toggle="dropdown">Mi</button>
+                            <div class="dropdown-menu dropdown-light">
+                                <a href="" class="">Share in My Feed</a>
+                                <a href="" class="">Share in Message</a>
+                            </div>
+                            <button class="button btn-silver-light"><i class="fab fa-twitter"></i></button>
+                            <button class="button btn-silver-light"><i class="fab fa-facebook-f"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article-card card-lg">
+                <a href="" class="article-img mb-3">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyCTUFDq2yLfY8ZGid4uxoFLxLeRAJBRH9o_rvMiXd5uSfDlXM&s" alt="name-article">
+                </a>
+                <a href="" class="article-title title-nowrap mb-1">Mexico suma otro periodista asesinado</a>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="date-info bottom-line d-flex align-items-center">
+                        29.12.2019   <a href="" class="profile-link title-nowrap">Maria De Jesus</a>
+                    </div>
+                    <div class="copy-link" data-container="body" data-toggle="popover" data-placement="top" data-content="Copy post URL">
+                        <i class="far fa-copy"></i>
+                    </div>
+                </div>
+                <div class="article-short-text title-line-cap">
+                    El secretario general de la Organización de Estados Americanos (OEA), Luis Almagro, llegará a Bolivia este viernes 17 de mayo y desde ya acapara toda la atención en la nación sudamericana.
+                    El secretario general de la Organización de Estados Americanos (OEA), Luis Almagro, llegará a Bolivia este viernes 17 de mayo y desde ya acapara toda la atención en la nación sudamericana.
+                </div>
+                <div class="article-button-action mt-3 position-relative">
+                    <div class="d-inline-flex">
+                        <button class="button btn-silver-light"><i class="far fa-thumbs-up"></i></button>
+                        <button class="button btn-silver-light"><i class="far fa-thumbs-down"></i></button>
+                        <button class="button btn-silver-light dropdown-toggle" data-toggle="dropdown"><i class="far fa-comment-alt"></i><span class="badge-counter">25</span></button>
+                        <div class="dropdown-menu dropdown-last-comment">
+                            <div class="semi-bold blue-color mb-2">Last Comments</div>
+                            <div class="last-comment">
+                                <div class="last-comment-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="name title-nowrap">Gerry robins</div>
+                                        <div class="date">8 days ago</div>
+                                    </div>
+                                    <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                </div>
+                                <div class="last-comment-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="name title-nowrap">Gerry robins</div>
+                                        <div class="date">8 days ago</div>
+                                    </div>
+                                    <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                </div>
+                                <div class="last-comment-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="name title-nowrap">Gerry robins</div>
+                                        <div class="date">8 days ago</div>
+                                    </div>
+                                    <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="text-muted ml-15 mr-2">Share:</div>
+                        <div class="btn-group">
+                            <button class="button btn-silver-light extra-bold dropdown-toggle" data-toggle="dropdown">Mi</button>
+                            <div class="dropdown-menu dropdown-light">
+                                <a href="" class="">Share in My Feed</a>
+                                <a href="" class="">Share in Message</a>
+                            </div>
+                            <button class="button btn-silver-light"><i class="fab fa-twitter"></i></button>
+                            <button class="button btn-silver-light"><i class="fab fa-facebook-f"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="article-mini-card">
+                <div class="left-column">
+                    <a href="" class="article-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyCTUFDq2yLfY8ZGid4uxoFLxLeRAJBRH9o_rvMiXd5uSfDlXM&s" alt="name-article">
+                    </a>
+                    <div class="divider"></div>
+                </div>
+                <div class="right-column">
+                    <div class="box-date">29.12.2019</div>
+                    <a href="" class="article-title title-line-cap">Fiscalía formalizará a ex comandante en jefe
+                        del Ejército por lavado de activos</a>
+                </div>
+            </div>
+            <div class="article-mini-card">
+                <div class="left-column">
+                    <a href="" class="article-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyCTUFDq2yLfY8ZGid4uxoFLxLeRAJBRH9o_rvMiXd5uSfDlXM&s" alt="name-article">
+                    </a>
+                    <div class="divider"></div>
+                </div>
+                <div class="right-column">
+                    <div class="box-date">29.12.2019</div>
+                    <a href="" class="article-title title-line-cap">Fiscalía formalizará a ex comandante en jefe
+                        del Ejército por lavado de activos</a>
+                </div>
+            </div>
+            <div class="article-mini-card">
+                <div class="left-column">
+                    <a href="" class="article-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyCTUFDq2yLfY8ZGid4uxoFLxLeRAJBRH9o_rvMiXd5uSfDlXM&s" alt="name-article">
+                    </a>
+                    <div class="divider"></div>
+                </div>
+                <div class="right-column">
+                    <div class="box-date">29.12.2019</div>
+                    <a href="" class="article-title title-line-cap">Fiscalía formalizará a ex comandante en jefe
+                        del Ejército por lavado de activos</a>
+                </div>
+            </div>
+            <a href="" class="button btn-blue btn-transform w-100 mt-2">Add news channel</a>
+            <div class="article-collapse mt-4" id="article-collapse-1">
+                <div class="box-shadow-content channel-box">
+                    <a href="" class="channel-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyCTUFDq2yLfY8ZGid4uxoFLxLeRAJBRH9o_rvMiXd5uSfDlXM&s" alt="chanel logo">
+                    </a>
+                    <a href="" class="title-dark medium-bold small">Delete</a>
+                </div>
+                <div class="collapse-item">
+                    <div class="box-shadow-content"  data-toggle="collapse" data-target="#article-1" aria-expanded="true">
+                        <div class="d-flex">
+                            <div class="collapse-button"></div>
+                            <div class="collapse-wrapper">
+                                <div class="article-title title-line-cap">Suma otro periodista</div>
+                            </div>
+                            <div class="title-dark extra-small-size date">01:12</div>
+                        </div>
+                    </div>
+                    <div id="article-1" class="collapse" data-parent="#article-collapse-1">
+                        <div class="box-rounded border-top-0">
+                            <div class="box-date mb-2">29.12.2019</div>
+                            <div class="article-short-text title-line-cap">El secretario general de la Organización de Estados Americanos (OEA), Luis Almagro, llegará a Bolivia este viernes 17 de mayo y desde ya acapara toda la atención en la nación sudamericana.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse-item">
+                    <div class="box-shadow-content"  data-toggle="collapse" data-target="#article-2" aria-expanded="true">
+                        <div class="d-flex">
+                            <div class="collapse-button"></div>
+                            <div class="collapse-wrapper">
+                                <div class="article-title title-line-cap">Suma otro periodista</div>
+                            </div>
+                            <div class="title-dark extra-small-size date">01:12</div>
+                        </div>
+                    </div>
+                    <div id="article-2" class="collapse" data-parent="#article-collapse-1">
+                        <div class="box-rounded border-top-0">
+                            <div class="box-date mb-2">29.12.2019</div>
+                            <div class="article-short-text title-line-cap">El secretario general de la Organización de Estados Americanos (OEA), Luis Almagro, llegará a Bolivia este viernes 17 de mayo y desde ya acapara toda la atención en la nación sudamericana.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse-item">
+                    <div class="box-shadow-content"  data-toggle="collapse" data-target="#article-3" aria-expanded="true">
+                        <div class="d-flex">
+                            <div class="collapse-button"></div>
+                            <div class="collapse-wrapper">
+                                <div class="article-title title-line-cap">Suma otro periodista</div>
+                            </div>
+                            <div class="title-dark extra-small-size date">01:12</div>
+                        </div>
+                    </div>
+                    <div id="article-3" class="collapse" data-parent="#article-collapse-1">
+                        <div class="box-rounded border-top-0">
+                            <div class="box-date mb-2">29.12.2019</div>
+                            <div class="article-short-text title-line-cap">El secretario general de la Organización de Estados Americanos (OEA), Luis Almagro, llegará a Bolivia este viernes 17 de mayo y desde ya acapara toda la atención en la nación sudamericana.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-rounded see-ll-news border-top-0">
+                    <a href="" class="link">See all news</a>
+                </div>
+            </div>
+            <!---->
+        </div>
+        <div class="col-md-4">
+            <div class="article-column-card">
+                <div class="left-column">
+                    <a href="" class="article-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyCTUFDq2yLfY8ZGid4uxoFLxLeRAJBRH9o_rvMiXd5uSfDlXM&s" alt="name-article">
+                    </a>
+                    <div class="article-button-action position-relative">
+                        <div class="d-inline-flex">
+                            <button class="button btn-silver-light dropdown-toggle" data-toggle="dropdown"><i class="far fa-comment-alt"></i><span class="badge-counter">25</span></button>
+                            <div class="dropdown-menu dropdown-last-comment">
+                                <div class="semi-bold blue-color mb-2">Last Comments</div>
+                                <div class="last-comment">
+                                    <div class="last-comment-item">
+                                        <div class="d-flex align-items-center">
+                                            <div class="name title-nowrap">Gerry robins</div>
+                                            <div class="date">8 days ago</div>
+                                        </div>
+                                        <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                    </div>
+                                    <div class="last-comment-item">
+                                        <div class="d-flex align-items-center">
+                                            <div class="name title-nowrap">Gerry robins</div>
+                                            <div class="date">8 days ago</div>
+                                        </div>
+                                        <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                    </div>
+                                    <div class="last-comment-item">
+                                        <div class="d-flex align-items-center">
+                                            <div class="name title-nowrap">Gerry robins</div>
+                                            <div class="date">8 days ago</div>
+                                        </div>
+                                        <div class="text-comment mt-1 title-line-cap">Lorem ipsum dolor sit amet, cu viderer deseruisse sea, ne ridens euripidis quo. No nec regione ornatus fabellas, id case erroribus quo. </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="button btn-silver-light extra-bold dropdown-toggle" data-toggle="dropdown">Mi</button>
+                                <div class="dropdown-menu dropdown-light">
+                                    <a href="" class="">Share in My Feed</a>
+                                    <a href="" class="">Share in Message</a>
+                                </div>
+                                <button class="button btn-silver-light"><i class="fab fa-twitter"></i></button>
+                                <button class="button btn-silver-light"><i class="fab fa-facebook-f"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-column">
+                    <div class="d-flex align-items-start">
+                        <a href="" class="article-title title-line-cap mb-2">Mexico suma otro periodista asesinado</a>
+                        <button class="icon blue-color edit-post-btn">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                    <div class="date-info bottom-line d-flex align-items-center mb-2">
+                        29.12.2019   <a href="" class="profile-link title-nowrap">Maria De Jesus</a>
+                    </div>
+                    <div class="article-short-text title-line-cap">
+                        El secretario general de la Organización de Estados Americanos (OEA), Luis Almagro, llegará a Bolivia este viernes 17 de mayo y desde ya acapara toda la atención en la nación sudamericana.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="assets/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="assets/node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

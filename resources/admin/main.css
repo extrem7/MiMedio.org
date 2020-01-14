@@ -1,0 +1,13 @@
+@import url("../../assets/vendor/fontawesome/css/all.css");
+
+.sidebar .avatar {
+    width: 34px;
+    height: 34px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 1s ease-in-out;
+}
+
+.callout a:hover {
+    color: #0056b3 !important;
+}

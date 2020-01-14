@@ -1,0 +1,123 @@
+.video-channel {
+  overflow: hidden;
+  .channel-name {
+    background-color: #222;
+    font-weight: 700;
+    font-size: 15px;
+    color: #ffffff;
+    padding: 10px 15px;
+  }
+
+  .play-btn {
+    color: #fff;
+    font-size: 18px;
+  }
+
+  .time {
+    font-size: 10px;
+    font-weight: 300;
+    color: #fff;
+    position: absolute;
+    right: 5px;
+    bottom: 2px;
+    font-style: italic;
+  }
+
+  .channel-play-box {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: $blue;
+    margin-top: -5px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    position: relative;
+    .video-name {
+      display: block;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+    .play-btn {
+      cursor: pointer;
+      position: relative;
+      padding-right: 12px;
+      margin-right: 12px;
+      &:before {
+        content: '';
+        width: 1px;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.2);
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+
+  .channel-video-list {
+    max-height: 285px;
+    height: 285px;
+    background-color: #222;
+    scrollbar-color: $blue #f6f6f6;
+    scrollbar-width: thin;
+    overflow-y: auto;
+    &::-webkit-scrollbar-track
+    {
+      -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+      background-color: #F5F5F5;
+    }
+    &::-webkit-scrollbar
+    {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb
+    {
+      background-color: $blue;
+      border: 2px solid $blue;
+    }
+    .video-item {
+      transition: border .3s ease-in-out, background .3s ease-in-out;
+      border-left: 2px solid transparent;
+      font-size: 11px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 6px 10px;
+      cursor: pointer;
+      .video-name {
+        -webkit-line-clamp: 2;
+        max-height: 32px;
+      }
+      img {
+        max-width: 60px;
+        min-width: 60px;
+        height: auto;
+        margin-right: 10px;
+      }
+      .time {
+        position: relative;
+        bottom: auto;
+        right: auto;
+      }
+      &:hover,
+      &.active {
+        border-left-color: $blue;
+        background-color: #333333;
+      }
+      &.active {
+        background-color: #404040;
+      }
+    }
+  }
+
+  .channel-main-video {
+    iframe {
+      width: 100%;
+      height: 200px;
+    }
+  }
+
+}

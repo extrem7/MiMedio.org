@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <title>Home</title>
+    <style>
+        :root {
+            --chanelColor: red;
+        }
+    </style>
+</head>
+<body>
+<!--Header when not-logged-->
+<header class="header ">
+    <div class="container d-flex align-items-center justify-content-between">
+        <a href="" class="logo"><img src="assets/img/logo.jpg" class="img-fluid" alt="logo-site"></a>
+        <a href="" class="button btn-yellow b-lg sm-size mx-164 btn-transform d-none d-md-block">Create my own media</a>
+        <div class="search-box">
+            <input type="text" class="control-form" placeholder="Search news">
+            <button type="submit" class="button btn-silver-light"><i class="fas fa-search"></i></button>
+            <button class="icon close-btn"><img src="https://ligainform.net/wp-content/themes/ligainform.ua/assets/img/icons/close.svg" alt=""></button>
+        </div>
+        <div class="d-flex align-items-center">
+            <button class="button btn-silver-light btn-mobile-search ml-25" id="search-btn"><i class="fas fa-search"></i></button>
+            <nav class="menu-container">
+                <ul class="menu">
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Users RSS Feeds</a></li>
+                </ul>
+                <a href="" class="button btn-yellow b-lg sm-size mx-164 btn-transform d-block d-md-none">Create my own media</a>
+                <button class="icon close-btn"><img src="https://ligainform.net/wp-content/themes/ligainform.ua/assets/img/icons/close.svg" alt=""></button>
+            </nav>
+            <a href="" class="button btn-silver-light ml-25"><span class="d-block d-lg-none"><i class="fas fa-sign-in-alt"></i></span><span class="d-none d-lg-block">Login/Registration</span></a>
+            <button class="mobile-btn ml-25" id="mobile-btn"><span></span><span></span><span></span></button>
+        </div>
+    </div>
+</header>
+<main class="content container">
+    <div class="sign-form mx-auto">
+        <div class="header-form">
+            <div class="medium-size">Register</div>
+        </div>
+        <div class="body-form">
+            <div class="form-group">
+                <input type="text" class="control-form" placeholder="First Name">
+            </div>
+            <div class="form-group">
+                <input type="password" class="control-form" placeholder="Last Name">
+            </div>
+            <div class="form-group">
+                <input type="password" class="control-form" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="password" class="control-form" placeholder="E-Mail">
+            </div>
+            <div class="form-group">
+                <input type="password" class="control-form" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <button class="button btn-blue shadow-none w-100 b-lg-base">Register</button>
+            </div>
+            <div class="form-group">
+                <button class="button btn-silver w-100 b-lg-base mb-2">Connect with Facebook</button>
+                <button class="button btn-silver w-100 b-lg-base">Connect with Twitter</button>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-center text-md-left">
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">QuIEnes Somos</a></li>
+                    <li><a href="">Enlaces</a></li>
+                    <li><a href="">Contacto</a></li>
+                </ul>
+                <div class="media-block mt-3">
+                    <a href="https://prom.ua/" target="_blank"> <i class="fab fa-facebook-f"></i> </a>
+                    <a href="https://www.youtube.com/" target="_blank"> <i class="fab fa-viber"></i> </a>
+                    <a href="https://prom.ua/" target="_blank"> <i class="fab fa-youtube"></i> </a>
+                    <a href="https://www.youtube.com/" target="_blank"> <i class="fab fa-google-plus-g"></i> </a>
+                </div>
+                <div class="mt-3">Soc.Periodística El Ciudadano, use libremente los contenidos citando la fuente. El Ciudadano Recomendamos TagDiv</div>
+                <div class="mt-3">Sitio web creado <a href="" class="copyright">Raxkor</a></div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex justify-content-center justify-content-md-end mt-3 mt-md-0">
+                    <div class="subscribe-block">
+                        <a href="https://www.facebook.com/PeriodicoElCiudadano" class="subscribe-item facebook">
+                            <div class="subscribe-info"> <i class="fab fa-facebook-f"></i> <span>4,216,999</span> <span>Fans</span></div><div class="text-uppercase subscribe-action">Me gusta</div>
+                        </a>
+                        <a href="https://www.instagram.com/el.ciudadano" class="subscribe-item instagram">
+                            <div class="subscribe-info"> <i class="fab fa-instagram"></i> <span id="instagram-counter">318,700</span> <span>Seguidores</span></div><div class="text-uppercase subscribe-action">Seguir</div>
+                        </a>
+                        <a href="https://twitter.com/@el_ciudadano" class="subscribe-item twitter">
+                            <div class="subscribe-info"> <i class="fab fa-twitter"></i> <span id="twitter-counter">350,363</span> <span>Seguidores</span></div><div class="text-uppercase subscribe-action">Seguir</div>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCJrlV1drEWg2OEZFLUcFbTQ" class="subscribe-item youtube">
+                            <div class="subscribe-info"> <i class="fas fa-play"></i> <span id="youtube-counter">17,100</span> <span>Suscriptores</span></div><div class="text-uppercase subscribe-action">Suscribirte</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="assets/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="assets/node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
