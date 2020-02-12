@@ -239,10 +239,6 @@ body {
   &.logged-user {
     padding-top: 106px;
   }
-  > div:nth-child(2),
-  > div {
-    display: none;
-  }
 }
 
 #app {

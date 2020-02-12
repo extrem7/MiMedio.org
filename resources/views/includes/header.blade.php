@@ -1,7 +1,8 @@
 <header class="header ">
     <div class="container d-flex align-items-center justify-content-between">
         <a href="{{route('home')}}" class="logo"><img src="{{get_image('logo')}}" class="img-fluid" alt="logo-site"></a>
-        <a href="" class="button btn-yellow b-lg sm-size mx-164 btn-transform d-none d-md-block">Create my own media</a>
+        <a href="{{route('posts.create')}}"
+           class="button btn-yellow b-lg sm-size mx-164 btn-transform d-none d-md-block">Create my own media</a>
         <div class="search-box">
             <input type="text" class="form-control" placeholder="Search news">
             <button type="submit" class="button btn-silver-light"><i class="fas fa-search"></i></button>
@@ -18,9 +19,9 @@
                         <li><a href="">Home</a></li>
                         <li><a href="">Users RSS Feeds</a></li>
                     </ul>
-                    <a href="" class="button btn-yellow b-lg sm-size mx-164 btn-transform d-block d-md-none">Create my
-                        own
-                        media</a>
+                    <a href="{{route('posts.create')}}"
+                       class="button btn-yellow b-lg sm-size mx-164 btn-transform d-block d-md-none">
+                        Create my own media</a>
                     <button class="icon close-btn"><img
                             src="https://ligainform.net/wp-content/themes/ligainform.ua/assets/img/icons/close.svg"
                             alt="">

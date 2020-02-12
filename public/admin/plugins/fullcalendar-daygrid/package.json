@@ -1,8 +1,8 @@
 {
   "_from": "@fullcalendar/daygrid@^4.3.0",
-  "_id": "@fullcalendar/daygrid@4.3.0",
+  "_id": "@fullcalendar/daygrid@4.4.0",
   "_inBundle": false,
-  "_integrity": "sha512-OrGaRIGbELESOXOCXtoQVY4cOxnxmN7OrjDGbMoVITdoXWuIZ6sFNO84WcBQoRaIbkmqVM0SAU2MENwy+eEwqQ==",
+  "_integrity": "sha512-pDfvL0XZxKHTZ4VFOmwaYe3LmuABEIZsEopeqQ8y5O6BDen9KCbJqgHeCI8FpASSBd6bNlUx7il7EHdSoHhgIw==",
   "_location": "/@fullcalendar/daygrid",
   "_phantomChildren": {},
   "_requested": {
@@ -20,8 +20,8 @@
     "/@fullcalendar/timegrid",
     "/admin-lte"
   ],
-  "_resolved": "https://registry.npmjs.org/@fullcalendar/daygrid/-/daygrid-4.3.0.tgz",
-  "_shasum": "1b4ab9fdc238dba77921cb7c5bd2d813c834e905",
+  "_resolved": "https://registry.npmjs.org/@fullcalendar/daygrid/-/daygrid-4.4.0.tgz",
+  "_shasum": "25fcae7226b62688b4e086a611582e72253b5229",
   "_spec": "@fullcalendar/daygrid@^4.3.0",
   "_where": "D:\\Work\\Server\\domains\\mimedio.loc\\node_modules\\admin-lte",
   "author": {
@@ -48,7 +48,7 @@
   "module": "main.esm.js",
   "name": "@fullcalendar/daygrid",
   "peerDependencies": {
-    "@fullcalendar/core": "~4.3.0"
+    "@fullcalendar/core": "~4.4.0"
   },
   "repository": {
     "type": "git",
@@ -58,5 +58,5 @@
   "title": "FullCalendar Day Grid Plugin",
   "types": "main.d.ts",
   "unpkg": "main.min.js",
-  "version": "4.3.0"
+  "version": "4.4.0"
 }

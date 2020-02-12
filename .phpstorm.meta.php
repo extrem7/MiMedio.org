@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2019-12-10 17:27:49.
+    * Generated on 2020-02-12 17:43:07.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -13,6 +13,9 @@ namespace PHPSTORM_META {
     override(new \Illuminate\Contracts\Container\Container, map([
         '' => '@',
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
+        'Butschster\Head\Contracts\MetaTags\MetaInterface' => \Butschster\Head\MetaTags\Meta::class,
+        'Butschster\Head\Contracts\Packages\ManagerInterface' => \Butschster\Head\Packages\Manager::class,
+        'Coderello\SharedData\SharedData' => \Coderello\SharedData\SharedData::class,
         'Cviebrock\EloquentSluggable\SluggableObserver' => \Cviebrock\EloquentSluggable\SluggableObserver::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -180,6 +183,9 @@ namespace PHPSTORM_META {
     override(\Illuminate\Container\Container::makeWith(0), map([
         '' => '@',
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
+        'Butschster\Head\Contracts\MetaTags\MetaInterface' => \Butschster\Head\MetaTags\Meta::class,
+        'Butschster\Head\Contracts\Packages\ManagerInterface' => \Butschster\Head\Packages\Manager::class,
+        'Coderello\SharedData\SharedData' => \Coderello\SharedData\SharedData::class,
         'Cviebrock\EloquentSluggable\SluggableObserver' => \Cviebrock\EloquentSluggable\SluggableObserver::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -347,6 +353,9 @@ namespace PHPSTORM_META {
     override(\Illuminate\Contracts\Container\Container::make(0), map([
         '' => '@',
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
+        'Butschster\Head\Contracts\MetaTags\MetaInterface' => \Butschster\Head\MetaTags\Meta::class,
+        'Butschster\Head\Contracts\Packages\ManagerInterface' => \Butschster\Head\Packages\Manager::class,
+        'Coderello\SharedData\SharedData' => \Coderello\SharedData\SharedData::class,
         'Cviebrock\EloquentSluggable\SluggableObserver' => \Cviebrock\EloquentSluggable\SluggableObserver::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -514,6 +523,9 @@ namespace PHPSTORM_META {
     override(\Illuminate\Contracts\Container\Container::makeWith(0), map([
         '' => '@',
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
+        'Butschster\Head\Contracts\MetaTags\MetaInterface' => \Butschster\Head\MetaTags\Meta::class,
+        'Butschster\Head\Contracts\Packages\ManagerInterface' => \Butschster\Head\Packages\Manager::class,
+        'Coderello\SharedData\SharedData' => \Coderello\SharedData\SharedData::class,
         'Cviebrock\EloquentSluggable\SluggableObserver' => \Cviebrock\EloquentSluggable\SluggableObserver::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -681,6 +693,9 @@ namespace PHPSTORM_META {
     override(\App::make(0), map([
         '' => '@',
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
+        'Butschster\Head\Contracts\MetaTags\MetaInterface' => \Butschster\Head\MetaTags\Meta::class,
+        'Butschster\Head\Contracts\Packages\ManagerInterface' => \Butschster\Head\Packages\Manager::class,
+        'Coderello\SharedData\SharedData' => \Coderello\SharedData\SharedData::class,
         'Cviebrock\EloquentSluggable\SluggableObserver' => \Cviebrock\EloquentSluggable\SluggableObserver::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -848,6 +863,9 @@ namespace PHPSTORM_META {
     override(\App::makeWith(0), map([
         '' => '@',
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
+        'Butschster\Head\Contracts\MetaTags\MetaInterface' => \Butschster\Head\MetaTags\Meta::class,
+        'Butschster\Head\Contracts\Packages\ManagerInterface' => \Butschster\Head\Packages\Manager::class,
+        'Coderello\SharedData\SharedData' => \Coderello\SharedData\SharedData::class,
         'Cviebrock\EloquentSluggable\SluggableObserver' => \Cviebrock\EloquentSluggable\SluggableObserver::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -1015,6 +1033,9 @@ namespace PHPSTORM_META {
     override(\app(0), map([
         '' => '@',
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
+        'Butschster\Head\Contracts\MetaTags\MetaInterface' => \Butschster\Head\MetaTags\Meta::class,
+        'Butschster\Head\Contracts\Packages\ManagerInterface' => \Butschster\Head\Packages\Manager::class,
+        'Coderello\SharedData\SharedData' => \Coderello\SharedData\SharedData::class,
         'Cviebrock\EloquentSluggable\SluggableObserver' => \Cviebrock\EloquentSluggable\SluggableObserver::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -1182,6 +1203,9 @@ namespace PHPSTORM_META {
     override(\resolve(0), map([
         '' => '@',
         'Barryvdh\Debugbar\LaravelDebugbar' => \Barryvdh\Debugbar\LaravelDebugbar::class,
+        'Butschster\Head\Contracts\MetaTags\MetaInterface' => \Butschster\Head\MetaTags\Meta::class,
+        'Butschster\Head\Contracts\Packages\ManagerInterface' => \Butschster\Head\Packages\Manager::class,
+        'Coderello\SharedData\SharedData' => \Coderello\SharedData\SharedData::class,
         'Cviebrock\EloquentSluggable\SluggableObserver' => \Cviebrock\EloquentSluggable\SluggableObserver::class,
         'Facade\IgnitionContracts\SolutionProviderRepository' => \Facade\Ignition\SolutionProviders\SolutionProviderRepository::class,
         'Facade\Ignition\DumpRecorder\DumpRecorder' => \Facade\Ignition\DumpRecorder\DumpRecorder::class,
@@ -1346,6 +1370,7 @@ namespace PHPSTORM_META {
         'view.engine.resolver' => \Illuminate\View\Engines\EngineResolver::class,
         'view.finder' => \Illuminate\View\FileViewFinder::class,
     ]));
+
 
     override(\Illuminate\Support\Arr::add(0), type(0));
     override(\Illuminate\Support\Arr::except(0), type(0));

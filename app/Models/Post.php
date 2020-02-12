@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 use Str;
 
 /**
@@ -39,14 +43,19 @@ use Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Post extends Model
+class Post extends Model implements HasMedia
 {
+    use HasMediaTrait;
+    use Sluggable;
 
     public const DRAFT = 'DRAFT';
     public const PUBLISHED = 'PUBLISHED';
 
-    protected $fillable = ['title', 'excerpt', 'body',];
+    protected $fillable = ['title', 'excerpt', 'body'];
 
+    protected $with = ['author', 'likes', 'image'];
+
+    // relations
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -57,21 +66,34 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function uploadImage(string $image = null)
+    public function likes()
     {
-        if ($image) {
-            $this->image = $image;
-        }
+        return $this->morphMany(Like::class, 'likeable')->where('dislike', '=', false);
     }
 
-    public function getImage()
+    public function dislikes()
     {
-        if ($this->image == null) {
-            return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShwH8uCYyecy62M0QGsV83eOkaeMLeBoApCVrKyBPNSK03dlSc';
-        }
-        return $this->image;
+        return $this->morphMany(Like::class, 'likeable')->where('dislike', '=', true);
     }
 
+    public function image()
+    {
+        return $this->morphOne(Media::class, 'model');
+    }
+
+    //media
+    public function registerMediaCollections()
+    {
+        $this->addMediaCollection('image')
+            ->singleFile();
+    }
+
+    public function uploadImage(UploadedFile $image = null)
+    {
+        $this->addMedia($image)->toMediaCollection('image');
+    }
+
+    //methods
     public function setFeatured($featured)
     {
         $this->featured = (bool)$featured;
@@ -80,6 +102,54 @@ class Post extends Model
     public function setStatus($status = false)
     {
         $this->status = $status ? self::PUBLISHED : self::DRAFT;
+    }
+
+    public function view()
+    {
+        if (!session()->has('viewed') || (session()->has('viewed') && !in_array($this->id, session()->get('viewed')))) {
+            $this->increment('views');
+            $this->save();
+            session()->push('viewed', $this->id);
+            session()->save();
+        }
+    }
+
+    //traits
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'title',
+                'onUpdate' => false,
+            ]
+        ];
+    }
+
+    //mutate/get
+    public function getDateAttribute()
+    {
+        return $this->created_at->format('d/m/Y');
+    }
+
+    public function getLikesAttribute()
+    {
+        return $this->likes()->count();
+    }
+
+    public function getDislikesAttribute()
+    {
+        return $this->dislikes()->count();
+    }
+
+    public function getCurrentLikeAttribute()
+    {
+        if ($this->likes()->first()) {
+            return 'like';
+        }
+        if ($this->dislikes()->first()) {
+            return 'dislike';
+        }
+        return null;
     }
 
 }

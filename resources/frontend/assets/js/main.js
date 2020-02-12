@@ -62,6 +62,7 @@ $(() => {
         window.open($(this).data('url'));
     });
 });
+
 $(window).on('load resize scroll', () => header());
 
 $(window).on('load', () => {

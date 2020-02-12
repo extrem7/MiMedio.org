@@ -1,8 +1,8 @@
 {
   "_from": "@fullcalendar/timegrid@^4.3.0",
-  "_id": "@fullcalendar/timegrid@4.3.0",
+  "_id": "@fullcalendar/timegrid@4.4.0",
   "_inBundle": false,
-  "_integrity": "sha512-9JCSZbzw2Hi+X893l5X9ViZaWjxh+sDy59o6nKx0gYKwSfs/vKpmk73GBQfKyUv8orkjpnTdPFfeLDZqlzBP4Q==",
+  "_integrity": "sha512-QwJ9oM87/ZTbXaE8PMIVp20GPtVCFmroaeR1GydJ6BKYtbxG/nsaSv7RhqvDa2jLjHaTWC2NjHo9hRfjQjtCZA==",
   "_location": "/@fullcalendar/timegrid",
   "_phantomChildren": {},
   "_requested": {
@@ -19,8 +19,8 @@
   "_requiredBy": [
     "/admin-lte"
   ],
-  "_resolved": "https://registry.npmjs.org/@fullcalendar/timegrid/-/timegrid-4.3.0.tgz",
-  "_shasum": "bf003499319e5e66135bb7b8d8ed274b1a62ca91",
+  "_resolved": "https://registry.npmjs.org/@fullcalendar/timegrid/-/timegrid-4.4.0.tgz",
+  "_shasum": "c5837cfd676afff0d95535ac4cc054ed65965976",
   "_spec": "@fullcalendar/timegrid@^4.3.0",
   "_where": "D:\\Work\\Server\\domains\\mimedio.loc\\node_modules\\admin-lte",
   "author": {
@@ -34,7 +34,7 @@
   "bundleDependencies": false,
   "copyright": "2019 Adam Shaw",
   "dependencies": {
-    "@fullcalendar/daygrid": "~4.3.0"
+    "@fullcalendar/daygrid": "~4.4.0"
   },
   "deprecated": false,
   "description": "Display your events on a grid of time slots",
@@ -50,7 +50,7 @@
   "module": "main.esm.js",
   "name": "@fullcalendar/timegrid",
   "peerDependencies": {
-    "@fullcalendar/core": "~4.3.0"
+    "@fullcalendar/core": "~4.4.0"
   },
   "repository": {
     "type": "git",
@@ -60,5 +60,5 @@
   "title": "FullCalendar Time Grid Plugin",
   "types": "main.d.ts",
   "unpkg": "main.min.js",
-  "version": "4.3.0"
+  "version": "4.4.0"
 }

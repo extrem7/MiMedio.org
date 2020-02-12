@@ -1,4 +1,4 @@
-@import url("../../assets/vendor/fontawesome/css/all.css");
+@import url("../../node_modules/@fortawesome/fontawesome-free/css/all.css");
 
 .sidebar .avatar {
     width: 34px;
@@ -11,3 +11,5 @@
 .callout a:hover {
     color: #0056b3 !important;
 }
+
+@import "~admin-lte/dist/css/adminlte.min.css";

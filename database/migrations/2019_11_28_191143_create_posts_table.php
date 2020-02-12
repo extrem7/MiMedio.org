@@ -17,13 +17,15 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('category_id')->nullable()->unsigned();
-            $table->unsignedBigInteger('user_id')->unsigned();
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('user_id');
 
             $table->string('title');
             $table->text('excerpt');
             $table->text('body');
             $table->string('slug')->unique();
+
+            $table->unsignedBigInteger('views')->default(0);
 
             $table->enum('status', [Post::DRAFT, Post::PUBLISHED])->default(Post::DRAFT);
 
@@ -33,7 +35,6 @@ class CreatePostsTable extends Migration
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
-
 
             $table->timestamps();
         });

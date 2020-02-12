@@ -1,8 +1,9 @@
 {
+    "/assets/js/app.js": "/assets/js/app.js",
     "/admin/css/main.css": "/admin/css/main.css",
+    "/assets/css/main.css": "/assets/css/main.css",
     "/admin/js/main.js": "/admin/js/main.js",
     "/admin/css/pace.css": "/admin/css/pace.css",
     "/admin/js/pace.js": "/admin/js/pace.js",
-    "/assets/css/main.css": "/assets/css/main.css",
     "/assets/js/main.js": "/assets/js/main.js"
 }

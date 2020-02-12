@@ -23,14 +23,7 @@
     @include('includes.footer')
 </div>
 <script src="{{asset('assets/js/main.js')}}"></script>
-<script>
-    $(function () {
-        $('.logout').on('click', (e) => {
-            e.preventDefault();
-            $('#logout-form').submit();
-        });
-    });
-</script>
+<script src="{{asset('assets/js/app.js')}}"></script>
 @stack('scripts')
 </body>
 </html>
