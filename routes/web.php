@@ -1,8 +1,6 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin-panel', 'namespace' => 'Admin'], function () {
     Route::group([
@@ -56,6 +54,4 @@ Route::group([
 
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 });
-
-Route::get('/home', 'HomeController@index')->name('home');
 

@@ -1,6 +1,6 @@
 <header class="header ">
     <div class="container d-flex align-items-center justify-content-between">
-        <a href="" class="logo"><img src="{{get_image('logo')}}" class="img-fluid" alt="logo-site"></a>
+        <a href="{{route('home')}}" class="logo"><img src="{{get_image('logo')}}" class="img-fluid" alt="logo-site"></a>
         <a href="" class="button btn-yellow b-lg sm-size mx-164 btn-transform d-none d-md-block">Create my own media</a>
         <div class="search-box">
             <input type="text" class="form-control" placeholder="Search news">

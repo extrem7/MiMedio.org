@@ -15,6 +15,9 @@ $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
+//production fix
+setlocale(LC_ALL,'en_US.UTF-8');
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces

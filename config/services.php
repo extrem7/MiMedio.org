@@ -16,7 +16,7 @@ return [
     'google' => [
         'client_id' => '590785044605-p2ognvjt7bkg40i4jij2eqm27a6pcbkj.apps.googleusercontent.com',
         'client_secret' => 'CcPUjqVfZFgxT54KVQVhseN7',
-        'redirect' => 'http://localhost/login/google/callback/'
+        'redirect' => env('APP_URL') . '/login/google/callback/'
     ],
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),

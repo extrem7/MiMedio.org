@@ -19,7 +19,8 @@ if (!function_exists('get_image')) {
 if (!function_exists('get_svg')) {
     function get_svg(string $name)
     {
-        $icon = file_get_contents(asset("assets/img/icons/$name.svg"));
+        //todo asset()
+        $icon = file_get_contents("assets/img/icons/$name.svg");
 
         return $icon;
     }

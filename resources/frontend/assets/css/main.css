@@ -8229,6 +8229,9 @@ input[type=submit] {
   .header .logo {
     margin-right: 30px;
     display: block; }
+    .header .logo img {
+      max-width: 166px;
+      max-height: 21px; }
   .header .profile-link {
     font-weight: 700;
     font-size: 14px;

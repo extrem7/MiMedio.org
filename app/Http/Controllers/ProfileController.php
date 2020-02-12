@@ -59,7 +59,7 @@ class ProfileController extends Controller
         }
 
         Meta::prependTitle('Edit playlist');
-        return view('profile.playlist', compact('videos'));
+        return view('profile.plawylist', compact('videos'));
     }
 
     public function playlistUpdate(Request $request)

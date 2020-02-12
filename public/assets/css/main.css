@@ -8,7 +8,7 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-/*@import url(../node_modules/@fortawesome/fontawesome-free/css/all.css);*/
+@import url(../node_modules/@fortawesome/fontawesome-free/css/all.css);
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -8231,6 +8231,9 @@ input[type=submit] {
   .header .logo {
     margin-right: 30px;
     display: block; }
+    .header .logo img {
+      max-width: 166px;
+      max-height: 21px; }
   .header .profile-link {
     font-weight: 700;
     font-size: 14px;
