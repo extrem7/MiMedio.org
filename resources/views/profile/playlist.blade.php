@@ -14,7 +14,13 @@
             @include('includes.alerts.success',['field'=>'status'])
             <form action="{{route('playlist.update')}}" method="post" class="{{$errors->isEmpty()?:'was-validated'}}">
                 @csrf
-
+                <div class="form-group">
+                    <label class="label mb-1" for="title">Channel title</label>
+                    <input type="text" id="title" name="title"
+                           class="control-form mx-550 {{valid_class('title',$errors)}}"
+                           value="{{old('title',$playlist->title)}}">
+                    @include('includes.field-error',['error'=>'title'])
+                </div>
                 <div class="repeater">
                     @foreach(old('videos',$videos) as $row)
                         <div class="form-group d-flex align-items-center repeater-video repeater-row">
@@ -45,28 +51,28 @@
     <script>
         $(function () {
             function updateInputName($input, index) {
-                $($input).attr('name', $($input).attr('name').replace(/[0-9]/g, index));
+                $($input).attr('name', $($input).attr('name').replace(/[0-9]/g, index))
             }
 
             $('body')
                 .on('click', '.repeater-add', function (e) {
-                    e.preventDefault();
+                    e.preventDefault()
                     const clone = $('.repeater .repeater-row:last-child').clone(),
-                        index = $('.repeater .repeater-row').length;
+                        index = $('.repeater .repeater-row').length
                     clone.find('input').each(function () {
-                        $(this).val('');
-                        updateInputName(this, index);
-                    });
-                    clone.appendTo('.repeater');
+                        $(this).val('')
+                        updateInputName(this, index)
+                    })
+                    clone.appendTo('.repeater')
                 })
                 .on('click', '.repeater-remove', function () {
-                    $(this).closest('.repeater-row').remove();
+                    $(this).closest('.repeater-row').remove()
                     $('.repeater .repeater-row').each(function (index) {
                         $(this).find('input').each(function () {
-                            updateInputName(this, index);
-                        });
-                    });
-                });
-        });
+                            updateInputName(this, index)
+                        })
+                    })
+                })
+        })
     </script>
 @endpush

@@ -31,11 +31,15 @@
             async like() {
                 try {
                     const {data} = await this.axios.post(`/post/${this.post_id}/like`)
-                    this.setLikes(data)
                     if (data.active) {
+                        this.likes++
                         this.liked = true
-                        this.disliked = false
+                        if(this.disliked){
+                            this.dislikes--
+                            this.disliked = false
+                        }
                     } else {
+                        this.likes--
                         this.liked = false
                     }
 
@@ -46,21 +50,21 @@
             async dislike() {
                 try {
                     const {data} = await this.axios.post(`/post/${this.post_id}/dislike`)
-                    this.setLikes(data)
                     if (data.active) {
+                        this.dislikes++
                         this.disliked = true
-                        this.liked = false
+                        if(this.liked){
+                            this.likes--
+                            this.liked = false
+                        }
                     } else {
+                        this.dislikes--
                         this.disliked = false
                     }
 
                 } catch (e) {
 
                 }
-            },
-            setLikes({likes, dislikes}) {
-                this.likes = likes
-                this.dislikes = dislikes
             }
         },
         created() {

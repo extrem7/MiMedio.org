@@ -8,7 +8,7 @@ class CreatePlaylistsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * php artisan migrate:refresh --path=/database/migrations/2019_12_06_183943_create_playlists_table.php
      * @return void
      */
     public function up()
@@ -17,6 +17,8 @@ class CreatePlaylistsTable extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedBigInteger('user_id')->unsigned();
+
+            $table->string('title');
 
             $table->json('videos')->nullable();
 

@@ -1,3 +1,28 @@
+let players = [], videoDone = false
+
+function onYouTubeIframeAPIReady() {
+    setTimeout(() => {
+        $('.youtube-player').each(function () {
+            let $parent = $(this).closest('.video-channel'),
+                item = $(this).data('item')
+            players[item] = new YT.Player($(this).attr('id'), {
+                height: '202',
+                videoId: $(this).data('main'),
+                events: {
+                    'onStateChange': event => {
+                        if (event.data == YT.PlayerState.PLAYING) {
+                            $parent.find('.fas').removeClass('fa-play').addClass('fa-pause')
+                        } else {
+                            $parent.find('.fas').removeClass('fa-pause').addClass('fa-play')
+                        }
+                    }
+                }
+            })
+            youtube($parent, players[item])
+        })
+    }, 1000)
+}
+
 function imagePreview() {
     $("#image").on('change', (e) => {
         const $preview = $('#image_preview'),
@@ -49,9 +74,27 @@ function initEditors() {
     })
 }
 
+function youtube($parent, player) {
+    console.log($parent, player)
+    $parent.find('.video-item').on('click', function () {
+        player.loadVideoById($(this).data('id'))
+        let $box = $parent.find('.channel-play-box')
+        $box.find('.video-name').text($(this).find('.video-name').text())
+        $box.find('.time').text($(this).find('.time').text())
+    })
+    $parent.find('.play-btn').on('click', function () {
+        if (player.getPlayerState() == YT.PlayerState.PLAYING) {
+            player.pauseVideo()
+        } else {
+            player.playVideo()
+        }
+    })
+}
+
 $(function () {
     $('.logout').on('click', (e) => {
-        e.preventDefault();
-        $('#logout-form').submit();
-    });
-});
+        e.preventDefault()
+        $('#logout-form').submit()
+    })
+
+})

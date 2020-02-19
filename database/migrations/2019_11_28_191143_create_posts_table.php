@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('user_id');
 
             $table->string('title');
@@ -27,7 +27,7 @@ class CreatePostsTable extends Migration
 
             $table->unsignedBigInteger('views')->default(0);
 
-            $table->enum('status', [Post::DRAFT, Post::PUBLISHED])->default(Post::DRAFT);
+            $table->enum('status', [Post::$statuses])->default(Post::DRAFT);
 
             $table->foreign('category_id')
                 ->references('id')->on('categories')

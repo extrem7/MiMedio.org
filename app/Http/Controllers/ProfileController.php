@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Playlist;
 use App\Models\User;
 use Auth;
-use Butschster\Head\Facades\Meta;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -17,7 +15,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         $avatar = $user->getAvatar();
 
-        Meta::prependTitle('Profile settings');
+        $this->meta->prependTitle('Profile settings');
         return view('profile.settings', compact('user', 'avatar'));
     }
 
@@ -53,13 +51,14 @@ class ProfileController extends Controller
 
     public function playlist()
     {
-        $videos = Auth::getUser()->videos;
+        $playlist = Auth::getUser()->playlist;
+        $videos = $playlist->videos;
         if (empty($videos)) {
             $videos = [['title' => '', 'id' => '', 'duration' => '']];
         }
 
-        Meta::prependTitle('Edit playlist');
-        return view('profile.plawylist', compact('videos'));
+        $this->meta->prependTitle('Edit playlist');
+        return view('profile.playlist', compact('playlist', 'videos'));
     }
 
     public function playlistUpdate(Request $request)
@@ -73,7 +72,7 @@ class ProfileController extends Controller
 
         $this->validate($request, $this->rulesPlaylist());
 
-        $data = ['videos' => $request->input('videos')];
+        $data = $request->all();
 
         $user->playlist()->updateOrCreate(['user_id' => $user->id], $data);
 
@@ -102,6 +101,7 @@ class ProfileController extends Controller
     private function rulesPlaylist()
     {
         return [
+            'title' => 'required|string|max:255',
             'videos.*.title' => ['required'],
             'videos.*.id' => ['required']
         ];

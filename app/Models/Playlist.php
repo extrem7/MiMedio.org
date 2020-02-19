@@ -9,7 +9,7 @@ class Playlist extends Model
 {
     public $incrementing = false;
 
-    protected $fillable = ['videos', 'user_id'];
+    protected $fillable = ['user_id', 'title', 'videos'];
 
     protected $casts = [
         'videos' => 'array',

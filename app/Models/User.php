@@ -19,11 +19,14 @@ class User extends Authenticatable implements HasMedia
         'name', 'email', 'provider', 'provider_id', 'password',
     ];
 
+   // protected $with = ['image'];
+
     protected $appends = ['has_password'];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
+
 
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -39,12 +42,23 @@ class User extends Authenticatable implements HasMedia
         return $this->hasOne(Playlist::class);
     }
 
+    public function image()
+    {
+        return $this->morphOne(Media::class, 'model');
+    }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('icon')
             ->width(68)
             ->height(68)
             ->sharpen(0);
+    }
+
+    public function registerMediaCollections()
+    {
+        $this->addMediaCollection('image')
+            ->singleFile();
     }
 
     public function getAvatar(string $size = ''): string
@@ -66,11 +80,21 @@ class User extends Authenticatable implements HasMedia
         return !empty($this->attributes['password']);
     }
 
-    public function getVideosAttribute(): array
+    public function getAvatarAttribute()
     {
-        if ($this->playlist) {
-            return $this->playlist->videos ?? [];
+        if ($this->image !== null) {
+            return $this->image->getFullUrl();
+        } else {
+            return 'http://gimnazija.com.ua/wp-content/uploads/2017/03/no-avatar-300x300.png';//todo
         }
-        return [];
+    }
+
+    public function toArray()
+    {
+        $attributes = parent::toArray();
+
+        $attributes['avatar'] = $this->avatar;
+
+        return $attributes;
     }
 }

@@ -19,6 +19,15 @@ mix.copy('node_modules/admin-lte/plugins', 'public/admin/plugins')
 mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/admin/webfonts')
 
 //frontend mix
+
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            '@': __dirname + '/resources/js'
+        },
+    },
+});
+
 mix.sass('resources/frontend/assets/scss/main.scss', 'public/assets/css/')
 
 mix.js('resources/js/app.js', 'public/assets/js/')
@@ -36,4 +45,4 @@ mix.copy('resources/frontend/assets/img', 'public/assets/img')
 
 mix.copy('node_modules/tinymce/', 'public/assets/vendor/tinymce')
 
-
+mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/assets/webfonts')

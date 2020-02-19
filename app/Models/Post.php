@@ -2,58 +2,41 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use App\Interfaces\Likeable;
+use App\Traits\LikeableTrait;
+use App\Traits\PaginateTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
-use Str;
 
-/**
- * App\Models\Post
- *
- * @property int $id
- * @property int $category_id
- * @property int $author_id
- * @property string $title
- * @property string $excerpt
- * @property string $body
- * @property string|null $image
- * @property string $slug
- * @property string $status
- * @property int $featured
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereAuthorId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereBody($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereCategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereExcerpt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereFeatured($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereImage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Post whereUpdatedAt($value)
- * @mixin \Eloquent
- */
-class Post extends Model implements HasMedia
+class Post extends Model implements HasMedia, Likeable
 {
     use HasMediaTrait;
     use Sluggable;
+    use LikeableTrait;
+    use PaginateTrait;
 
     public const DRAFT = 'DRAFT';
     public const PUBLISHED = 'PUBLISHED';
 
-    protected $fillable = ['title', 'excerpt', 'body'];
+    public static $statuses = [self::DRAFT, self::PUBLISHED];
 
-    protected $with = ['author', 'likes', 'image'];
+    public static $statusesEn = [
+        self::DRAFT => 'Draft',
+        self::PUBLISHED => 'Publish'
+    ];
+
+    protected $fillable = ['category_id', 'title', 'excerpt', 'body', 'status'];
+
+    //protected $with = ['likes', 'dislikes'];
+
+    protected $appends = ['likes', 'dislikes'];
+
+    protected $orderBy = 'id';
+    protected $orderDirection = 'desc';
 
     // relations
     public function category()
@@ -66,19 +49,30 @@ class Post extends Model implements HasMedia
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function likes()
-    {
-        return $this->morphMany(Like::class, 'likeable')->where('dislike', '=', false);
-    }
-
-    public function dislikes()
-    {
-        return $this->morphMany(Like::class, 'likeable')->where('dislike', '=', true);
-    }
-
     public function image()
     {
         return $this->morphOne(Media::class, 'model');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function related()
+    {
+        return $this->author->posts()->where('id', '!=', $this->id);
+    }
+
+    public function newQuery($ordered = true)
+    {
+        $query = parent::newQuery();
+
+        if (empty($ordered)) {
+            return $query;
+        }
+
+        return $query->orderBy($this->orderBy, $this->orderDirection);
     }
 
     //media
@@ -131,25 +125,34 @@ class Post extends Model implements HasMedia
         return $this->created_at->format('d/m/Y');
     }
 
-    public function getLikesAttribute()
+    public function getDateDotsAttribute()
     {
-        return $this->likes()->count();
+        return $this->created_at->format('d.m.Y');
     }
 
-    public function getDislikesAttribute()
+    public function getHasCommentsAttribute()
     {
-        return $this->dislikes()->count();
+        return $this->comments->count();
     }
 
-    public function getCurrentLikeAttribute()
+    public function getCommentsCountAttribute()
     {
-        if ($this->likes()->first()) {
-            return 'like';
-        }
-        if ($this->dislikes()->first()) {
-            return 'dislike';
-        }
-        return null;
+        return $this->comments->count();
+    }
+
+    public function getBaseCommentsAttribute()
+    {
+        return $this->comments()->where('parent_id', '=', null)->get();
+    }
+
+    public function getLastCommentsAttribute()
+    {
+        return $this->comments()->orderBy('id', 'desc')->take(3)->get();
+    }
+
+    public function getLinkAttribute()
+    {
+        return route('posts.show', $this->slug);
     }
 
 }

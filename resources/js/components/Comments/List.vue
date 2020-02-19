@@ -1,0 +1,107 @@
+<template>
+    <div class="comment">
+        <div class="box-shadow-content">
+            <div class="title-dark semi-bold">{{title}}</div>
+        </div>
+        <div class="box-rounded up-to-top border-top-0" :class="{'pt-0':this.comments.length}">
+            <transition-group appear name="comments-transition" tag="ul" class="comment-list" v-if="comments.length">
+                <item v-for="(comment,i) in comments" :comment="comment" :key="i"></item>
+            </transition-group>
+            <form @submit.prevent="send" class="submit-comment">
+                <textarea v-model="text" rows="3" class="control-form" required></textarea>
+                <button class="button btn-blue"><i class="fas fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+</template>
+
+<script>
+    import Item from "./Item"
+
+    export default {
+        props: {
+            post_id: Number,
+            initial_comments: Array,
+            initial_count: Number
+        },
+        components: {
+            Item
+        },
+        data() {
+            return {
+                comments: [],
+                commentsCount: null,
+                text: '',
+                reply: null
+            }
+        },
+        computed: {
+            title() {
+                if (this.commentsCount) {
+                    const count = this.commentsCount
+                    return count > 1 ? `${count} comments` : `1 comment`
+                }
+                return 'There are no comments yet'
+            }
+        },
+        methods: {
+            async send() {
+                try {
+                    const {data} = await this.axios.post(`/post/${this.post_id}/comment`, {
+                        text: this.text,
+                        reply: this.reply
+                    })
+                    if (data.status === 'ok') {
+                        this.text = ''
+                        this.reply = null
+
+                        this.commentsCount++
+                        const {comment} = data
+                        const {parent_id} = comment
+                        comment.children = []
+                        if (parent_id) {
+                            let parent = null
+
+                            function findParent(comment) {
+                                console.log(comment.id, parent_id, comment.id == parent_id)
+                                if (comment.id == parent_id) {
+                                    parent = comment
+                                } else {
+                                    comment.children.forEach(findParent)
+                                }
+                            }
+
+                            this.comments.forEach(findParent)
+                            parent.children.push(comment)
+                        } else {
+                            this.comments.push(data.comment)
+                        }
+                    }
+
+                } catch (e) {
+
+                }
+            },
+        },
+        created() {
+            if (this.initial_comments)
+                this.comments = this.initial_comments
+            if (this.initial_count)
+                this.commentsCount = this.initial_count
+            this.$bus.on('reply', (reply) => {
+                this.reply = reply
+            })
+        }
+    }
+</script>
+
+<style>
+    .comments-transition-enter-active, .list-leave-active {
+        transition: all 1s;
+    }
+
+    .comments-transition-enter, .comments-transition-leave-to {
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+</style>

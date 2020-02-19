@@ -39,3 +39,11 @@ if (!function_exists('valid_class')) {
         if ($errors->isNotEmpty()) return $errors->has($name) ? 'is-invalid' : 'is-valid';
     }
 }
+
+function selected($condition = false): string
+{
+    if ($condition) {
+        echo 'selected';
+    }
+    return '';
+}

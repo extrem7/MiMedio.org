@@ -15,6 +15,10 @@
   .logo {
     margin-right: 30px;
     display: block;
+    img {
+      max-width: 166px;
+      max-height: 21px;
+    }
   }
   .profile-link {
     font-weight: 700;

@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
+use App\Services\LikesService;
 use Auth;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -15,9 +18,17 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(int $page = 1)
     {
-        //
+        $this->meta->prependTitle('Your posts');
+
+        $user = Auth::getUser();
+
+        $posts = $user->posts()->with(['author', 'image', 'comments' => function (Relation $query) {
+            $query->setEagerLoads([]);
+        }])->paginateUri(1, $page);
+
+        return view('profile.posts', compact('posts'));
     }
 
     /**
@@ -27,8 +38,12 @@ class PostsController extends Controller
      */
     public function create()
     {
+        $this->meta->prependTitle('Create post');
+
         $categories = Category::pluck('name', 'id')->all();
-        return view('profile.posts.create', compact('categories'));
+        $statuses = Post::$statusesEn;
+
+        return view('posts.create', compact('categories', 'statuses'));
     }
 
     /**
@@ -67,13 +82,18 @@ class PostsController extends Controller
      */
     public function show($param)
     {
-        $post = Post::where('id', $param)
+        $post = Post::with(['author.playlist', 'author.posts', 'image', 'comments.likes', 'comments.dislikes'])
+            ->where('id', $param)
             ->orWhere('slug', $param)
             ->firstOrFail();
 
+        $this->meta->prependTitle($post->title);
+
         $post->view();
 
-        return view('profile.posts.show', compact('post'));
+        $playlist = $post->author->playlist;
+
+        return view('posts.show', compact('post', 'playlist'));
     }
 
     /**
@@ -82,9 +102,14 @@ class PostsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $this->meta->prependTitle('Edit post');
+
+        $categories = Category::pluck('name', 'id')->all();
+        $statuses = Post::$statusesEn;
+
+        return view('posts.edit', compact('post', 'categories', 'statuses'));
     }
 
     /**
@@ -94,9 +119,26 @@ class PostsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, Post $post)
     {
-        //
+        $data = $request->validated();
+
+        if ($data['excerpt'] === null) {
+            $data['excerpt'] = substr($data['body'], 0, 140);
+        }
+
+        $post->fill($data);
+        $post->save();
+
+        if ($request->hasFile('image')) {
+            $post->uploadImage($request->file('image'));
+        }
+
+        if ($post) {
+            return redirect()->route('posts.show', $post->slug);
+        } else {
+            return back()->withErrors('msg', "Error")->withInput();
+        }
     }
 
     /**
@@ -110,56 +152,21 @@ class PostsController extends Controller
         //
     }
 
-    public function like(Post $post)
+    public function like(Post $post, LikesService $likesService)
     {
-        $user_id = Auth::getUser()->id;
-        $active = true;
+        $data = $likesService->toggle($post);
 
-        $like = $post->likes()->where('user_id', '=', $user_id)->first();
-        $dislike = $post->dislikes()->where('user_id', '=', $user_id)->first();
-        if ($like === null) {
-            $post->likes()->create([
-                'user_id' => Auth::getUser()->id
-            ]);
-            if ($dislike) {
-                $dislike->delete();
-            }
-        } else {
-            $like->delete();
-            $active = false;
-        }
-        return response()->json([
-            'status' => 'ok',
-            'likes' => $post->likes,
-            'dislikes' => $post->dislikes,
-            'active' => $active
-        ]);
+        return response()->json(array_merge([
+            'status' => 'ok'
+        ], $data));
     }
 
-    public function dislike(Post $post)
+    public function dislike(Post $post, LikesService $likesService)
     {
-        $user_id = Auth::getUser()->id;
-        $active = true;
+        $data = $likesService->toggle($post, false);
 
-        $dislike = $post->dislikes()->where('user_id', '=', $user_id)->first();
-        $like = $post->likes()->where('user_id', '=', $user_id)->first();
-        if ($dislike === null) {
-            $post->dislikes()->create([
-                'user_id' => Auth::getUser()->id,
-                'dislike' => true
-            ]);
-            if ($like) {
-                $like->delete();
-            }
-        } else {
-            $dislike->delete();
-            $active = false;
-        }
-        return response()->json([
-            'status' => 'ok',
-            'likes' => $post->likes,
-            'dislikes' => $post->dislikes,
-            'active' => $active
-        ]);
+        return response()->json(array_merge([
+            'status' => 'ok'
+        ], $data));
     }
 }
