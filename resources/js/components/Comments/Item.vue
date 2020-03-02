@@ -1,6 +1,6 @@
 <template>
     <li>
-        <div class="d-flex comment-item">
+        <div class="d-flex comment-item" :class="{'comment-reply-to':isReplyTo}">
             <img v-if="comment.author.avatar" :src="comment.author.avatar" alt="user" class="avatar">
             <div>
                 <div class="d-flex align-items-start align-items-sm-center flex-column flex-sm-row">
@@ -10,23 +10,28 @@
                 <div>{{comment.text}}</div>
                 <div class="mt-2 d-flex align-items-center">
                     <button class="icon" :class="{active:liked}" @click.prevent="like">
-                        <i class="far fa-thumbs-up text-success"></i> {{likes}}
+                        <i class="fa-thumbs-up text-success" :class="{fas:liked,far:!liked}"></i> {{likes}}
                     </button>
                     <button class="icon ml-2" :class="{active:disliked}" @click.prevent="dislike">
-                        <i class="far fa-thumbs-down text-danger"></i> {{dislikes}}
+                        <i class="fa-thumbs-down text-danger" :class="{fas:disliked,far:!dislikes}"></i> {{dislikes}}
                     </button>
-                    <button class="blue-color text-uppercase extra-small-size ml-2 icon" @click="reply">REPLY</button>
+                    <button class="blue-color text-uppercase extra-small-size ml-2 icon" @click="reply">
+                        {{isReplyTo?'CANCEL REPLY':'REPLY'}}
+                    </button>
                 </div>
             </div>
         </div>
         <transition-group appear name="comments-transition" tag="ul" class="comment-list"
-                          v-if="comment.children.length">
-            <item v-for="(comment,i) in comment.children" :comment="comment" :key="i"></item>
+                          v-if="comment.children !==undefined && comment.children.length">
+            <item v-for="(comment,i) in comment.children" :comment="comment" :key="comment.id"></item>
         </transition-group>
     </li>
 </template>
 
 <script>
+    import {CLEAR_REPLY_TO, SET_REPLY_TO} from "../../store/modules/comments/mutation-types"
+    import {mapState} from "vuex"
+
     export default {
         props: {
             comment: Object
@@ -40,9 +45,18 @@
                 disliked: false
             }
         },
+        computed: {
+            isReplyTo() {
+                return this.$store.state.comments.replyTo === this.comment.id
+            }
+        },
         methods: {
             reply() {
-                this.$bus.emit('reply', this.comment.id)
+                if (this.isReplyTo) {
+                    this.$store.commit(CLEAR_REPLY_TO)
+                } else {
+                    this.$store.commit(SET_REPLY_TO, this.comment.id)
+                }
             },
             async like() {
                 try {
@@ -50,7 +64,7 @@
                     if (data.active) {
                         this.likes++
                         this.liked = true
-                        if(this.disliked){
+                        if (this.disliked) {
                             this.dislikes--
                             this.disliked = false
                         }
@@ -69,7 +83,7 @@
                     if (data.active) {
                         this.dislikes++
                         this.disliked = true
-                        if(this.liked){
+                        if (this.liked) {
                             this.likes--
                             this.liked = false
                         }

@@ -2,8 +2,9 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Models\Category;
 use App\Models\Post;
-use Illuminate\Support\Str;
+use App\Models\User;
 use Faker\Generator as Faker;
 
 /*
@@ -21,9 +22,10 @@ $factory->define(Post::class, function (Faker $faker) {
     $title = $faker->unique()->sentence;
     return [
         'title' => $title,
-        'slug' => Str::slug($title),
-        'user_id' => \App\Models\User::where('email', 'raxkor.dev@gmail.com')->first()->id,
-        'excerpt' => $faker->text(50),
-        'body' => $faker->realText(),
-        'status' => (bool)random_int(0, 1) ? Post::PUBLISHED : Post::DRAFT];
+        'user_id' => User::all()->random()->id,
+        'category_id' => Category::all()->random()->id,
+        'excerpt' => $faker->text(140),
+        'body' => $faker->realText(1000),
+        'status' => Post::PUBLISHED
+    ];
 });

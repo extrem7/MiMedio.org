@@ -5,7 +5,7 @@
         </div>
         <div class="box-rounded up-to-top border-top-0" :class="{'pt-0':this.comments.length}">
             <transition-group appear name="comments-transition" tag="ul" class="comment-list" v-if="comments.length">
-                <item v-for="(comment,i) in comments" :comment="comment" :key="i"></item>
+                <item v-for="(comment,i) in comments" :comment="comment" :key="comment.id"></item>
             </transition-group>
             <form @submit.prevent="send" class="submit-comment">
                 <textarea v-model="text" rows="3" class="control-form" required></textarea>
@@ -17,11 +17,11 @@
 
 <script>
     import Item from "./Item"
+    import {CLEAR_REPLY_TO} from "../../store/modules/comments/mutation-types"
 
     export default {
         props: {
             post_id: Number,
-            initial_comments: Array,
             initial_count: Number
         },
         components: {
@@ -49,11 +49,11 @@
                 try {
                     const {data} = await this.axios.post(`/post/${this.post_id}/comment`, {
                         text: this.text,
-                        reply: this.reply
+                        reply: this.$store.state.comments.replyTo
                     })
                     if (data.status === 'ok') {
                         this.text = ''
-                        this.reply = null
+                        this.$store.commit(CLEAR_REPLY_TO)
 
                         this.commentsCount++
                         const {comment} = data
@@ -83,14 +83,19 @@
                 }
             },
         },
-        created() {
-            if (this.initial_comments)
-                this.comments = this.initial_comments
-            if (this.initial_count)
-                this.commentsCount = this.initial_count
-            this.$bus.on('reply', (reply) => {
-                this.reply = reply
-            })
+        async created() {
+            try {
+                const {data} = await this.axios.get(`/post/${this.post_id}/comments`)
+                console.log(typeof data.comments)
+                if (typeof data.comments == 'object') {
+                    this.comments = Object.values(data.comments)
+                } else {
+                    this.comments = data.comments
+                }
+                this.commentsCount = data.count
+            } catch (e) {
+
+            }
         }
     }
 </script>

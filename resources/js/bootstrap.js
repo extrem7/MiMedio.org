@@ -9,5 +9,10 @@ import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios)
 
+import {BootstrapVue} from 'bootstrap-vue'
+
+Vue.use(BootstrapVue)
+
 import VueBus from 'vue-bus'
+
 Vue.use(VueBus)

@@ -51,7 +51,7 @@
                             <select id="status" name="status"
                                     class="control-form custom-select mx-550 {{valid_class('status',$errors)}}">
                                 @foreach($statuses as $id=>$name)
-                                    <option value="{{$id}}" {{selected(old('status'==$id))}}>{{$name}}</option>
+                                    <option value="{{$id}}" {{selected(old('status')==$id)}}>{{$name}}</option>
                                 @endforeach
                             </select>
                             @include('includes.field-error',['error'=>'status'])

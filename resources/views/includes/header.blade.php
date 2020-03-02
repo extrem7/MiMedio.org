@@ -16,8 +16,8 @@
             @guest
                 <nav class="menu-container">
                     <ul class="menu">
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Users RSS Feeds</a></li>
+                        <li><a href="{{route('home')}}">Home</a></li>
+                        <li><a href="{{route('rss')}}">Users RSS Feeds</a></li>
                     </ul>
                     <a href="{{route('posts.create')}}"
                        class="button btn-yellow b-lg sm-size mx-164 btn-transform d-block d-md-none">
@@ -35,8 +35,8 @@
             @auth
                 <nav class="d-none d-lg-block">
                     <ul class="menu">
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Following</a></li>
+                        <li><a href="{{route('home')}}">Home</a></li>
+                        <li><a href="{{route('rss')}}">Following</a></li>
                     </ul>
                 </nav>
                 <div class="dropdown">
@@ -46,7 +46,8 @@
                     </a>
                     <div class="dropdown-menu dropdown-account dropdown-menu-right">
                         <a href="{{route('settings')}}" class="dropdown-item">Settings</a>
-                        <a href="{{route('settings.playlist')}}" class="dropdown-item">Edit playlist</a>
+                        <a href="{{route('profile.posts.index')}}" class="dropdown-item">My posts</a>
+                        <a href="{{route('settings.playlist')}}" class="dropdown-item">My playlist</a>
                         <a href="" class="dropdown-item d-block d-lg-none">Settings</a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ route('logout') }}" class="dropdown-item logout">{{ __('Logout') }}</a>
@@ -57,7 +58,7 @@
                 </div>
                 <a href="" class="push-bell-notifications ml-25">
                     <i class="far fa-bell"></i>
-                    <span class="push-badge">12</span>
+                    <!--<span class="push-badge">12</span>-->
                 </a>
             @endauth
         </div>

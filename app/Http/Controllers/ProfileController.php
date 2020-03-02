@@ -3,13 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\PostsService;
 use Auth;
+use Butschster\Head\Contracts\MetaTags\MetaInterface;
 use Hash;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
+    private $postsService;
+
+    public function __construct(MetaInterface $meta)
+    {
+        parent::__construct($meta);
+        $this->postsService = new PostsService();
+    }
+
     public function settings()
     {
         $user = Auth::user();
@@ -49,6 +60,21 @@ class ProfileController extends Controller
         return redirect()->back()->with('status', 'Profile has been successfully updated.');
     }
 
+    public function posts(int $page = 1)
+    {
+        $this->meta->prependTitle('My posts');
+
+        $user = Auth::getUser();
+
+        $posts = $this->postsService->getPosts($user->posts(), $page, 6);
+
+        $user->posts()->with(['author', 'image', 'comments' => function (Relation $query) {
+            $query->setEagerLoads([]);
+        }])->paginateUri(1, $page);
+
+        return view('profile.posts', compact('posts'));
+    }
+
     public function playlist()
     {
         $playlist = Auth::getUser()->playlist;
@@ -57,7 +83,7 @@ class ProfileController extends Controller
             $videos = [['title' => '', 'id' => '', 'duration' => '']];
         }
 
-        $this->meta->prependTitle('Edit playlist');
+        $this->meta->prependTitle('My playlist');
         return view('profile.playlist', compact('playlist', 'videos'));
     }
 

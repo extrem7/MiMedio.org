@@ -5,47 +5,54 @@ namespace App\Traits;
 
 
 use App\Models\Like;
+use Auth;
 
 trait LikeableTrait
 {
+    public function likesRaw()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+
     public function likes()
     {
-        return $this->morphMany(Like::class, 'likeable')->where('dislike', '=', false);
+        return $this->likesRaw->where('dislike', '=', false);
     }
 
     public function dislikes()
     {
-        return $this->morphMany(Like::class, 'likeable')->where('dislike', '=', true);
+        return $this->likesRaw->where('dislike', '=', true);
+    }
+
+    public function getRawLikesAttribute()
+    {
+        return $this->likesRaw->where('dislike', '=', false);
+    }
+
+    public function getRawDislikesAttribute()
+    {
+        return $this->likesRaw->where('dislike', '=', true);
     }
 
     public function getLikesCountAttribute()
     {
-        return $this->likes->count();
+        return $this->rawLikes->count();
     }
 
     public function getDislikesCountAttribute()
     {
-        return $this->dislikes->count();
+        return $this->rawDislikes->count();
     }
 
     public function getCurrentLikeAttribute()
     {
-        if ($this->likes->first()) {
+        $id = Auth::id();
+        if ($this->rawLikes->where('user_id', '=', $id)->first()) {
             return 'like';
         }
-        if ($this->dislikes->first()) {
+        if ($this->rawDislikes->where('user_id', '=', $id)->first()) {
             return 'dislike';
         }
         return null;
-    }
-
-    public function getInitialLikesAttribute()
-    {
-        return $this->likes->count();
-    }
-
-    public function getInitialDislikesAttribute()
-    {
-        return $this->dislikes->count();
     }
 }

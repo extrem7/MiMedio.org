@@ -20,26 +20,20 @@ mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/admin/we
 
 //frontend mix
 
-mix.webpackConfig({
-    resolve: {
-        alias: {
-            '@': __dirname + '/resources/js'
-        },
-    },
-});
+mix.sass('resources/sass/app.scss', 'public/assets/css/').version()
+mix.sass('resources/frontend/assets/scss/main.scss', 'public/assets/css/').version()
 
-mix.sass('resources/frontend/assets/scss/main.scss', 'public/assets/css/')
-
-mix.js('resources/js/app.js', 'public/assets/js/')
+mix.js('resources/js/app.js', 'public/assets/js/').version()
 
 mix.scripts([
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/popper.js/dist/umd/popper.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/bs-custom-file-input/dist/bs-custom-file-input.min.js',
+    'node_modules/jquery-mousewheel/jquery.mousewheel.js',
     'resources/frontend/assets/js/main.js',
     'resources/frontend/assets/js/custom.js',
-], 'public/assets/js/main.js')
+], 'public/assets/js/main.js').version()
 
 mix.copy('resources/frontend/assets/img', 'public/assets/img')
 

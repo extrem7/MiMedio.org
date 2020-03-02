@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-lg-5 col-md-6">
             <div class="semi-bold blue-color medium-size mt-4 mb-3">Profile settings</div>
-            @include('includes.alerts.success',['field'=>'status'])
+            @include('includes.alerts.success')
             @if(!$user->has_password)
                 <div class="alert alert-warning">
                     You have registered through a social network.<br>

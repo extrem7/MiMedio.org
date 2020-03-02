@@ -2,31 +2,31 @@
 
 namespace App\Models;
 
+use App\Traits\FollowableTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
-use Spatie\Image\Manipulations;
 
 class User extends Authenticatable implements HasMedia
 {
     use Notifiable;
+    use FollowableTrait;
     use HasMediaTrait;
 
     protected $fillable = [
         'name', 'email', 'provider', 'provider_id', 'password',
     ];
 
-   // protected $with = ['image'];
+    // protected $with = ['image'];
 
     protected $appends = ['has_password'];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
-
 
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -87,6 +87,11 @@ class User extends Authenticatable implements HasMedia
         } else {
             return 'http://gimnazija.com.ua/wp-content/uploads/2017/03/no-avatar-300x300.png';//todo
         }
+    }
+
+    public function getLinkAttribute()
+    {
+        return route('users.show', $this->id);
     }
 
     public function toArray()

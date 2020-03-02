@@ -1,12 +1,5 @@
 @extends('layouts.profile')
-@push('styles')
-    <style>
-        .repeater > .repeater-row:first-child .repeater-remove {
-            opacity: 0;
-            pointer-events: none;
-        }
-    </style>
-@endpush
+
 @section('sub-content')
     <div class="row">
         <div class="col-lg-8 col-md-10">
@@ -45,34 +38,15 @@
                 </div>
             </form>
         </div>
+        @if($playlist)
+            <div class="col-lg-4">
+                @include('posts.includes.playlist')
+            </div>
+        @endif
     </div>
 @endsection
 @push('scripts')
     <script>
-        $(function () {
-            function updateInputName($input, index) {
-                $($input).attr('name', $($input).attr('name').replace(/[0-9]/g, index))
-            }
-
-            $('body')
-                .on('click', '.repeater-add', function (e) {
-                    e.preventDefault()
-                    const clone = $('.repeater .repeater-row:last-child').clone(),
-                        index = $('.repeater .repeater-row').length
-                    clone.find('input').each(function () {
-                        $(this).val('')
-                        updateInputName(this, index)
-                    })
-                    clone.appendTo('.repeater')
-                })
-                .on('click', '.repeater-remove', function () {
-                    $(this).closest('.repeater-row').remove()
-                    $('.repeater .repeater-row').each(function (index) {
-                        $(this).find('input').each(function () {
-                            updateInputName(this, index)
-                        })
-                    })
-                })
-        })
+        repeater()
     </script>
 @endpush

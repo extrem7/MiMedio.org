@@ -1,9 +1,10 @@
 {
-    "/assets/js/app.js": "/assets/js/app.js",
-    "/admin/css/main.css": "/admin/css/main.css",
-    "/assets/css/main.css": "/assets/css/main.css",
-    "/admin/js/main.js": "/admin/js/main.js",
-    "/admin/css/pace.css": "/admin/css/pace.css",
-    "/admin/js/pace.js": "/admin/js/pace.js",
-    "/assets/js/main.js": "/assets/js/main.js"
+    "/assets/js/app.js": "/assets/js/app.js?id=7928b7c92b6891ce6bc3",
+    "/admin/css/main.css": "/admin/css/main.css?id=f92fd25897586d65ec2d",
+    "/assets/css/app.css": "/assets/css/app.css?id=ab52a90c63e2ea15a528",
+    "/assets/css/main.css": "/assets/css/main.css?id=00727c7709ecd2325bdf",
+    "/admin/js/main.js": "/admin/js/main.js?id=6eeda5218221f3b3fc5a",
+    "/admin/css/pace.css": "/admin/css/pace.css?id=7bba84cb68736f6ea9ae",
+    "/admin/js/pace.js": "/admin/js/pace.js?id=248f37358dd94120dc84",
+    "/assets/js/main.js": "/assets/js/main.js?id=54e38a6a0de663cc699b"
 }

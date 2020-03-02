@@ -7,12 +7,10 @@
     display: flex;
     align-content: center;
     justify-content: space-around;
-    margin-bottom: 10px;
     flex-wrap: wrap;
 
     .img-preview, form {
         max-width: 48%;
-        margin-bottom: 10px;
         cursor: pointer;
     }
 
@@ -22,7 +20,7 @@
         object-fit: contain;
     }
 
-    form {
+    .form-ajax {
         display: flex;
         justify-content: center;
         position: relative;
@@ -45,4 +43,9 @@
             }
         }
     }
+}
+
+.repeater > .repeater-row:first-child .repeater-remove {
+    opacity: 0;
+    pointer-events: none;
 }

@@ -20,6 +20,9 @@ Route::group(['prefix' => 'admin-panel', 'namespace' => 'Admin'], function () {
 
         Route::resource('/categories', 'CategoriesController', ['names' => 'admin.categories']);
         Route::resource('/posts', 'PostsController', ['names' => 'admin.posts']);
+
+        Route::delete('media/{media}', 'MediaController@destroy')->name('admin.media.destroy');
+
         Route::post('logout', 'LoginController@logout')->name('admin.logout');
     });
     Route::get('/logout', function () {

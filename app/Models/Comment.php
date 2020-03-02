@@ -12,7 +12,7 @@ class Comment extends Model implements Likeable
 
     protected $fillable = ['user_id', 'post_id', 'parent_id', 'text'];
 
-    protected $with = ['author'];
+    protected $with = ['author', 'children'];
 
     protected $appends = ['date'];
 
@@ -40,10 +40,12 @@ class Comment extends Model implements Likeable
     {
         $attributes = parent::toArray();
 
-        $attributes['initial_likes'] = $this->initial_likes;
-        $attributes['initial_dislikes'] = $this->initial_dislikes;
+        $attributes['initial_likes'] = $this->likes_count;
+        $attributes['initial_dislikes'] = $this->dislikes_count;
         $attributes['current_like'] = $this->current_like;
-        $attributes['children'] = [];
+        if ($this->children->count() == 0) {
+            $attributes['children'] = [];
+        }
 
         return $attributes;
     }

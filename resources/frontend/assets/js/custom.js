@@ -91,10 +91,105 @@ function youtube($parent, player) {
     })
 }
 
+function repeater() {
+    function updateInputName($input, index) {
+        $($input).attr('name', $($input).attr('name').replace(/[0-9]/g, index))
+    }
+
+    $('body')
+        .on('click', '.repeater-add', function (e) {
+            e.preventDefault()
+            const clone = $('.repeater .repeater-row:last-child').clone(),
+                index = $('.repeater .repeater-row').length
+            clone.find('input').each(function () {
+                $(this).val('')
+                updateInputName(this, index)
+            })
+            clone.appendTo('.repeater')
+        })
+        .on('click', '.repeater-remove', function () {
+            $(this).closest('.repeater-row').remove()
+            $('.repeater .repeater-row').each(function (index) {
+                $(this).find('input').each(function () {
+                    updateInputName(this, index)
+                })
+            })
+        })
+}
+
+function share() {
+    const popupSize = {
+        width: 780,
+        height: 550
+    }
+
+    $('body').on('click', '.social-button', function (e) {
+        var verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
+            horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2)
+
+        var popup = window.open($(this).prop('href'), 'social',
+            'width=' + popupSize.width + ',height=' + popupSize.height +
+            ',left=' + verticalPos + ',top=' + horisontalPos +
+            ',location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1')
+
+        if (popup) {
+            popup.focus()
+            e.preventDefault()
+        }
+
+    })
+}
+
+function horizontalScroll() {
+    $('.slide-panel .button').on('click', function () {
+        const $container = $(this).closest('.category-own-media').find('.inline-block-pc'),
+            currentScroll = $container.scrollLeft()
+        let itemWidth = $container.find('.article-column-card').width()
+        if ($(this).hasClass('slide-prev')) itemWidth = -itemWidth
+        $container.animate({scrollLeft: currentScroll + itemWidth}, 500)
+    })
+    $('.inline-block-pc').on('mousewheel', function (event, delta) {
+
+        this.scrollLeft -= (delta * 60)
+
+        event.preventDefault()
+
+    })
+}
+
+function deleteAjax() {
+    $('.form-ajax').on('click', function (e) {
+        e.preventDefault()
+        if (!confirm('Are you sure?')) return
+        $.ajax({
+            url: $(this).data('action'),
+            type: 'POST',
+            data: {
+                _method: 'DELETE'
+            },
+            success: () => {
+                let $hide = $(this)
+                if ($(this).closest('table').length) {
+                    $hide = $(this).closest('tr')
+                }
+                $hide.fadeOut(function () {
+                    $(this).remove()
+                })
+            }
+        })
+    })
+}
+
 $(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
     $('.logout').on('click', (e) => {
         e.preventDefault()
         $('#logout-form').submit()
     })
-
+    share()
+    horizontalScroll()
 })

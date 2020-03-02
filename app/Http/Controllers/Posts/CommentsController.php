@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Posts;
 
+use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Services\LikesService;
@@ -10,6 +11,18 @@ use Illuminate\Http\Request;
 
 class CommentsController extends Controller
 {
+    public function index(Post $post)
+    {
+        $comments = $post->comments;
+
+        $count = $comments->count();
+
+        $comments = $comments
+            ->where('parent_id', '=', null);
+
+        return response()->json(compact('count', 'comments'));
+    }
+
     public function store(Post $post, Request $request)
     {
         $this->validate($request, [
@@ -34,8 +47,9 @@ class CommentsController extends Controller
         ]);
     }
 
-    public function like(Comment $comment, LikesService $likesService)
+    public function like(int $comment, LikesService $likesService)
     {
+        $comment = Comment::without(['children', 'author'])->find($comment);
         $data = $likesService->toggle($comment);
 
         return response()->json(array_merge([
@@ -43,8 +57,9 @@ class CommentsController extends Controller
         ], $data));
     }
 
-    public function dislike(Comment $comment, LikesService $likesService)
+    public function dislike(int $comment, LikesService $likesService)
     {
+        $comment = Comment::without(['children', 'author'])->find($comment);
         $data = $likesService->toggle($comment, false);
 
         return response()->json(array_merge([

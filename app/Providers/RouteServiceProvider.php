@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -23,9 +26,32 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        $this->app->booted(function () {
+            share([
+                'routes' => [
+                    'login' => route('login'),
+                    'register' => route('register')
+                ]
+            ]);
+        });
+
+        Route::bind('post', function ($value) {
+            return Post::where('slug', $value)
+                ->orWhere('id', $value)
+                ->firstOrFail();
+        });
+        Route::bind('category', function ($value) {
+            return Category::where('slug', $value)
+                ->orWhere('id', $value)
+                ->firstOrFail();
+        });
+        Route::bind('user', function ($value) {
+            return User::where('id', $value)
+                //   ->orWhere('slug', $value)
+                ->firstOrFail();
+        });
     }
 
     /**
@@ -38,8 +64,6 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
-
-        //
     }
 
     /**
@@ -70,8 +94,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
     }
 }

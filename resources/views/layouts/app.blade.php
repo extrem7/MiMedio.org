@@ -1,12 +1,9 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="robots" content="noindex, nofollow">
     @meta_tags
-    <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
+    <link rel="stylesheet" href="{{mix('assets/css/app.css')}}">
+    <link rel="stylesheet" href="{{mix('assets/css/main.css')}}">
     <style>
         :root {
             --chanelColor: red;
@@ -21,9 +18,11 @@
         @yield('content')
     </main>
     @include('includes.footer')
+    <error></error>
 </div>
-<script src="{{asset('assets/js/main.js')}}"></script>
-<script src="{{asset('assets/js/app.js')}}"></script>
+@shared
+<script src="{{mix('assets/js/main.js')}}"></script>
+<script src="{{mix('assets/js/app.js')}}"></script>
 @stack('scripts')
 </body>
 </html>

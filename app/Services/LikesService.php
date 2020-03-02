@@ -29,7 +29,7 @@ class LikesService
             $bad = $like;
         }
         if ($good === null) {
-            $likeable->likes()->create([
+            $likeable->likesRaw()->create([
                 'user_id' => Auth::getUser()->id,
                 'dislike' => !$makeLike
             ]);
@@ -47,8 +47,8 @@ class LikesService
 
     private function getInitialData(Likeable $likeable, int $user_id)
     {
-        $like = $likeable->likes()->where('user_id', '=', $user_id)->first(['id']);
-        $dislike = $likeable->dislikes()->where('user_id', '=', $user_id)->first(['id']);
+        $like = $likeable->likes()->where('user_id', '=', $user_id)->first();
+        $dislike = $likeable->dislikes()->where('user_id', '=', $user_id)->first();
         return compact('like', 'dislike');
     }
 }

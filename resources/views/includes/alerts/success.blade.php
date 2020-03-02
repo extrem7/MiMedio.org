@@ -1,5 +1,5 @@
-@if(session($field))
-    <div class="alert alert-success">
-        {{session($field)}}
+@if(session($field??'status'))
+    <div class="alert alert-primary">
+        {{session($field??'status')}}
     </div>
 @endif

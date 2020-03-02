@@ -8,6 +8,7 @@
     <div class="row">
         <div class="col-12">
             <div class="title-semi-bold blue-color medium-size mb-3">Edit post</div>
+            @include('includes.alerts.success')
             <form method="post" action="{{route('posts.update',$post->id)}}" enctype="multipart/form-data"
                   class="box-rounded form-wrapper">
                 @csrf
@@ -52,6 +53,17 @@
                             <label class="custom-file-label" for="image">Upload your picture</label>
                         </div>
                         @include('includes.field-error',['error'=>'image'])
+                        @if($post->image)
+                            <div class="card card-primary mt-3">
+                                <div class="images-preview model-gallery">
+                                    <div data-action="{{route('admin.media.destroy',$post->image->id)}}"
+                                         class="form-ajax">
+                                        <img src="{{$post->image->getUrl()}}" class="img-fluid">
+                                        <button class="delete"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <div>
                         <div class="form-group">
@@ -67,8 +79,14 @@
                             </select>
                             @include('includes.field-error',['error'=>'status'])
                         </div>
-                        <button class="button btn-blue mx-164 btn-transform">Update</button>
-                        <a href="#" class="button btn-silver-light mx-164 ml-2 btn-transform preview">Preview</a>
+                        <div>
+                            <button class="button btn-blue mx-164 btn-transform">Update</button>
+                            <a href="#" class="button btn-silver-light mx-164 ml-2 btn-transform preview">Preview</a>
+                        </div>
+                        <div class="text-center">
+                            <a href="{{$post->link}}" target="_blank"
+                               class="button btn-yellow mx-164 mt-2 btn-transform">Open in new tab</a>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -81,5 +99,6 @@
     <script>
         initEditors()
         imagePreview()
+        deleteAjax()
     </script>
 @endpush

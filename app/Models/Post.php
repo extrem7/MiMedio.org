@@ -6,6 +6,7 @@ use App\Interfaces\Likeable;
 use App\Traits\LikeableTrait;
 use App\Traits\PaginateTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -33,7 +34,7 @@ class Post extends Model implements HasMedia, Likeable
 
     //protected $with = ['likes', 'dislikes'];
 
-    protected $appends = ['likes', 'dislikes'];
+    protected $appends = ['date_dots', 'likes_count', 'dislikes_count', 'thumbnail', 'link'];
 
     protected $orderBy = 'id';
     protected $orderDirection = 'desc';
@@ -61,7 +62,7 @@ class Post extends Model implements HasMedia, Likeable
 
     public function related()
     {
-        return $this->author->posts()->where('id', '!=', $this->id);
+        return $this->author->posts()->where('id', '!=', $this->id)->take(3);
     }
 
     public function newQuery($ordered = true)
@@ -73,6 +74,19 @@ class Post extends Model implements HasMedia, Likeable
         }
 
         return $query->orderBy($this->orderBy, $this->orderDirection);
+    }
+
+    //scopes
+
+    /**
+     * Scope a query to only published posts.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopePublished($query)
+    {
+        return $query->where('status', '=', self::PUBLISHED);
     }
 
     //media
@@ -114,7 +128,8 @@ class Post extends Model implements HasMedia, Likeable
         return [
             'slug' => [
                 'source' => 'title',
-                'onUpdate' => false,
+                'onUpdate' => true,
+                'unique' => false
             ]
         ];
     }
@@ -132,7 +147,7 @@ class Post extends Model implements HasMedia, Likeable
 
     public function getHasCommentsAttribute()
     {
-        return $this->comments->count();
+        return $this->comments->count() !== 0;
     }
 
     public function getCommentsCountAttribute()
@@ -147,12 +162,21 @@ class Post extends Model implements HasMedia, Likeable
 
     public function getLastCommentsAttribute()
     {
-        return $this->comments()->orderBy('id', 'desc')->take(3)->get();
+        return $this->comments->sortByDesc('id')->take(3);
+    }
+
+    public function getThumbnailAttribute()
+    {
+        if ($this->image !== null) {
+            return $this->image->getFullUrl();
+        } else {
+            return 'https://archive.org/download/no-photo-available/no-photo-available.png';//todo
+        }
     }
 
     public function getLinkAttribute()
     {
-        return route('posts.show', $this->slug);
+        return route('posts.show', ['user' => $this->author->id, 'slug' => $this->slug]);
     }
 
 }

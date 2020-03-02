@@ -2,11 +2,11 @@
     <div class="d-inline-flex">
         <button class="button btn-silver-light" :class="{active:liked}" @click.prevent="like">
             <i class="far fa-thumbs-up"></i>
-            <span class="badge-counter">{{likes}}</span>
+            <span class="badge-counter" v-if="likes">{{likes}}</span>
         </button>
         <button class="button btn-silver-light" :class="{active:disliked}" @click.prevent="dislike">
             <i class="far fa-thumbs-down"></i>
-            <span class="badge-counter">{{dislikes}}</span>
+            <span class="badge-counter" v-if="dislikes">{{dislikes}}</span>
         </button>
     </div>
 </template>
@@ -34,7 +34,7 @@
                     if (data.active) {
                         this.likes++
                         this.liked = true
-                        if(this.disliked){
+                        if (this.disliked) {
                             this.dislikes--
                             this.disliked = false
                         }
@@ -53,7 +53,7 @@
                     if (data.active) {
                         this.dislikes++
                         this.disliked = true
-                        if(this.liked){
+                        if (this.liked) {
                             this.likes--
                             this.liked = false
                         }
