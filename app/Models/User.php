@@ -22,7 +22,7 @@ class User extends Authenticatable implements HasMedia
 
     // protected $with = ['image'];
 
-    protected $appends = ['has_password'];
+    protected $appends = ['has_password', 'link'];
 
     protected $hidden = [
         'password', 'remember_token',
@@ -83,7 +83,7 @@ class User extends Authenticatable implements HasMedia
     public function getAvatarAttribute()
     {
         if ($this->image !== null) {
-            return $this->image->getFullUrl();
+            return $this->image->getUrl('icon');
         } else {
             return 'http://gimnazija.com.ua/wp-content/uploads/2017/03/no-avatar-300x300.png';//todo
         }

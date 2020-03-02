@@ -1,10 +1,12 @@
 <template>
     <li>
         <div class="d-flex comment-item" :class="{'comment-reply-to':isReplyTo}">
+            <a :href="comment.author.link">
             <img v-if="comment.author.avatar" :src="comment.author.avatar" alt="user" class="avatar">
+            </a>
             <div>
                 <div class="d-flex align-items-start align-items-sm-center flex-column flex-sm-row">
-                    <div class="name">{{comment.author.name}}</div>
+                    <a :href="comment.author.link" class="name">{{comment.author.name}}</a>
                     <div class="date ml-0 ml-sm-2 mb-2 mb-sm-0">{{comment.date}}</div>
                 </div>
                 <div>{{comment.text}}</div>

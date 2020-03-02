@@ -25,7 +25,9 @@
                         <span class="badge-counter">{{$post->comments_count}}</span>
                     @endif
                 </a>
-                @include('posts.includes.comments')
+                @if(isset($showComments))
+                    @include('posts.includes.comments')
+                @endif
                 <div class="btn-group">
                     <button class="button btn-silver-light extra-bold dropdown-toggle"
                             data-toggle="dropdown">Mi

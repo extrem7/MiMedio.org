@@ -49,10 +49,7 @@ class PostsController extends PostsBaseController
         }
 
         if ($post) {
-            return redirect()->route('posts.edit', [
-                'user' => $post->author->id,
-                'slug' => $post->slug
-            ])->with('status', 'Post has been updated');
+            return redirect()->route('posts.edit', $post->id)->with('status', 'Post has been updated');
         } else {
             return back()->withErrors('msg', "Error")->withInput();
         }
