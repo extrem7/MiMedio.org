@@ -74,7 +74,8 @@ class ProfileController extends Controller
     public function playlist()
     {
         $playlist = Auth::getUser()->playlist;
-        $videos = $playlist->videos;
+        if ($playlist !== null)
+            $videos = $playlist->videos;
         if (empty($videos)) {
             $videos = [['title' => '', 'id' => '', 'duration' => '']];
         }

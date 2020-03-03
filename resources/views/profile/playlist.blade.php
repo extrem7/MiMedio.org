@@ -11,7 +11,7 @@
                     <label class="label mb-1" for="title">Channel title</label>
                     <input type="text" id="title" name="title"
                            class="control-form mx-550 {{valid_class('title',$errors)}}"
-                           value="{{old('title',$playlist->title)}}">
+                           value="{{old('title',$playlist->title??'')}}">
                     @include('includes.field-error',['error'=>'title'])
                 </div>
                 <div class="repeater">
