@@ -26,7 +26,7 @@ class PostsService
             $posts = $relation->get();
         }
 
-        if ($paginate && $posts->count() == 0) {
+        if ($paginate && $posts->count() == 0 && $abort) {
             abort(404);
         }
 
