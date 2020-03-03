@@ -31,7 +31,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/post/{post}/like', 'Posts\PostsController@like')->name('posts.like');
     Route::post('/post/{post}/dislike', 'Posts\PostsController@dislike')->name('posts.dislike');
 
-    Route::get('/post/{post}/comments', 'Posts\CommentsController@index')->name('comments.store');
     Route::post('/post/{post}/comment', 'Posts\CommentsController@store')->name('comments.store');
     Route::post('/comment/{comment}/like', 'Posts\CommentsController@like')->name('comments.like');
     Route::post('/comment/{comment}/dislike', 'Posts\CommentsController@dislike')->name('comments.dislike');
@@ -39,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/user/{user}/follow', 'FollowingsController')->name('user.follow')->middleware('not.self');
 });
 
+Route::get('/post/{post}/comments', 'Posts\CommentsController@index')->name('comments.index');
 Route::get('/posts/{page?}', 'Posts\PostsController@index')->name('posts.index');
 Route::get('/channel/{user}/post/{slug}', 'Posts\PostsController@show')->name('posts.show');
 

@@ -111,6 +111,7 @@ class PostsController extends PostsBaseController
     public function destroy(Post $post)
     {
         $post->delete();
+        return redirect()->back()->with('status', 'Post has been deleted');
     }
 
     public function like(Post $post, LikesService $likesService)

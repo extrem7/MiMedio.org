@@ -47,9 +47,16 @@
         <div class="d-flex align-items-start">
             <a href="{{$post->link}}" class="article-title title-line-cap mb-2">{{$post->title}}</a>
             @if(isset($edit))
-                <a href="{{route('posts.edit',$post->id)}}" class="icon blue-color edit-post-btn">
+                <a href="{{route('posts.edit',$post->id)}}" class="icon blue-color edit-post-btn ml-2">
                     <i class="fas fa-edit"></i>
                 </a>
+            @endif
+            @if(isset($edit))
+                <form action="{{route('posts.destroy',$post->id)}}" method="post" class="ml-2">
+                    @method('DELETE')
+                    @csrf
+                    <button class="icon edit-post-btn"><i class="fas fa-trash-alt"></i></button>
+                </form>
             @endif
         </div>
         <div class="date-info bottom-line d-flex align-items-center mb-2">
