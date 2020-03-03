@@ -66,11 +66,7 @@ class ProfileController extends Controller
 
         $user = Auth::getUser();
 
-        $posts = $this->postsService->getPosts($user->posts(), $page, 6);
-
-        $user->posts()->with(['author', 'image', 'comments' => function (Relation $query) {
-            $query->setEagerLoads([]);
-        }])->paginateUri(1, $page);
+        $posts = $this->postsService->getPosts($user->posts(), $page, 6, true, false);
 
         return view('profile.posts', compact('posts'));
     }

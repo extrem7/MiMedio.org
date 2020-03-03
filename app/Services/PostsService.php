@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class PostsService
 {
-    public function getPosts(Relation $relation = null, int $page = 1, int $per_page = null, bool $paginate = true)
+    public function getPosts(Relation $relation = null, int $page = 1, int $per_page = null, bool $paginate = true, bool $abort = true)
     {
         if ($relation == null) {
             $relation = Post::query();
