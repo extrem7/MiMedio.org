@@ -15,7 +15,7 @@ class DebugBarMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(!\Auth::check()) {
+        if(!\Auth::check() || !\Auth::user()->is_admin) {
             \Debugbar::disable();
         }
         return $next($request);
