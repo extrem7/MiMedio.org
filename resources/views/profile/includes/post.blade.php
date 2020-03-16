@@ -28,18 +28,7 @@
                 @if(isset($showComments))
                     @include('posts.includes.comments')
                 @endif
-                <div class="btn-group">
-                    <button class="button btn-silver-light extra-bold dropdown-toggle"
-                            data-toggle="dropdown">Mi
-                    </button>
-                    <div class="dropdown-menu dropdown-light">
-                        <a href="" class="">Share in My Feed</a>
-                        <a href="" class="">Share in Message</a>
-                    </div>
-                    <button class="button btn-silver-light"><i class="fab fa-twitter"></i></button>
-                    <button class="button btn-silver-light"><i class="fab fa-facebook-f"></i>
-                    </button>
-                </div>
+                @include('posts.includes.share',['hide_text'=>true])
             </div>
         </div>
     </div>
@@ -61,6 +50,7 @@
         </div>
         <div class="date-info bottom-line d-flex align-items-center mb-2">
             {{$post->date_dots}} <a href="" class="profile-link title-nowrap">{{$post->author->name}}</a>
+            <div class="item ml-2"><i class="far fa-eye mr-1"></i>{{$post->views}}</div>
         </div>
         <div class="article-short-text title-line-cap">{!! $post->excerpt !!}</div>
     </div>

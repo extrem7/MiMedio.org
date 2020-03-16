@@ -10,6 +10,7 @@
                 <div class="name title-nowrap">{{$post->author->name}}</div>
             </a>
         </div>
+        <div class="item"><i class="far fa-eye mr-1"></i>{{$post->views}}</div>
         <followers :user_id="{{$post->author->id}}"
                    :initial_followers="{{$post->author->followers_count}}"></followers>
         @if(!is_current_user($post->author))

@@ -22,6 +22,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('profile/playlist', 'ProfileController@playlist')->name('settings.playlist');
     Route::post('profile/playlist', 'ProfileController@playlistUpdate')->name('playlist.update');
 
+    Route::get('profile/poll', 'ProfileController@poll')->name('settings.poll');
+
 
     Route::resource('/profile/posts', 'Posts\PostsController', ['except' => ['index', 'show']])->middleware('author');
     Route::get('/profile/posts/{page?}', 'ProfileController@posts')->name('profile.posts.index');
