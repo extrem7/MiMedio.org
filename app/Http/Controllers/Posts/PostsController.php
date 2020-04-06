@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Services\LikesService;
 use Auth;
+use Illuminate\Http\Request;
 
 class PostsController extends PostsBaseController
 {
@@ -21,6 +22,21 @@ class PostsController extends PostsBaseController
         $posts = $this->postsService->getPosts(null, $page);
 
         return view('posts.index', compact('categories', 'posts'));
+    }
+
+    public function search(Request $request)
+    {
+        $this->validate($request, [
+            'query' => 'required|string'
+        ]);
+
+        $query = $request->get('query');
+
+        $this->meta->prependTitle($query . ' - Search results');
+
+        $posts = $this->postsService->search($query);
+
+        return view('posts.search', compact('posts', 'query'));
     }
 
     public function create()
@@ -69,11 +85,9 @@ class PostsController extends PostsBaseController
 
         $post->view();
 
-        $playlist = $post->author->playlist;
-
         $related = $this->postsService->getRelated($post);
 
-        return view('posts.show', compact('post', 'playlist', 'related'));
+        return view('posts.show', compact('post', 'related'));
     }
 
     public function edit(Post $post)

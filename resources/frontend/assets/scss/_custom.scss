@@ -49,3 +49,8 @@
     opacity: 0;
     pointer-events: none;
 }
+
+.poll-repeater > .repeater-row:nth-child(2) .repeater-remove {
+    opacity: 0;
+    pointer-events: none;
+}

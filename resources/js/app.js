@@ -10,7 +10,9 @@ import Likes from "./components/Posts/Likes"
 import Comments from './components/Comments/List'
 import CopyButton from "./components/Posts/CopyButton"
 import FollowButton from "./components/Posts/FollowButton"
+import UserFollowButton from './components/Users/FollowButton'
 import Followers from "./components/Posts/Followers"
+import ColorPicker from "./components/ColorPicker"
 
 const app = new Vue({
     el: '#app',
@@ -21,7 +23,9 @@ const app = new Vue({
         Comments,
         CopyButton,
         Followers,
-        FollowButton
+        FollowButton,
+        UserFollowButton,
+        ColorPicker
     },
     store,
 })
@@ -34,10 +38,9 @@ axios.interceptors.response.use(function (response) {
     console.log(error)
     if (error.response.status == 401) {
         app.$bus.emit('unauthenticated')
-    }
-    else if (error.response.status == 400) {
+    } else if (error.response.status == 400) {
         app.$bus.emit('bad-request')
-    } else{
+    } else {
         app.$bus.emit('server-error')
     }
 

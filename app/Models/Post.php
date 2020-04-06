@@ -9,6 +9,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -19,6 +20,7 @@ class Post extends Model implements HasMedia, Likeable
     use Sluggable;
     use LikeableTrait;
     use PaginateTrait;
+    use Searchable;
 
     public const DRAFT = 'DRAFT';
     public const PUBLISHED = 'PUBLISHED';
@@ -176,7 +178,10 @@ class Post extends Model implements HasMedia, Likeable
 
     public function getLinkAttribute()
     {
-        return route('posts.show', ['user' => $this->author->id, 'slug' => $this->slug]);
+        return route('posts.show', [
+            'user' => $this->author->slug ?? $this->author->id,
+            'slug' => $this->slug
+        ]);
     }
 
 }

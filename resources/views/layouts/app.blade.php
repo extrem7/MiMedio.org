@@ -4,14 +4,10 @@
     @meta_tags
     <link rel="stylesheet" href="{{mix('assets/css/app.css')}}">
     <link rel="stylesheet" href="{{mix('assets/css/main.css')}}">
-    <style>
-        :root {
-            --chanelColor: red;
-        }
-    </style>
     @stack('styles')
 </head>
 <body class="@yield('body-class')">
+<div id="fb-root"></div>
 <div id="app">
     @include('includes.header')
     <main class="content container">

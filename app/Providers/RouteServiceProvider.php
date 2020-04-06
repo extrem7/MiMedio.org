@@ -49,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('user', function ($value) {
             return User::where('id', $value)
-                //   ->orWhere('slug', $value)
+                  ->orWhere('slug', $value)
                 ->firstOrFail();
         });
     }

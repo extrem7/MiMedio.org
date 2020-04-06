@@ -8,7 +8,7 @@ class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * php artisan migrate:refresh --path=/database/migrations/2014_10_12_000000_create_users_table.php
      * @return void
      */
     public function up()
@@ -24,6 +24,13 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
+
+            $table->string('slug')->nullable();
+            $table->char('color', 6)->nullable();
+            $table->json('embed')->nullable();
+
+            $table->string('saved_rss')->nullable();
+
             $table->timestamps();
         });
     }
@@ -35,6 +42,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('users');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

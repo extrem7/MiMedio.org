@@ -7,6 +7,7 @@
 
 @extends('layouts.app')
 
+@include('users.includes.custom-color')
 @section('content')
     @include('users.includes.header')
     <div class="row">
@@ -24,21 +25,7 @@
                         :user_id="{{$user->id}}"></posts-vertical-list>
                 </div>
             </div>
-            <section class="social-network mt-3 mt-md-5">
-                <div class="title-semi-bold blue-color medium-size mb-4">Social Networks</div>
-                <div class="custom-tab horizontal-overflow">
-                    <a href="#facebook" class="" data-toggle="tab">Facebook</a>
-                    <a href="#instagram" class="" data-toggle="tab">Instagram</a>
-                    <a href="#twitter" class="" data-toggle="tab">Twitter</a>
-                    <a href="#youtube" class="" data-toggle="tab">Youtube</a>
-                </div>
-                <div class="box-rounded tab-content">
-                    <div class="tab-pane fade show active" id="facebook" role="tabpanel">1</div>
-                    <div class="tab-pane fade" id="instagram" role="tabpanel">2</div>
-                    <div class="tab-pane fade" id="twitter" role="tabpanel">3</div>
-                    <div class="tab-pane fade" id="youtube" role="tabpanel">4</div>
-                </div>
-            </section>
+            @include('users.includes.social')
             @foreach($categoriesWithPosts as $category)
                 <section class="category-own-media mt-3 mt-md-5">
                     <div class="d-flex slider-header justify-content-between align-items-center">
@@ -52,7 +39,7 @@
                     </div>
                     <div class="inline-block-pc">
                         @foreach($category->posts as $post)
-                            @include('profile.includes.post')
+                            @include('profile.includes.post',['hideAuthor'=>true])
                         @endforeach
                         <div class="d-flex align-items-center ml-2">
                             <a href="{{route('users.show.category',[
@@ -67,3 +54,8 @@
         @include('users.includes.sidebar')
     </div>
 @endsection
+@push('scripts')
+    <script async defer crossorigin="anonymous"
+            src="https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v6.0&appId=2267874190154020&autoLogAppEvents=1"></script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+@endpush

@@ -13,7 +13,7 @@
                 <h1 class="post-name">{{$post->title}}</h1>
                 <div class="box-shadow-content channel-info-box mt-3">
                     <div class="item">
-                        <a href="{{route('users.show',$post->author->id)}}" class="profile-box">
+                        <a href="{{$post->author->link}}" class="profile-box">
                             <img src="{{$post->author->avatar}}" alt="name-article">
                             <div class="name title-nowrap">{{$post->author->name}}</div>
                         </a>
@@ -42,11 +42,9 @@
                 <comments :post_id="{{$post->id}}"></comments>
             </div>
         </div>
-        @if($playlist)
-            <div class="col-lg-4">
-                @include('posts.includes.playlist')
-            </div>
-        @endif
+        <div class="col-lg-4">
+            @include('posts.includes.playlist')
+        </div>
         @if($related->count())
             <div class="col-12">
                 <div class="box-rounded similar">

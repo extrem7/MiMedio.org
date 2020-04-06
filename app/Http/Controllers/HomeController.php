@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Mail;
+use App\Services\PostsService;
+use App\Services\RssService;
+use Auth;
+use Butschster\Head\Contracts\MetaTags\MetaInterface;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    private $postsService;
+
+    public function __construct(MetaInterface $meta)
     {
-        $this->middleware('auth');
+        parent::__construct($meta);
+        $this->postsService = new PostsService();
     }
 
     /**
@@ -22,8 +22,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(RssService $rssService)
     {
-        return view('home');
+        $this->meta->prependTitle('Social network');
+        $posts = $this->postsService->getPosts();
+        $rss = collect($rssService->get())->slice(0, 2);
+        if (Auth::check()) {
+
+            if (Auth::user()->saved_media_rss->isNotEmpty()) {
+                $rss = $rssService->getForUser();
+            }
+        }
+        return view('home', compact('posts', 'rss'));
     }
 }

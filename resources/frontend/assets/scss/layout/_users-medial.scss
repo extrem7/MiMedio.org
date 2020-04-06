@@ -55,6 +55,9 @@
     margin-top: -1px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    &.vertical-scroll {
+      max-height: 500px;
+    }
   }
 }
 
@@ -95,6 +98,7 @@
       bottom: -1px;
       transition: background-color .2s ease-in-out;
     }
+    &.active,
     &:hover {
       background-color: #fff;
       border-bottom-color: #fff;
@@ -192,6 +196,9 @@
     object-fit: cover;
   }
   .category-info {
+    .category-info-item + .category-info-item {
+      margin-left: 5px;
+    }
     a + a {
       margin-left: 5px;
     }

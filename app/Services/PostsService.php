@@ -19,7 +19,7 @@ class PostsService
 
         if ($paginate) {
             if ($per_page == null) {
-                $per_page = config('mimedio.posts_per_page');
+                $per_page = $this->perPage();
             }
             $posts = $relation->paginateUri($per_page, $page);
         } else {
@@ -30,6 +30,12 @@ class PostsService
             abort(404);
         }
 
+        return $posts;
+    }
+
+    public function search(string $query)
+    {
+        $posts = Post::search($query)->paginate($this->perPage());
         return $posts;
     }
 
@@ -78,12 +84,17 @@ class PostsService
     {
         return $relation->with([
             'author.followers',
-            'author.image',
+            'author.avatarImage',
             'likesRaw',
             'image',
             'comments' => function (Relation $query) {
                 $query->setEagerLoads([]);
             }
         ]);
+    }
+
+    public function perPage()
+    {
+        return config('mimedio.posts_per_page');
     }
 }

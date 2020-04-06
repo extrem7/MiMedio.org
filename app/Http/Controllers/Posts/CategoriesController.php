@@ -27,8 +27,6 @@ class CategoriesController extends PostsBaseController
 
         $categoriesWithPosts = $this->postsService->getUserCategories($user, false);
 
-        $playlist = $user->playlist;
-
-        return view('users.category', compact('user', 'category', 'posts', 'categoriesWithPosts', 'playlist'));
+        return view('users.category', compact('user', 'category', 'posts', 'categoriesWithPosts'));
     }
 }

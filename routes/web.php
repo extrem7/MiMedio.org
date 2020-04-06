@@ -1,6 +1,8 @@
 <?php
 
-Route::get('/{page?}', 'Posts\PostsController@index')->name('home')->where('page', '[0-9]+');;
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/posts{page?}', 'Posts\PostsController@index')->name('posts')->where('page', '[0-9]+');
+Route::get('/search', 'Posts\PostsController@search')->name('search');
 
 Route::get('/join-with-us', 'Auth\LoginController@join')->name('join');
 
@@ -19,11 +21,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('profile/settings', 'ProfileController@settings')->name('settings');
     Route::patch('profile/settings', 'ProfileController@settingsUpdate')->name('settings.update');
 
+    Route::get('profile/channel', 'ProfileController@channel')->name('settings.channel');
+    Route::patch('profile/channel', 'ProfileController@channelUpdate')->name('settings.channel.update');
+
     Route::get('profile/playlist', 'ProfileController@playlist')->name('settings.playlist');
     Route::post('profile/playlist', 'ProfileController@playlistUpdate')->name('playlist.update');
 
-    Route::get('profile/poll', 'ProfileController@poll')->name('settings.poll');
-
+    Route::get('profile/poll', 'ProfileController@poll')->name('poll');
+    Route::post('profile/poll', 'ProfileController@pollStore')->name('poll.create');
+    Route::post('profile/poll/{poll}', 'ProfileController@pollVote')->name('poll.vote');
+    Route::delete('profile/poll', 'ProfileController@pollDelete')->name('poll.delete');
 
     Route::resource('/profile/posts', 'Posts\PostsController', ['except' => ['index', 'show']])->middleware('author');
     Route::get('/profile/posts/{page?}', 'ProfileController@posts')->name('profile.posts.index');
@@ -38,6 +45,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/comment/{comment}/dislike', 'Posts\CommentsController@dislike')->name('comments.dislike');
 
     Route::post('/user/{user}/follow', 'FollowingsController')->name('user.follow')->middleware('not.self');
+
+    Route::post('/rss/{id}/add', 'RssController@add')->name('rss.add');
+    Route::delete('/rss/{id}/remove', 'RssController@remove')->name('rss.remove');
 });
 
 Route::get('/post/{post}/comments', 'Posts\CommentsController@index')->name('comments.index');
@@ -47,9 +57,8 @@ Route::get('/channel/{user}/post/{slug}', 'Posts\PostsController@show')->name('p
 Route::get('/category/{category}/{page?}', 'Posts\CategoriesController@show')->name('categories.show');
 
 Route::get('/rss', 'RssController@index')->name('rss');
-Route::get('/rss/{id}/add', 'RssController@add')->name('rss.add');
-Route::get('/rss/{id}/remove', 'RssController@remove')->name('rss.remove');
 
+Route::get('/channels/{page?}', 'UsersController@index')->name('users.index')->where('page', '[0-9]+');;
 Route::get('/channel/{user}', 'UsersController@show')->name('users.show');
 Route::get('/channel/{user}/posts/{page?}', 'UsersController@posts')->name('users.show.posts');
 

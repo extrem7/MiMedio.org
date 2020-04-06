@@ -6,7 +6,7 @@
 <div class="row channel-others-users">
     <div class="col-12 col-lg-8">
         <div class="d-flex align-items-center flex-column flex-lg-row">
-            <a href="{{$user->link}}"><img src="{{$user->avatar}}" alt="{{$user->name}}" class="mr-4 logo-channel"></a>
+            <a href="{{$user->link}}"><img src="{{$user->logo}}" alt="{{$user->name}}" class="mr-4 logo-channel"></a>
             <ul class="category-tab-list horizontal-overflow br-0 mt-4 mt-lg-0">
                 @foreach($categoriesWithPosts as $id=>$item)
                     <li>

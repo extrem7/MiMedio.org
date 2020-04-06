@@ -49,7 +49,7 @@
             @endif
         </div>
         <div class="date-info bottom-line d-flex align-items-center mb-2">
-            {{$post->date_dots}} <a href="" class="profile-link title-nowrap">{{$post->author->name}}</a>
+            {{$post->date_dots}} @if(!isset($hideAuthor))<a href="" class="profile-link title-nowrap">{{$post->author->name}}</a>@endif
             <div class="item ml-2"><i class="far fa-eye mr-1"></i>{{$post->views}}</div>
         </div>
         <div class="article-short-text title-line-cap">{!! $post->excerpt !!}</div>

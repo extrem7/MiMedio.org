@@ -188,6 +188,33 @@
   }
 }
 
+.btn-warning {
+  color: #fff;
+  &:hover {
+    color: #ffc107;
+    background-color: #fff;
+  }
+  &.btn-transform {
+    background-color: #ffc107;
+    &:after {
+      background-color: #fff;
+    }
+  }
+}
+
+.btn-danger {
+  &:hover {
+    background-color: #fff;
+    color: #dc3545;
+  }
+  &.btn-transform {
+    background-color: #dc3545;
+    &:after {
+      background-color: #fff;
+    }
+  }
+}
+
 .cancel-btn {
   &:hover {
     border-color: $red;
