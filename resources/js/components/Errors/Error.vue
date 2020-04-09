@@ -3,6 +3,14 @@
         <bad-request></bad-request>
         <unauthenticated></unauthenticated>
         <server-error></server-error>
+        <b-alert
+            v-model="copy"
+            class="position-fixed fixed-bottom m-0 rounded-0"
+            style="z-index: 2000;"
+            variant="info"
+            dismissible>Link to this post has been copied to the clipboard. You can send it to your friends in <a
+            href="/messenger">our messenger</a>.
+        </b-alert>
     </div>
 </template>
 
@@ -16,6 +24,19 @@
             BadRequest,
             Unauthenticated,
             ServerError
+        },
+        data() {
+            return {
+                copy: false
+            }
+        },
+        created() {
+            this.$bus.on('copy-alert', () => {
+                this.copy = true
+                setTimeout(() => {
+                    this.copy = false
+                }, 8000)
+            })
         }
     }
 </script>

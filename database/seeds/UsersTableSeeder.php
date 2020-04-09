@@ -9,6 +9,7 @@ class UsersTableSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     * @throws Exception
      */
     public function run()
     {
@@ -19,10 +20,10 @@ class UsersTableSeeder extends Seeder
             'password' => env('INITIAL_USER_PASSWORDHASH'),
             'is_admin' => true
         ]);
-        User::create([
-            'name' => 'John Doe',
-            'email' => 'example@mimedio.com',
-            'password' => Hash::make('2705921')
-        ]);
+
+        factory(User::class, 15)->create()->each(function (User $user) {
+            $user->addMediaFromUrl('https://picsum.photos/150/150')
+                ->toMediaCollection('avatar');
+        });
     }
 }

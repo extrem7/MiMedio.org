@@ -1,6 +1,8 @@
 <?php
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home/posts/{page?}', 'HomeController@posts')->name('home.posts');
+
 Route::get('/posts{page?}', 'Posts\PostsController@index')->name('posts')->where('page', '[0-9]+');
 Route::get('/search', 'Posts\PostsController@search')->name('search');
 
@@ -48,6 +50,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/rss/{id}/add', 'RssController@add')->name('rss.add');
     Route::delete('/rss/{id}/remove', 'RssController@remove')->name('rss.remove');
+
+    Route::get('/messenger/{user?}', 'HomeController@messenger')->name('messenger');
+    Route::get('/contacts', 'ContactsController@get');
+    Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
+    Route::post('/conversation/send', 'ContactsController@send');
 });
 
 Route::get('/post/{post}/comments', 'Posts\CommentsController@index')->name('comments.index');

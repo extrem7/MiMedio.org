@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\FollowableTrait;
 use App\Traits\LikeableTrait;
 use App\Traits\PaginateTrait;
+use Cache;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -25,7 +26,7 @@ class User extends Authenticatable implements HasMedia
 
 
     protected $fillable = [
-        'name', 'email', 'provider', 'provider_id', 'password', 'slug', 'color', 'embed', 'saved_rss'
+        'name', 'email', 'provider', 'provider_id', 'password', 'slug', 'color', 'embed', 'saved_rss', 'link'
     ];
 
     // protected $with = ['image'];
@@ -73,6 +74,11 @@ class User extends Authenticatable implements HasMedia
         return $this->hasManyThrough(Like::class, Post::class, 'user_id', 'likeable_id');
     }
 
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'from');
+    }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('icon')
@@ -105,6 +111,11 @@ class User extends Authenticatable implements HasMedia
         } else {
             return $this->getAvatar($size);
         }
+    }
+
+    public function isOnline()
+    {
+        return Cache::has('user-is-online-' . $this->id);
     }
 
     public function isSuperAdmin(): bool

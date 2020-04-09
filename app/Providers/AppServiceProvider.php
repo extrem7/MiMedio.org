@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Message;
 use App\Services\SocialService;
 use Auth;
+use Cache;
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Route;
@@ -27,9 +30,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         View::composer('admin.includes.sidebar', function ($view) {
             $view->with('name', ucfirst(Auth::user()->name));
+        });
+        View::composer('includes.notifications-bell', function ($view) {
+            $currentRoute = Route::current();
+            if ($currentRoute->getName() == 'messenger') {
+                $unread = 0;
+            } else {
+                $unread = Message::where('to', auth()->id())->where('read', false)->count();
+            }
+            $view->with('unread', $unread);
         });
         View::composer('users.includes.poll', function ($view) {
             $currentRoute = Route::current();

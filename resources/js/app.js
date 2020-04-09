@@ -6,26 +6,34 @@ import store from './store'
 
 import Error from "./components/Errors/Error"
 import PostsVerticalList from "./components/Posts/VerticalList"
+import PostsHomeList from "./components/Posts/HomeList"
 import Likes from "./components/Posts/Likes"
 import Comments from './components/Comments/List'
 import CopyButton from "./components/Posts/CopyButton"
+import SendButton from "./components/Posts/SendButton"
 import FollowButton from "./components/Posts/FollowButton"
 import UserFollowButton from './components/Users/FollowButton'
 import Followers from "./components/Posts/Followers"
 import ColorPicker from "./components/ColorPicker"
+import ChatApp from './components/Messenger/ChatApp'
+import MiChat from "./components/Messenger/MiChat"
 
 const app = new Vue({
     el: '#app',
     components: {
         Error,
         PostsVerticalList,
+        PostsHomeList,
         Likes,
         Comments,
         CopyButton,
+        SendButton,
         Followers,
         FollowButton,
         UserFollowButton,
-        ColorPicker
+        ColorPicker,
+        ChatApp,
+        MiChat
     },
     store,
 })

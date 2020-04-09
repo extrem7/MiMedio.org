@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Interfaces\Likeable;
 use App\Traits\LikeableTrait;
 use App\Traits\PaginateTrait;
+use App\Traits\SearchTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +21,8 @@ class Post extends Model implements HasMedia, Likeable
     use Sluggable;
     use LikeableTrait;
     use PaginateTrait;
-    use Searchable;
+    //use Searchable;
+    use SearchTrait;
 
     public const DRAFT = 'DRAFT';
     public const PUBLISHED = 'PUBLISHED';
@@ -36,7 +38,17 @@ class Post extends Model implements HasMedia, Likeable
 
     //protected $with = ['likes', 'dislikes'];
 
-    protected $appends = ['date_dots', 'likes_count', 'dislikes_count', 'thumbnail', 'link'];
+    protected $appends = [
+        'date_dots',
+        'likes_count',
+        'dislikes_count',
+        'current_like',
+        'thumbnail',
+        'link',
+        'comments_count',
+        'has_comments',
+        'share_links'
+    ];
 
     protected $orderBy = 'id';
     protected $orderDirection = 'desc';
@@ -182,6 +194,11 @@ class Post extends Model implements HasMedia, Likeable
             'user' => $this->author->slug ?? $this->author->id,
             'slug' => $this->slug
         ]);
+    }
+
+    public function getShareLinksAttribute()
+    {
+        return share_buttons($this->link);
     }
 
 }

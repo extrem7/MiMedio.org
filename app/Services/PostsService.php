@@ -88,7 +88,7 @@ class PostsService
             'likesRaw',
             'image',
             'comments' => function (Relation $query) {
-                $query->setEagerLoads([]);
+                $query->setEagerLoads([])->with('author');
             }
         ]);
     }

@@ -30,7 +30,7 @@
                 <nav class="d-none d-lg-block">
                     <ul class="menu">
                         <li><a href="{{route('home')}}">Home</a></li>
-                        <li><a href="{{route('users.index')}}">News Channels</a></li>
+                        <li><a href="{{route('users.index')}}">Channels</a></li>
                     </ul>
                 </nav>
                 <div class="dropdown">
@@ -53,10 +53,7 @@
                         </form>
                     </div>
                 </div>
-                <a href="" class="push-bell-notifications ml-25">
-                    <i class="far fa-bell"></i>
-                    <!--<span class="push-badge">12</span>-->
-                </a>
+               @include('includes.notifications-bell')
             @endauth
         </div>
     </div>

@@ -4,9 +4,15 @@
             <div class="col-md-6 text-center text-md-left">
                 <ul>
                     <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="">QuIEnes Somos</a></li>
-                    <li><a href="">Enlaces</a></li>
-                    <li><a href="">Contacto</a></li>
+                    <li><a href="{{route('posts.index')}}">All news</a></li>
+                    <li><a href="{{route('users.index')}}">Channels</a></li>
+                    <li><a href="{{route('rss')}}">Rss feeds</a></li>
+                    @guest
+                        <li><a href="{{route('join')}}">Join with Us</a></li>
+                    @endguest
+                    @auth
+                        <li> <a href="{{Auth::user()->link}}">My media</a></li>
+                    @endauth
                 </ul>
                 <div class="media-block mt-3">
                     <a href="{{config('mimedio.social.facebook.link')}}" target="_blank">
