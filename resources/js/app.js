@@ -11,6 +11,7 @@ import Likes from "./components/Posts/Likes"
 import Comments from './components/Comments/List'
 import CopyButton from "./components/Posts/CopyButton"
 import SendButton from "./components/Posts/SendButton"
+import ShareButton from "./components/Posts/ShareButton"
 import FollowButton from "./components/Posts/FollowButton"
 import UserFollowButton from './components/Users/FollowButton'
 import Followers from "./components/Posts/Followers"
@@ -28,6 +29,7 @@ const app = new Vue({
         Comments,
         CopyButton,
         SendButton,
+        ShareButton,
         Followers,
         FollowButton,
         UserFollowButton,

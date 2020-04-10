@@ -7,5 +7,5 @@
             @include('posts.includes.post')
         @endforeach
     </div>
-    {{$posts->links()}}
+    {{$posts->appends(request()->query())->links()}}
 @endsection

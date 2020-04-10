@@ -38,9 +38,11 @@ class UsersController extends Controller
 
         $posts = $this->postsService->getPosts($user->posts());
 
+        $shared = $this->postsService->getShared($user);
+
         $categoriesWithPosts = $this->postsService->getUserCategories($user);
 
-        return view('users.show', compact('user', 'posts', 'categoriesWithPosts'));
+        return view('users.show', compact('user', 'posts', 'shared', 'categoriesWithPosts'));
     }
 
     public function posts(User $user, int $page = 1)

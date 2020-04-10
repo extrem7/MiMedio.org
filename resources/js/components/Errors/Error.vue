@@ -11,6 +11,13 @@
             dismissible>Link to this post has been copied to the clipboard. You can send it to your friends in <a
             href="/messenger">our messenger</a>.
         </b-alert>
+        <b-alert
+            v-model="share"
+            class="position-fixed fixed-bottom m-0 rounded-0"
+            style="z-index: 2000;"
+            variant="info"
+            dismissible>This post has been shared to your channel.
+        </b-alert>
     </div>
 </template>
 
@@ -27,7 +34,8 @@
         },
         data() {
             return {
-                copy: false
+                copy: false,
+                share: false,
             }
         },
         created() {
@@ -35,6 +43,12 @@
                 this.copy = true
                 setTimeout(() => {
                     this.copy = false
+                }, 8000)
+            })
+            this.$bus.on('share-alert', () => {
+                this.share = true
+                setTimeout(() => {
+                    this.share = false
                 }, 8000)
             })
         }

@@ -14,7 +14,6 @@
 
     export default {
         props: {
-            user_id: Number,
             initial_posts: Object
         },
         components: {

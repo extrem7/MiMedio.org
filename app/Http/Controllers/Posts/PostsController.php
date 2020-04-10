@@ -6,6 +6,7 @@ use App\Http\Controllers\PostsBaseController;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Share;
 use App\Models\User;
 use App\Services\LikesService;
 use Auth;
@@ -144,5 +145,20 @@ class PostsController extends PostsBaseController
         return response()->json(array_merge([
             'status' => 'ok'
         ], $data));
+    }
+
+    public function share(Post $post)
+    {
+        $old = Share::where('user_id', auth()->id())->where('post_id', $post->id)->first();
+        if ($old !== null) {
+            $old->delete();
+        }
+
+        $shared = new Share(['user_id' => auth()->id(), 'post_id' => $post->id]);
+        $shared->save();
+
+        return response()->json([
+            'status' => 'ok'
+        ]);
     }
 }

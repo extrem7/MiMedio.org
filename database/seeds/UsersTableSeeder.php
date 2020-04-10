@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
             'is_admin' => true
         ]);
 
-        factory(User::class, 15)->create()->each(function (User $user) {
+        factory(User::class, 100)->create()->each(function (User $user) {
             $user->addMediaFromUrl('https://picsum.photos/150/150')
                 ->toMediaCollection('avatar');
         });

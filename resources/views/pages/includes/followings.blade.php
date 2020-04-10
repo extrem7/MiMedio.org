@@ -18,9 +18,12 @@
                             <div class="name title-nowrap">{{$user->name}}</div>
                         </a>
                     </div>
-                    <div class="item">
-                        <a href="{{$user->link}}"><span class="blue-color">3</span> new posts</a>
-                    </div>
+                    @if($user->new_posts)
+                        <div class="item">
+                            <a href="{{$user->link}}"><span class="blue-color">{{$user->new_posts}}</span> new posts
+                                today</a>
+                        </div>
+                    @endif
                     <div class="item">
                         <follow-button :user_id="{{$user->id}}"
                                        :initial_following="{{is_following($user)}}">

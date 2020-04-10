@@ -26,6 +26,24 @@
                 </div>
             </div>
             @include('users.includes.social')
+            @if($shared)
+                <section class="category-own-media mt-3 mt-md-5">
+                    <div class="d-flex slider-header justify-content-between align-items-center">
+                        <div class="title-semi-bold blue-color medium-size">Shared news</div>
+                        <div class="d-flex slide-panel">
+                            <button class="button btn-silver-light slide-prev"><i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="button btn-silver-light slide-next ml-1"><i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="inline-block-pc">
+                        @foreach($shared as $post)
+                            @include('profile.includes.post')
+                        @endforeach
+                    </div>
+                </section>
+            @endif
             @foreach($categoriesWithPosts as $category)
                 <section class="category-own-media mt-3 mt-md-5">
                     <div class="d-flex slider-header justify-content-between align-items-center">

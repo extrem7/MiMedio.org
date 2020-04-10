@@ -79,6 +79,11 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Message::class, 'from');
     }
 
+    public function shared()
+    {
+        return $this->belongsToMany(Post::class, 'shares');
+    }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('icon')

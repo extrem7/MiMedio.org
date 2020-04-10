@@ -35,13 +35,19 @@ class PostsService
 
     public function search(string $query)
     {
-        $posts = Post::search($query)->paginate($this->perPage());
+        $posts = $this->eagerLoad(Post::published()->search($query))
+            ->paginate($this->perPage());
         return $posts;
     }
 
     public function getCategories()
     {
         return Category::pluck('name', 'slug');
+    }
+
+    public function getShared(User $user, bool $eagerLoad = true)
+    {
+        return $this->getPosts($user->shared(), 0, 0, false, false);
     }
 
     public function getUserCategories(User $user, bool $eagerLoad = true)

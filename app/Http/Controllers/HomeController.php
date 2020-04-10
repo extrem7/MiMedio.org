@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Models\Post;
 use App\Models\User;
 use App\Services\PostsService;
 use App\Services\RssService;
 use Auth;
 use Butschster\Head\Contracts\MetaTags\MetaInterface;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -52,7 +54,10 @@ class HomeController extends Controller
                 return $chat->last->id;
             })->reverse();
 
-            $followings = Auth::user()->followings;
+            $followings = Auth::user()->followings->map(function($user){
+                $user->new_posts = Post::published()->whereDate('created_at', Carbon::today())->count();
+                return $user;
+            });
         }
 
         return view('pages.home', compact('posts', 'rss', 'followings', 'chats'));

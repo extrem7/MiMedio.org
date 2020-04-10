@@ -9,7 +9,7 @@
     <div class="btn-group">
         <button class="button btn-silver-light extra-bold dropdown-toggle" data-toggle="dropdown">Mi</button>
         <div class="dropdown-menu dropdown-light">
-            <a href="" class="">Share in My Feed</a>
+           <share-button :post-id="{{$post->id}}"></share-button>
             <send-button link="{{$post->link}}"></send-button>
         </div>
         {!!share_buttons($post->link)!!}

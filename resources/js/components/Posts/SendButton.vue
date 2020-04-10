@@ -9,11 +9,6 @@
         props: {
             link: String
         },
-        data() {
-            return {
-                showAlert: false
-            }
-        },
         methods: {
             copy() {
                 copyTextToClipboard(this.link, () => {
