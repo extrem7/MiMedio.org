@@ -63,14 +63,8 @@ return [
                     'name' => 'youtube_playlist',
                     'type' => 'repeater',
                     'label' => 'Youtube videos playlist',
-                    'mutator' => function ($value, $key) {
-                        return json_encode(request('youtube_playlist'));
-                    },
-                    'accessor' => function ($value, $key) {
-                        return is_null($value) ? [
-                            ['title' => '', 'id' => '', 'duration' => '']
-                        ] : json_decode($value, true);
-                    },
+                    'mutator' => 'YoutubeRepeaterMutator',
+                    'accessor' => 'YoutubeRepeaterAccessor',
                 ]
             ]
         ]

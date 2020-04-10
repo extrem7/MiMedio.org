@@ -20,8 +20,7 @@
                     </div>
                     @if($user->new_posts)
                         <div class="item">
-                            <a href="{{$user->link}}"><span class="blue-color">{{$user->new_posts}}</span> new posts
-                                today</a>
+                            <a href="{{$user->link}}"><span class="blue-color">{{$user->new_posts}}</span> new posts</a>
                         </div>
                     @endif
                     <div class="item">

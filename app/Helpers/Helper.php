@@ -73,3 +73,21 @@ function is_current_user(User $user): bool
     }
     return false;
 }
+
+class YoutubeRepeaterMutator
+{
+    public function handle($value, $key)
+    {
+        return json_encode(request('youtube_playlist'));
+    }
+}
+
+class YoutubeRepeaterAccessor
+{
+    public function handle($value, $key)
+    {
+        return is_null($value) ? [
+            ['title' => '', 'id' => '', 'duration' => '']
+        ] : json_decode($value, true);
+    }
+}

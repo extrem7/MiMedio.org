@@ -11,7 +11,7 @@
             </div>
             <copy-button :link="post.link"></copy-button>
         </div>
-        <div class="article-short-text title-line-cap">{{post.excerpt}}</div>
+        <div class="article-short-text title-line-cap" v-html="post.excerpt"></div>
         <div class="article-button-action mt-3 position-relative">
             <div class="d-inline-flex">
                 <likes :post_id="post.id"
