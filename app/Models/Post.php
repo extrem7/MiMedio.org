@@ -45,8 +45,9 @@ class Post extends Model implements HasMedia, Likeable
         'current_like',
         'thumbnail',
         'link',
-        'comments_count',
+       // 'comments_count',
         'has_comments',
+        'last_comments',
         'share_links'
     ];
 
@@ -161,13 +162,13 @@ class Post extends Model implements HasMedia, Likeable
 
     public function getHasCommentsAttribute()
     {
-        return $this->comments->count() !== 0;
+        return $this->comments_count !== 0;
     }
 
-    public function getCommentsCountAttribute()
+    /*public function getCommentsCountAttribute()
     {
-        return $this->comments->count();
-    }
+        return $this->comments()->count();
+    }*/
 
     public function getBaseCommentsAttribute()
     {
@@ -176,7 +177,7 @@ class Post extends Model implements HasMedia, Likeable
 
     public function getLastCommentsAttribute()
     {
-        return $this->comments->sortByDesc('id')->take(3);
+        return $this->comments()->orderBy('id', 'desc')->take(3);
     }
 
     public function getThumbnailAttribute()

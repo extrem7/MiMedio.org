@@ -33,7 +33,7 @@
                 <div class="dropdown-menu dropdown-last-comment" v-if="post.has_comments">
                     <div class="semi-bold blue-color mb-2">Last Comments</div>
                     <div class="last-comment">
-                        <div class="last-comment-item" v-for="comment in post.comments.slice(0,3)">
+                        <div class="last-comment-item" v-for="comment in post.last_comments">
                             <div class="d-flex align-items-center">
                                 <div class="name title-nowrap">{{comment.author.name}}</div>
                                 <div class="date">{{comment.date}}</div>

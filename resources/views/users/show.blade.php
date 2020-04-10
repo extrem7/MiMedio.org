@@ -26,7 +26,7 @@
                 </div>
             </div>
             @include('users.includes.social')
-            @if($shared)
+            @if($shared->isNotEmpty())
                 <section class="category-own-media mt-3 mt-md-5">
                     <div class="d-flex slider-header justify-content-between align-items-center">
                         <div class="title-semi-bold blue-color medium-size">Shared news</div>

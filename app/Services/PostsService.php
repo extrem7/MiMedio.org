@@ -89,14 +89,15 @@ class PostsService
     private function eagerLoad($relation)
     {
         return $relation->with([
+            'author',
             'author.followers',
             'author.avatarImage',
             'likesRaw',
             'image',
-            'comments' => function (Relation $query) {
+            /*'comments' => function (Relation $query) {
                 $query->setEagerLoads([])->with('author');
-            }
-        ]);
+            }*/
+        ])->withCount('comments');
     }
 
     public function perPage()
