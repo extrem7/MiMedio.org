@@ -9,6 +9,24 @@
     color: var(--chanelColor);
   }
 
+  .vote-answer {
+    .custom-control-input:checked ~ .custom-control-label::before {
+      border-color: var(--chanelColor);
+      background-color: var(--chanelColor);
+    }
+  }
+
+  .channel-info-box {
+    .btn-yellow,
+    .btn-blue {
+      border-color: var(--chanelColor);
+      background-color: var(--chanelColor);
+      &:hover {
+        color: var(--chanelColor);
+      }
+    }
+  }
+
   .progress-bar,
   .article-mini-card .divider,
   .push-badge,
