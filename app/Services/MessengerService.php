@@ -9,9 +9,9 @@ use App\Models\User;
 
 class MessengerService
 {
-    public function getChats()
+    public function getChats(bool $useFollowings = false)
     {
-        $chats = $this->getContacts();
+        $chats = $this->getContacts($useFollowings);
 
         $chats = $chats->map(function ($chat) {
             $chat->last = Message::whereIn('from', [$chat->id, auth()->id()])
@@ -25,14 +25,17 @@ class MessengerService
         return $chats;
     }
 
-    public function getContacts()
+    public function getContacts(bool $useFollowings = false)
     {
         $followings = \Auth::user()->followings;
 
         $receivers = User::whereHas('messages', function ($query) {
             $query->where('to', '=', auth()->id());
-        })->whereNotIn('id', $followings->pluck('id'))->get();
+        });
 
-        return $receivers->merge($followings);
+        if ($useFollowings) {
+            return $receivers->whereNotIn('id', $followings->pluck('id'))->get()->merge($followings);
+        }
+        return $receivers->get();
     }
 }

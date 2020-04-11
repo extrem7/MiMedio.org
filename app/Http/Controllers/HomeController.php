@@ -68,7 +68,7 @@ class HomeController extends Controller
             ]);
         }
 
-        $contacts = $messengerService->getContacts();
+        $contacts = $messengerService->getContacts(true);
 
         $unreadIds = Message::select(\DB::raw('`from` as sender_id, count(`from`) as messages_count'))
             ->where('to', auth()->id())
