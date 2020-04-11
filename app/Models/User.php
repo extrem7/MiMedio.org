@@ -84,6 +84,11 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Post::class, 'shares');
     }
 
+    public function shares()
+    {
+        return $this->hasManyThrough(Share::class, Post::class, 'user_id', 'post_id');
+    }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('icon')
@@ -102,8 +107,8 @@ class User extends Authenticatable implements HasMedia
 
     public function getAvatar(string $size = ''): string
     {
-        if ($this->getMedia('avatar')->isNotEmpty()) {
-            return $this->getFirstMediaUrl('avatar', $size);
+        if ($this->avatarImage !== null) {
+            return $this->avatarImage->getUrl($size);
         } else {
             return 'https://ювелирочка.рф/upload/review/no_avatar.png';//todo
         }
@@ -111,8 +116,8 @@ class User extends Authenticatable implements HasMedia
 
     public function getLogo(string $size = ''): string
     {
-        if ($this->getMedia('logo')->isNotEmpty()) {
-            return $this->getFirstMediaUrl('logo', $size);
+        if ($this->logoImage !== null) {
+            return $this->logo->getUrl($size);
         } else {
             return $this->getAvatar($size);
         }
@@ -152,11 +157,6 @@ class User extends Authenticatable implements HasMedia
     {
         $items = $this->saved_rss ? explode(',', $this->saved_rss) : [];
         return collect($items);
-    }
-
-    public function getPostsCountAttribute()
-    {
-        return $this->posts()->count();
     }
 
     public function toArray()

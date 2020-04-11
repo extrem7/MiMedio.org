@@ -25,7 +25,8 @@ class UsersController extends Controller
         $this->meta->prependTitle('Channels');
 
         $user = Auth::user();
-        $users = User::withCount('followers')
+        $users = User::withCount(['posts', 'followers', 'shares'])
+            ->with('avatarImage', 'logoImage', 'likesRaw')
             ->orderBy('followers_count', 'desc')
             ->paginateUri($this->postsService->perPage(), $page);
 
@@ -34,6 +35,8 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
+        $user->loadCount('followers');
+
         $this->meta->prependTitle($user->name);
 
         $posts = $this->postsService->getPosts($user->posts());

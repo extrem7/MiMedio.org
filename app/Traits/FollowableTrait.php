@@ -5,7 +5,6 @@ namespace App\Traits;
 
 
 use App\Models\User;
-use Auth;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 trait FollowableTrait
@@ -52,15 +51,5 @@ trait FollowableTrait
     public function isFollowed(User $user): bool
     {
         return $this->followers->contains('id', $user->id);
-    }
-
-    public function getFollowingsCountAttribute()
-    {
-        return $this->followings->count();
-    }
-
-    public function getFollowersCountAttribute()
-    {
-        return $this->followers->count();
     }
 }

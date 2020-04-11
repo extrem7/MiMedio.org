@@ -23,20 +23,15 @@
         </div>
     </div>
     <div class="box-rounded up-to-top border-top-0">
-        <img src="{{$channel->getLogo()}}" alt="">
+        <a href="{{$channel->link}}"><img src="{{$channel->getLogo()}}" alt="{{$user->name}}"></a>
         <div class="category-info d-flex align-items-center justify-content-between mt-3">
             <div class="d-flex flex-wrap mr-3">
-                <a href="" class="inherit-color medium-bold"><span
-                        class="blue-color semi-bold">{{$channel->posts_count}}</span>
-                    posts</a>
-                <a href="" class="inherit-color medium-bold"><span
-                        class="blue-color semi-bold">{{$channel->likes_count}}</span>
-                    likes</a>
-                <a href="" class="inherit-color medium-bold"><span
-                        class="blue-color semi-bold">{{$channel->dislikes_count}}</span>
-                    dislikes</a>
-                <a href="" class="inherit-color medium-bold"><span class="blue-color semi-bold">35</span>
-                    shares</a><!--todo-->
+                @foreach(['posts','likes','dislikes','shares'] as $count)
+                    @php $count .='_count'  @endphp
+                    <a href="" class="inherit-color medium-bold"><span
+                            class="blue-color semi-bold">{{$channel->$count}}</span>
+                        posts</a>
+                @endforeach
             </div>
             <copy-button link="{{$channel->link}}"></copy-button>
         </div>

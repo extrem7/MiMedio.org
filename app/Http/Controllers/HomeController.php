@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Models\Post;
 use App\Models\User;
+use App\Services\MessengerService;
 use App\Services\PostsService;
 use App\Services\RssService;
 use Auth;
@@ -26,10 +27,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(RssService $rssService)
+    public function index(RssService $rssService, MessengerService $messengerService)
     {
         $this->meta->prependTitle('Social network');
-        $posts = $this->postsService->getPosts(null, 1, 6);
+        $posts = $this->postsService->getHomeTimeLine();
         $rss = collect($rssService->get())->slice(0, 2);
         $chats = [];
         $followings = [];
@@ -40,21 +41,9 @@ class HomeController extends Controller
                 $rss = $rssService->getForUser();
             }
 
-            $chats = User::whereHas('messages', function ($query) {
-                $query->where('to', '=', auth()->id());
-            })->get();
+            $chats = $messengerService->getChats();
 
-            $chats = $chats->map(function ($chat) {
-                $chat->last = Message::whereIn('from', [$chat->id, auth()->id()])
-                    ->whereIn('to', [$chat->id, auth()->id()])
-                    ->orderBy('id', 'desc')
-                    ->first();
-                return $chat;
-            })->sortBy(function ($chat) {
-                return $chat->last->id;
-            })->reverse();
-
-            $followings = Auth::user()->followings->map(function($user){
+            $followings = Auth::user()->followings->map(function ($user) {
                 $user->new_posts = Post::published()->whereDate('created_at', Carbon::today())->count();
                 return $user;
             });
@@ -65,11 +54,11 @@ class HomeController extends Controller
 
     public function posts(int $page = 1)
     {
-        $posts = $this->postsService->getPosts(null, $page, 6);
+        $posts = $this->postsService->getHomeTimeLine($page);
         return $posts;
     }
 
-    public function messenger(User $user = null)
+    public function messenger(User $user = null, MessengerService $messengerService)
     {
         $this->meta->prependTitle('Messenger');
 
@@ -79,7 +68,7 @@ class HomeController extends Controller
             ]);
         }
 
-        $contacts = User::where('id', '!=', auth()->id())->get();
+        $contacts = $messengerService->getContacts();
 
         $unreadIds = Message::select(\DB::raw('`from` as sender_id, count(`from`) as messages_count'))
             ->where('to', auth()->id())

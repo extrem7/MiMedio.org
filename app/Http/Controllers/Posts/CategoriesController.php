@@ -23,6 +23,7 @@ class CategoriesController extends PostsBaseController
     {
         $this->meta->prependTitle($user->name . ' | ' . $category->name);
 
+        $user->loadCount('followers');
         $posts = $this->postsService->getPosts($user->posts()->whereCategoryId($category->id), $page, 6);
 
         $categoriesWithPosts = $this->postsService->getUserCategories($user, false);

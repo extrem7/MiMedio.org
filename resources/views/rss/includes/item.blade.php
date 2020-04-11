@@ -28,7 +28,7 @@
                      data-parent="#article-collapse-{{$item->id}}">
                     <div class="box-rounded border-top-0">
                         <div class="box-date mb-2">{{Carbon::parse($post->date)->format('Y.m.d')}}</div>
-                        <div class="article-short-text title-line-cap">{!! $post->excerpt !!}</div>
+                        <div class="article-short-text title-line-cap">{{strip_tags($post->excerpt)}}</div>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="right-column">
                         <div class="box-date">{{Carbon::parse($post->date)->format('Y.m.d')}}</div>
-                        <a href="{{$post->link}}" class="article-title title-line-cap">{{$post->title}}</a>
+                        <a href="{{$post->link}}" class="article-title title-line-cap">{{strip_tags($post->title)}}</a>
                     </div>
                 </div>
             @endforeach

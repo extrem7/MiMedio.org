@@ -45,7 +45,6 @@ class Post extends Model implements HasMedia, Likeable
         'current_like',
         'thumbnail',
         'link',
-       // 'comments_count',
         'has_comments',
         'last_comments',
         'share_links'

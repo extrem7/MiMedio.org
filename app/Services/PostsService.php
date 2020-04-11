@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class PostsService
 {
-    public function getPosts(Relation $relation = null, int $page = 1, int $per_page = null, bool $paginate = true, bool $abort = true)
+    public function getPosts($relation = null, int $page = 1, int $per_page = null, bool $paginate = true, bool $abort = false)
     {
         if ($relation == null) {
             $relation = Post::query();
@@ -31,6 +31,11 @@ class PostsService
         }
 
         return $posts;
+    }
+
+    public function getHomeTimeLine(int $page = 1)
+    {
+        return $this->getPosts(Post::where('user_id', '!=', auth()->id()), $page, 6);
     }
 
     public function search(string $query)
@@ -69,7 +74,8 @@ class PostsService
                 $categoriesWithPosts[$item->id] = (object)[
                     'name' => $item->name,
                     'slug' => $item->slug,
-                    'posts' => $postsInCategory
+                    'posts' => $postsInCategory,
+                    'load_more' => $query->count() > 6
                 ];
         };
 

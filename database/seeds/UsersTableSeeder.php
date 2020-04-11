@@ -21,9 +21,13 @@ class UsersTableSeeder extends Seeder
             'is_admin' => true
         ]);
 
-        factory(User::class, 100)->create()->each(function (User $user) {
-            $user->addMediaFromUrl('https://picsum.photos/150/150')
+        factory(User::class, 28)->create()->each(function (User $user) {
+            $user->addMediaFromUrl('https://picsum.photos/320/200')
                 ->toMediaCollection('avatar');
+            $poll = $user->ownPoll()->create(['question' => 'Some question?']);
+            $poll->addOptions(['One', 'Two', 'Three'])
+                ->maxSelection()
+                ->generate();
         });
     }
 }

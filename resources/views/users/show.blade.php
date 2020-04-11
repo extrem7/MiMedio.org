@@ -12,19 +12,21 @@
     @include('users.includes.header')
     <div class="row">
         <div class="col-lg-8 col-12 my-own-media">
-            <div class="box-rounded main-media">
-                <div class="row">
-                    <div class="col-md-6">
-                        @php
-                            $post = $posts->shift();
-                        @endphp
-                        @include('users.includes.post-large',compact('post'))
+            @if($posts->isNotEmpty())
+                <div class="box-rounded main-media">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @php
+                                $post = $posts->shift();
+                            @endphp
+                            @include('users.includes.post-large',compact('post'))
+                        </div>
+                        <posts-vertical-list
+                            :initial_posts="{{json_encode($posts)}}"
+                            :user_id="{{$user->id}}"></posts-vertical-list>
                     </div>
-                    <posts-vertical-list
-                        :initial_posts="{{json_encode($posts)}}"
-                        :user_id="{{$user->id}}"></posts-vertical-list>
                 </div>
-            </div>
+            @endif
             @include('users.includes.social')
             @if($shared->isNotEmpty())
                 <section class="category-own-media mt-3 mt-md-5">
@@ -59,12 +61,14 @@
                         @foreach($category->posts as $post)
                             @include('profile.includes.post',['hideAuthor'=>true])
                         @endforeach
-                        <div class="d-flex align-items-center ml-2">
-                            <a href="{{route('users.show.category',[
+                        @if($category->load_more)
+                            <div class="d-flex align-items-center ml-2">
+                                <a href="{{route('users.show.category',[
                            'user'=>$user->id,
                            'category'=>$category->slug
                            ])}}" class="button btn-yellow btn-transform">See all news</a>
-                        </div>
+                            </div>
+                        @endif
                     </div>
                 </section>
             @endforeach
