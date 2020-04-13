@@ -37,5 +37,8 @@ class PostsTableSeeder extends Seeder
             $post->addMediaFromUrl('https://picsum.photos/750/370')
                 ->toMediaCollection('image');
         });
+        User::all()->each(function (User $user) {
+            $user->shared()->attach(Post::all()->random(5));
+        });
     }
 }

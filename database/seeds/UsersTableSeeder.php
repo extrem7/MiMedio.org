@@ -40,7 +40,6 @@ class UsersTableSeeder extends Seeder
         });
         User::all()->each(function (User $user) {
             $user->followings()->attach(User::all()->random(10));
-            $user->shared()->attach(Post::all()->random(5));
         });
     }
 }
