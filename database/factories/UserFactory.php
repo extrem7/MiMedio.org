@@ -33,8 +33,8 @@ $factory->define(User::class, function (Faker $faker) {
 
 $factory->define(App\Models\Message::class, function (Faker $faker) {
     do {
-        $from = rand(1, 10);
-        $to = rand(1, 10);
+        $from = rand(319, 347);
+        $to = rand(319, 347);
     } while ($from === $to);
 
     return [
