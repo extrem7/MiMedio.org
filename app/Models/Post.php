@@ -176,7 +176,7 @@ class Post extends Model implements HasMedia, Likeable
 
     public function getLastCommentsAttribute()
     {
-        return $this->comments()->orderBy('id', 'desc')->take(3);
+        return $this->comments()->orderBy('id', 'desc')->take(3)->get();
     }
 
     public function getThumbnailAttribute()

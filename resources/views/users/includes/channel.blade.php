@@ -26,11 +26,11 @@
         <a href="{{$channel->link}}"><img src="{{$channel->getLogo()}}" alt="{{$user->name}}"></a>
         <div class="category-info d-flex align-items-center justify-content-between mt-3">
             <div class="d-flex flex-wrap mr-3">
-                @foreach(['posts','likes','dislikes','shares'] as $count)
-                    @php $count .='_count'  @endphp
+                @foreach(['posts'=>'posts','likes'=>'likes','dislikes'=>'dislikes','shares'=>'shares'] as $prop=>$name)
+                    @php $prop .='_count'  @endphp
                     <a href="" class="inherit-color medium-bold"><span
-                            class="blue-color semi-bold">{{$channel->$count}}</span>
-                        posts</a>
+                            class="blue-color semi-bold">{{$channel->$prop}}</span>
+                        {{$name}}</a>
                 @endforeach
             </div>
             <copy-button link="{{$channel->link}}"></copy-button>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -24,10 +25,22 @@ class UsersTableSeeder extends Seeder
         factory(User::class, 28)->create()->each(function (User $user) {
             $user->addMediaFromUrl('https://picsum.photos/320/200')
                 ->toMediaCollection('avatar');
+            $user->playlist()->create([
+                'title' => $user->name . ' TV',
+                'videos' => [
+                    ['title' => 'КИТАЕЦ ПРОТИВ СТОЛБА. ЛУЧШЕ ГРАНТЫ ?', 'id' => 'VDrXI5DjdsQ', 'duration' => '12:55'],
+                    ['title' => 'Защита информации в сети', 'id' => '4oLzvhDRZT4', 'duration' => '2:33:02']
+                ]
+            ]);
+
             $poll = $user->ownPoll()->create(['question' => 'Some question?']);
             $poll->addOptions(['One', 'Two', 'Three'])
                 ->maxSelection()
                 ->generate();
+        });
+        User::all()->each(function (User $user) {
+            $user->followings()->attach(User::all()->random(10));
+            $user->shared()->attach(Post::all()->random(5));
         });
     }
 }

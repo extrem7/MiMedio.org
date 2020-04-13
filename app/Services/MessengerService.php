@@ -31,10 +31,13 @@ class MessengerService
 
         $receivers = User::whereHas('messages', function ($query) {
             $query->where('to', '=', auth()->id());
-        });
+        })->orWhereHas('receivedMessages', function ($query) {
+            $query->where('from', '=', auth()->id());
+        });;
 
         if ($useFollowings) {
-            return $receivers->whereNotIn('id', $followings->pluck('id'))->get()->merge($followings);
+            $receivers = $receivers->whereNotIn('id', $followings->pluck('id'))->get();
+            return collect()->merge($receivers)->merge($followings);
         }
         return $receivers->get();
     }

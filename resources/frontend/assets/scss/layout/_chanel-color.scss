@@ -15,18 +15,15 @@
       background-color: var(--chanelColor);
     }
   }
-
-  .channel-info-box {
-    .btn-yellow,
-    .btn-blue {
-      border-color: var(--chanelColor);
-      background-color: var(--chanelColor);
-      &:hover {
-        color: var(--chanelColor);
-      }
+  .vote .btn-yellow,
+  .channel-info-box .btn-blue {
+    border-color: var(--chanelColor);
+    background-color: var(--chanelColor);
+    &:hover {
+      color: var(--chanelColor);
     }
   }
-
+  
   .progress-bar,
   .article-mini-card .divider,
   .push-badge,

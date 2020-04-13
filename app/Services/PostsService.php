@@ -100,9 +100,9 @@ class PostsService
             'author.avatarImage',
             'likesRaw',
             'image',
-            /*'comments' => function (Relation $query) {
-                $query->setEagerLoads([])->with('author');
-            }*/
+            'comments' => function (Relation $query) {
+                $query->setEagerLoads([])->with('author','likesRaw')->take(3);
+            }
         ])->withCount('comments');
     }
 

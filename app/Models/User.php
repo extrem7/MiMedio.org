@@ -79,6 +79,11 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Message::class, 'from');
     }
 
+    public function receivedMessages()
+    {
+        return $this->hasMany(Message::class, 'to');
+    }
+
     public function shared()
     {
         return $this->belongsToMany(Post::class, 'shares');
