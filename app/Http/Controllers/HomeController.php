@@ -43,8 +43,8 @@ class HomeController extends Controller
 
             $chats = $messengerService->getChats();
 
-            $followings = Auth::user()->followings->map(function ($user) {
-                $user->new_posts = Post::published()->whereDate('created_at', Carbon::today())->count();
+            $followings = Auth::user()->followings->map(function (User $user) {
+                $user->new_posts = $user->posts()->published()->whereDate('created_at', Carbon::today())->count();
                 return $user;
             });
         }
