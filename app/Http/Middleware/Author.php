@@ -17,7 +17,7 @@ class Author
      */
     public function handle($request, Closure $next)
     {
-        if ($request->routeIs(['posts.edit', 'posts.update', 'posts.delete'])) {
+        if ($request->routeIs(['posts.edit', 'posts.update', 'posts.destroy'])) {
             if (Auth::id() !== $request->route()->parameter('post')->author->id) {
                 abort(403);
                 exit;
