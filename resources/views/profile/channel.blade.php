@@ -17,17 +17,22 @@
             <div class="col-lg-8 col-md-6">
                 <div class="form-group">
                     <div class="label mb-1">Url slug of channel (mimedio.org/channel/{slug})</div>
-                    <input type="text" name="slug" value="{{old('slug',$user->slug)}}" class="control-form {{valid_class('slug',$errors)}} mx-365">
+                    <input type="text" name="slug" value="{{old('slug',$user->slug)}}"
+                           class="control-form {{valid_class('slug',$errors)}} mx-365">
                     @include('includes.field-error',['error'=>'slug'])
                 </div>
                 <div class="form-group">
-                    <div class="label mb-1">Facebook embed</div>
+                    <div class="label mb-1">Facebook embed (<a
+                            href="https://developers.facebook.com/docs/plugins/page-plugin" target="_blank">embed page</a>,
+                        <a href="https://developers.facebook.com/docs/plugins/embedded-posts" target="_blank">embed post</a>, <a
+                            href="https://developers.facebook.com/docs/plugins/embedded-video-player" target="_blank">embed video</a>)
+                    </div>
                     <textarea name="embed[facebook]" rows="7"
                               class="control-form {{valid_class('embed.facebook',$errors)}}">{{old('embed.facebook',$facebook)}}</textarea>
                     @include('includes.field-error',['error'=>'embed.facebook'])
                 </div>
                 <div class="form-group">
-                    <div class="label mb-1">Twitter embed</div>
+                    <div class="label mb-1">Twitter embed (<a href="https://publish.twitter.com/" target="_blank">create embed code</a>)</div>
                     <textarea name="embed[twitter]" rows="7"
                               class="control-form {{valid_class('embed.twitter',$errors)}}">{{old('embed.twitter',$twitter)}}</textarea>
                     @include('includes.field-error',['error'=>'embed.twitter'])
