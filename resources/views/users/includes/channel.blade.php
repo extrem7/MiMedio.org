@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="box-rounded up-to-top border-top-0">
-        <a href="{{$channel->link}}"><img src="{{$channel->getLogo()}}" alt="{{$user->name}}"></a>
+        <a href="{{$channel->link}}"><img src="{{$channel->getLogo()}}" alt="{{$channel->name}}"></a>
         <div class="category-info d-flex align-items-center justify-content-between mt-3">
             <div class="d-flex flex-wrap mr-3">
                 @foreach(['posts'=>'posts','likes'=>'likes','dislikes'=>'dislikes','shares'=>'shares'] as $prop=>$name)
