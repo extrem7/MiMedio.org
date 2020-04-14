@@ -1,7 +1,7 @@
 <template>
     <div class="item">
         <button @click.prevent="follow" class="button btn-transform b-sm"
-                :class="{'btn-blue':!following,'cancel-btn':following}">
+                :class="{'btn-blue':!following,'btn-darkC':following}">
             {{following?'Unfollow':'Follow'}}
         </button>
     </div>

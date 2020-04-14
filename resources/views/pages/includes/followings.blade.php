@@ -23,11 +23,9 @@
                             <a href="{{$user->link}}"><span class="blue-color">{{$user->new_posts}}</span> new posts</a>
                         </div>
                     @endif
-                    <div class="item">
-                        <follow-button :user_id="{{$user->id}}"
-                                       :initial_following="{{is_following($user)}}">
-                        </follow-button>
-                    </div>
+                    <follow-button :user_id="{{$user->id}}"
+                                   :initial_following="{{is_following($user)}}">
+                    </follow-button>
                 </div>
             @endforeach
         </div>
