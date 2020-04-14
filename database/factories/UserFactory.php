@@ -26,15 +26,15 @@ $factory->define(User::class, function (Faker $faker) {
         'color' => collect(['6d9eeb', 'e06666', '6aa84f', '741b47'])->random(),
         'embed' => [
             'facebook' => '<div class="fb-page" data-href="https://www.facebook.com/facebook" data-tabs="" data-width="" data-height="250" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/facebook" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div>',
-            'twitter'=>'<a class="twitter-timeline" data-theme="light" href="https://twitter.com/TwitterDev/lists/national-parks?ref_src=twsrc%5Etfw">A Twitter List by TwitterDev</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
+            'twitter' => '<a class="twitter-timeline" data-theme="light" href="https://twitter.com/TwitterDev/lists/national-parks?ref_src=twsrc%5Etfw">A Twitter List by TwitterDev</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
         ]
     ];
 });
 
 $factory->define(App\Models\Message::class, function (Faker $faker) {
     do {
-        $from = rand(319, 347);
-        $to = rand(319, 347);
+        $from = User::all()->random(1)[0]->id;
+        $to = User::all()->random(1)[0]->id;
     } while ($from === $to);
 
     return [

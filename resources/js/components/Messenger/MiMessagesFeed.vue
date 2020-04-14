@@ -3,13 +3,13 @@
         <div class="message-li" v-for="(message,i) in messages">
             <div class="box-shadow-content date" v-if="newDay(message,i-1)">{{message.day}}</div>
             <div class="message-item user-message"
-                 :class="`${message.to === contact.id ? 'my' : 'user'}-message`" :key="message.id">
+                 :class="`${message.to == contact.id ? 'my' : 'user'}-message`" :key="message.id">
                 <div class="d-flex align-items-center">
-                    <div v-if="message.to !== contact.id" class="avatar">
+                    <div v-if="message.to != contact.id" class="avatar">
                         <img :src="contact.avatar" :alt="contact.name">
                     </div>
                     <div>
-                        <div v-if="message.to !== contact.id" class="name text-nowrap mb-2">{{ contact.name }}</div>
+                        <div v-if="message.to != contact.id" class="name text-nowrap mb-2">{{ contact.name }}</div>
                         <div class="message-full-text" v-html="message.text"></div>
                     </div>
                 </div>

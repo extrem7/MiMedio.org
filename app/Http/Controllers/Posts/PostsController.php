@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Services\LikesService;
 use Auth;
 use Illuminate\Http\Request;
+use Str;
 
 class PostsController extends PostsBaseController
 {
@@ -70,6 +71,19 @@ class PostsController extends PostsBaseController
         } else {
             return back()->withErrors('msg', "Error")->withInput();
         }
+    }
+
+    public function image(Request $request)
+    {
+        $this->validate($request, [
+            'image' => 'required|image|max:2048|mimes:jpg,jpeg,bmp,png',
+        ]);
+
+        $image = $request->file('image');
+        $name = Str::random(25);
+        $file = $image->storeAs('public/uploads', $name . '.' . $image->getClientOriginalExtension());
+
+        return ['location' => \Storage::url($file)];
     }
 
     public function show(User $user, string $slug)

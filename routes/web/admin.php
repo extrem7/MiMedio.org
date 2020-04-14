@@ -25,7 +25,7 @@ Route::group(['prefix' => 'admin-panel', 'namespace' => 'Admin'], function () {
 
         Route::post('logout', 'LoginController@logout')->name('admin.logout');
     });
-    Route::get('/logout', function () {
+    /*Route::get('/logout', function () {
         abort(404);
-    });
+    });*/
 });

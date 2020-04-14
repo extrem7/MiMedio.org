@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('profile/poll', 'ProfileController@pollDelete')->name('poll.delete');
 
     Route::resource('/profile/posts', 'Posts\PostsController', ['except' => ['index', 'show']])->middleware('author');
+    Route::post('/profile/posts/image', 'Posts\PostsController@image')->name('posts.image');
     Route::get('/profile/posts/{page?}', 'ProfileController@posts')->name('profile.posts.index');
 
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');

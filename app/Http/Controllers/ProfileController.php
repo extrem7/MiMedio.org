@@ -150,6 +150,7 @@ class ProfileController extends Controller
         $this->meta->prependTitle('My poll');
 
         $poll = Auth::getUser()->ownPoll;
+        $answers = null;
         if ($poll !== null)
             $answers = $poll->options->pluck('name');
 

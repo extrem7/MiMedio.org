@@ -2,7 +2,7 @@
     <div class="col-md-12 col-lg-4 message-list-wrapper">
         <ul class="contact-list">
             <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)"
-                :class="{ active: contact === selected }">
+                :class="{ active: contact == selected }">
                 <div class="d-flex align-items-center">
                     <div class="avatar">
                         <img :src="contact.avatar" :alt="contact.name">
@@ -14,7 +14,7 @@
                         <div class="name text-nowrap mt-1">{{ contact.name }}</div>
                         <div class="message-short-text title-line-cap mt-2"
                              v-if="contact.last"
-                             v-html="(contact.last.from===user.id?'You: ':'' ) + contact.last.text">
+                             v-html="(contact.last.from==user.id?'You: ':'' ) + contact.last.text">
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
 
                 if (!this.loaded) {
                     if (shared().chat) {
-                        this.selected = contacts.find((contact) => contact.id === shared().chat)
+                        this.selected = contacts.find((contact) => contact.id == shared().chat)
                     } else {
                         this.selected = contacts[0]
                     }

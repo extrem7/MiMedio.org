@@ -60,7 +60,38 @@ function initEditors() {
         content_css: [
             '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
             '//www.tiny.cloud/css/codepen.min.css'
-        ]
+        ],
+        convert_urls: false,
+        images_upload_handler: function (blobInfo, success, failure) {
+            var xhr, formData;
+            xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('POST', '/profile/posts/image');
+            var token = $('meta[name="csrf-token"]').attr('content');
+            xhr.setRequestHeader("X-CSRF-Token", token);
+            xhr.setRequestHeader("Accept", 'application/json');
+            xhr.onload = function() {
+                var json;
+                if (xhr.status === 422) {
+                    json = JSON.parse(xhr.responseText);
+                    failure('Error: ' + json.errors.image.join('\n'));
+                    return;
+                }
+                if (xhr.status != 200) {
+                    failure('HTTP Error: ' + xhr.status);
+                    return;
+                }
+                json = JSON.parse(xhr.responseText);
+                if (!json || typeof json.location != 'string') {
+                    failure('Invalid JSON: ' + xhr.responseText);
+                    return;
+                }
+                success(json.location);
+            };
+            formData = new FormData();
+            formData.append('image', blobInfo.blob(), blobInfo.filename());
+            xhr.send(formData);
+        }
     }).then(editor => {
         $('.preview').on('click', (e) => {
             e.preventDefault()
