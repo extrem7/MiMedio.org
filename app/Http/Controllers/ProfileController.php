@@ -27,7 +27,7 @@ class ProfileController extends Controller
     public function settings()
     {
         $user = Auth::user();
-        $avatar = $user->avatar;
+        $avatar = $user->getAvatar();
 
         $this->meta->prependTitle('Profile settings');
         return view('profile.settings', compact('user', 'avatar'));
