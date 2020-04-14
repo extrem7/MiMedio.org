@@ -109,7 +109,7 @@ class ProfileController extends Controller
 
         $user = Auth::getUser();
 
-        $posts = $this->postsService->getPosts($user->posts(), $page, 6, true, false);
+        $posts = $this->postsService->getPosts($user->posts(), $page, 6, true, false,false);
 
         return view('profile.posts', compact('posts'));
     }

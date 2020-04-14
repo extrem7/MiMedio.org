@@ -9,13 +9,16 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class PostsService
 {
-    public function getPosts($relation = null, int $page = 1, int $per_page = null, bool $paginate = true, bool $abort = false)
+    public function getPosts($relation = null, int $page = 1, int $per_page = null, bool $paginate = true, bool $abort = false, bool $published = true)
     {
         if ($relation == null) {
             $relation = Post::query();
         }
 
-        $relation = $this->eagerLoad($relation)->published();
+        $relation = $this->eagerLoad($relation);
+        if($published){
+            $relation = $relation->published();
+        }
 
         if ($paginate) {
             if ($per_page == null) {
@@ -101,7 +104,7 @@ class PostsService
             'likesRaw',
             'image',
             'comments' => function (Relation $query) {
-                $query->setEagerLoads([])->with('author','likesRaw')->take(3);
+                $query->setEagerLoads([])->with('author', 'likesRaw')->take(3);
             }
         ])->withCount('comments');
     }
