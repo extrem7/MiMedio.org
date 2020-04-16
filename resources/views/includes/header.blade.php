@@ -40,12 +40,12 @@
                     </a>
                     <div class="dropdown-menu dropdown-account dropdown-menu-right">
                         <a href="{{Auth::user()->link}}" class="dropdown-item">My media</a>
+                        <a href="{{route('users.index')}}" class="dropdown-item d-block d-lg-none">Channels</a>
                         <a href="{{route('settings')}}" class="dropdown-item">Edit profile</a>
                         <a href="{{route('settings.channel')}}" class="dropdown-item">Edit channel</a>
                         <a href="{{route('profile.posts.index')}}" class="dropdown-item">My posts</a>
                         <a href="{{route('settings.playlist')}}" class="dropdown-item">My playlist</a>
                         <a href="{{route('poll')}}" class="dropdown-item">My poll</a>
-                        <a href="" class="dropdown-item d-block d-lg-none">Settings</a>
                         <div class="dropdown-divider"></div>
                         <a href="{{ route('logout') }}" class="dropdown-item logout">{{ __('Logout') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -53,7 +53,7 @@
                         </form>
                     </div>
                 </div>
-               @include('includes.notifications-bell')
+                @include('includes.notifications-bell')
             @endauth
         </div>
     </div>

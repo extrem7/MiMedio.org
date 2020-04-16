@@ -358,3 +358,13 @@
     }
   }
 }
+
+@media (max-width: 370px) {
+  .header {
+    .logo {
+      img {
+        max-width: 120px;
+      }
+    }
+  }
+}

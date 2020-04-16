@@ -21,7 +21,7 @@ mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/admin/we
 //frontend mix
 
 mix.sass('resources/sass/app.scss', 'public/assets/css/').version()
-mix.sass('resources/frontend/assets/scss/main.scss', 'public/assets/css/').version()
+mix.sass('resources/frontend/scss/main.scss', 'public/assets/css/').version()
 
 mix.js('resources/js/app.js', 'public/assets/js/').version()
 
@@ -31,11 +31,11 @@ mix.scripts([
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/bs-custom-file-input/dist/bs-custom-file-input.min.js',
     'node_modules/jquery-mousewheel/jquery.mousewheel.js',
-    'resources/frontend/assets/js/main.js',
-    'resources/frontend/assets/js/custom.js',
+    'resources/frontend/js/main.js',
+    'resources/frontend/js/custom.js',
 ], 'public/assets/js/main.js').version()
 
-mix.copy('resources/frontend/assets/img', 'public/assets/img')
+mix.copy('resources/frontend/img', 'public/assets/img')
 
 mix.copy('node_modules/tinymce/', 'public/assets/vendor/tinymce')
 
