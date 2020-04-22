@@ -16,7 +16,7 @@ class PostsService
         }
 
         $relation = $this->eagerLoad($relation);
-        if($published){
+        if ($published) {
             $relation = $relation->published();
         }
 
@@ -38,7 +38,7 @@ class PostsService
 
     public function getHomeTimeLine(int $page = 1)
     {
-        return $this->getPosts(Post::where('user_id', '!=', auth()->id()), $page, 6);
+        return $this->getPosts(Post::query(), $page, 6);
     }
 
     public function search(string $query)
