@@ -9,42 +9,34 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class PostsService
 {
-    public function getPosts($relation = null, int $page = 1, int $per_page = null, bool $paginate = true, bool $abort = false, bool $published = true)
+    public function getPosts($relation = null, bool $paginate = true)
     {
         if ($relation == null) {
-            $relation = Post::query();
+            $relation = Post::published();
         }
 
         $relation = $this->eagerLoad($relation);
-        if ($published) {
-            $relation = $relation->published();
-        }
 
-        if ($paginate) {
-            if ($per_page == null) {
-                $per_page = $this->perPage();
-            }
+        if ($paginate === true) {
+            $page = request()->route()->parameters()['page'] ?? 1;
+            $per_page = $this->perPage();
             $posts = $relation->paginateUri($per_page, $page);
+            if ($posts->count() === 0 && navIsRoute('profile.posts.index')) abort(404);
         } else {
-            $posts = $relation->get();
+            return $relation->get();
         }
-
-        if ($paginate && $posts->count() == 0 && $abort) {
-            abort(404);
-        }
-
         return $posts;
     }
 
-    public function getHomeTimeLine(int $page = 1)
+    public function getHomeTimeLine()
     {
-        return $this->getPosts(Post::query(), $page, 6);
+        return $this->getPosts();
     }
 
     public function search(string $query)
     {
-        $posts = $this->eagerLoad(Post::published()->search($query))
-            ->paginate($this->perPage());
+        $posts = $this->eagerLoad(Post::published()->search($query))->paginate($this->perPage());
+
         return $posts;
     }
 
@@ -55,7 +47,7 @@ class PostsService
 
     public function getShared(User $user, bool $eagerLoad = true)
     {
-        return $this->getPosts($user->shared(), 0, 0, false, false);
+        return $this->getPosts($user->shared(), false);
     }
 
     public function getUserCategories(User $user, bool $eagerLoad = true)
@@ -104,13 +96,22 @@ class PostsService
             'likesRaw',
             'image',
             'comments' => function (Relation $query) {
-                $query->setEagerLoads([])->with('author', 'likesRaw')->take(3);
+                $query->setEagerLoads([])
+                    ->with('author', 'likesRaw')
+                    ->orderByDesc('id')
+                    ->limit(3);
             }
         ])->withCount('comments');
     }
 
     public function perPage()
     {
+        if (navIsRoute('users.show.category')) {
+            return 6;
+        }
+        if (navIsRoute('profile.posts.index')) {
+            return 8;
+        }
         return config('mimedio.posts_per_page');
     }
 }

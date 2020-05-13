@@ -42,7 +42,7 @@
                 </div>
             </form>
             @if(!empty($answers))
-                <form method="post" action="{{route('poll.delete')}}">
+                <form method="post" action="{{route('poll.destroy')}}">
                     @csrf
                     @method('DELETE')
                     <button class="button btn-yellow mx-164 mt-3 btn-transform">Reset poll</button>

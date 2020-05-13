@@ -5,7 +5,7 @@
         <div class="col-lg-8 col-md-10">
             <div class="semi-bold blue-color medium-size mt-4 mb-3">List of your videos</div>
             @include('includes.alerts.success',['field'=>'status'])
-            <form action="{{route('playlist.update')}}" method="post" class="{{$errors->isEmpty()?:'was-validated'}}">
+            <form action="{{route('settings.playlist.update')}}" method="post" class="{{$errors->isEmpty()?:'was-validated'}}">
                 @csrf
                 <div class="form-group">
                     <label class="label mb-1" for="title">Channel title</label>

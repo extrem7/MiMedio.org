@@ -11,7 +11,7 @@
             </div>
             <div class="col-12">
                 <div class="form-group">
-                    <a href="{{route('admin.posts.create')}}" class="btn btn-success">Create</a>
+                    <a href="{{route('posts.create')}}" class="btn btn-success">Create</a>
                 </div>
                 <table id="posts" class="table table-bordered table-hover">
                     <thead>

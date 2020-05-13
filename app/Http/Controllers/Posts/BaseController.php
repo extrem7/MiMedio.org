@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Posts;
 
+use App\Http\Controllers\Controller;
 use App\Services\PostsService;
 use Butschster\Head\Contracts\MetaTags\MetaInterface;
-use Illuminate\Http\Request;
 
-class PostsBaseController extends Controller
+class BaseController extends Controller
 {
     protected $postsService;
 

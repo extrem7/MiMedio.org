@@ -10,22 +10,12 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    /**
-     * This namespace is applied to your controller routes.
-     *
-     * In addition, it is set as the URL generator's root namespace.
-     *
-     * @var string
-     */
     protected $namespace = 'App\Http\Controllers';
 
-    /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
-     */
     public function boot()
     {
+        Route::pattern('page', '[0-9]+');
+
         parent::boot();
 
         $this->app->booted(function () {
@@ -49,48 +39,43 @@ class RouteServiceProvider extends ServiceProvider
         });
         Route::bind('user', function ($value) {
             return User::where('id', $value)
-                  ->orWhere('slug', $value)
+                ->orWhere('slug', $value)
                 ->firstOrFail();
         });
     }
 
-    /**
-     * Define the routes for the application.
-     *
-     * @return void
-     */
     public function map()
     {
         $this->mapApiRoutes();
 
-        $this->mapWebRoutes();
+        $this->mapFrontendRoutes();
+        $this->mapLoggedRoutes();
+        $this->mapAdminRoutes();
     }
 
-    /**
-     * Define the "web" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    protected function mapWebRoutes()
+    protected function mapFrontendRoutes()
     {
-        Route::group([
-            'middleware' => 'web',
-            'namespace' => $this->namespace,
-        ], function ($router) {
-            require base_path('routes/web/admin.php');
-            require base_path('routes/web.php');
-        });
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web/frontend.php'));
     }
 
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
+    public function mapLoggedRoutes()
+    {
+        Route::middleware(['web', 'auth'])
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web/logged.php'));
+    }
+
+    public function mapAdminRoutes()
+    {
+        Route::middleware(['web', 'auth'])
+            ->namespace($this->namespace . '\Admin')
+            ->prefix('admin-panel')
+            ->as('admin.')
+            ->group(base_path('routes/web/admin.php'));
+    }
+
     protected function mapApiRoutes()
     {
         Route::prefix('api')

@@ -21,19 +21,19 @@
                 </likes>
 
                 <button class="button btn-silver-light dropdown-toggle btn-comment"
-                        :data-toggle="post.has_comments?'dropdown':''">
-                    <i class="far fa-comment-alt"></i><span class="badge-counter" v-if="post.has_comments">{{post.comments_count}}
+                        :data-toggle="commentsCount?'dropdown':''">
+                    <i class="far fa-comment-alt"></i><span class="badge-counter" v-if="commentsCount">{{commentsCount}}
                 </span>
                 </button>
 
                 <a :href="`${post.link}/#comments`" class="button btn-silver-light dropdown-toggle btn-comment-link">
                     <i class="far fa-comment-alt"></i>
-                    <span class="badge-counter" v-if="post.has_comments">>{{post.comments_count}}</span>
+                    <span class="badge-counter" v-if="commentsCount">>{{commentsCount}}</span>
                 </a>
-                <div class="dropdown-menu dropdown-last-comment" v-if="post.has_comments">
+                <div class="dropdown-menu dropdown-last-comment" v-if="commentsCount">
                     <div class="semi-bold blue-color mb-2">Last Comments</div>
                     <div class="last-comment">
-                        <div class="last-comment-item" v-for="comment in post.last_comments">
+                        <div class="last-comment-item" v-for="comment in post.comments">
                             <div class="d-flex align-items-center">
                                 <div class="name title-nowrap">{{comment.author.name}}</div>
                                 <div class="date">{{comment.date}}</div>
@@ -66,8 +66,12 @@
     import SendButton from "./SendButton"
 
     export default {
-        name: "Post",
         props: ['post'],
+        data() {
+            return {
+                commentsCount: this.post.comments_count
+            }
+        },
         components: {
             Likes,
             CopyButton,

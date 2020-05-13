@@ -5,10 +5,12 @@ namespace App\Models;
 use App\Interfaces\Likeable;
 use App\Traits\LikeableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
 class Comment extends Model implements Likeable
 {
     use LikeableTrait;
+    use HasEagerLimit;
 
     protected $fillable = ['user_id', 'post_id', 'parent_id', 'text'];
 

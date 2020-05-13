@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Posts;
 
-use App\Http\Controllers\PostsBaseController;
 use App\Models\Category;
 use App\Models\User;
 
-class CategoriesController extends PostsBaseController
+class CategoriesController extends BaseController
 {
     public function show(Category $category, int $page = 1)
     {
@@ -14,7 +13,7 @@ class CategoriesController extends PostsBaseController
 
         $categories = $this->postsService->getCategories();
 
-        $posts = $this->postsService->getPosts($category->posts(), $page);
+        $posts = $this->postsService->getPosts($category->posts());
 
         return view('posts.index', compact('categories', 'category', 'posts'));
     }
@@ -24,7 +23,7 @@ class CategoriesController extends PostsBaseController
         $this->meta->prependTitle($user->name . ' | ' . $category->name);
 
         $user->loadCount('followers');
-        $posts = $this->postsService->getPosts($user->posts()->whereCategoryId($category->id), $page, 6);
+        $posts = $this->postsService->getPosts($user->posts()->whereCategoryId($category->id));
 
         $categoriesWithPosts = $this->postsService->getUserCategories($user, false);
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Auth;
-use Illuminate\Http\Request;
 
 class FollowingsController extends Controller
 {

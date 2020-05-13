@@ -10,9 +10,10 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
-use Laravel\Scout\Searchable;
+//use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use \Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 use Spatie\MediaLibrary\Models\Media;
 
 class Post extends Model implements HasMedia, Likeable
@@ -23,6 +24,7 @@ class Post extends Model implements HasMedia, Likeable
     use PaginateTrait;
     //use Searchable;
     use SearchTrait;
+    use HasEagerLimit;
 
     public const DRAFT = 'DRAFT';
     public const PUBLISHED = 'PUBLISHED';
@@ -36,8 +38,6 @@ class Post extends Model implements HasMedia, Likeable
 
     protected $fillable = ['category_id', 'title', 'excerpt', 'body', 'status'];
 
-    //protected $with = ['likes', 'dislikes'];
-
     protected $appends = [
         'date_dots',
         'likes_count',
@@ -46,7 +46,6 @@ class Post extends Model implements HasMedia, Likeable
         'thumbnail',
         'link',
         'has_comments',
-        'last_comments',
         'share_links'
     ];
 
@@ -161,22 +160,12 @@ class Post extends Model implements HasMedia, Likeable
 
     public function getHasCommentsAttribute()
     {
-        return $this->comments_count !== 0;
+        return $this->comments_count > 0;
     }
-
-    /*public function getCommentsCountAttribute()
-    {
-        return $this->comments()->count();
-    }*/
 
     public function getBaseCommentsAttribute()
     {
         return $this->comments()->where('parent_id', '=', null)->get();
-    }
-
-    public function getLastCommentsAttribute()
-    {
-        return $this->comments()->orderBy('id', 'desc')->take(3)->get();
     }
 
     public function getThumbnailAttribute()

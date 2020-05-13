@@ -32,6 +32,7 @@ class Handler extends ExceptionHandler
      *
      * @param \Exception $exception
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -43,12 +44,14 @@ class Handler extends ExceptionHandler
      *
      * @param \Illuminate\Http\Request $request
      * @param \Exception $exception
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws Exception
      */
     public function render($request, Exception $exception)
     {
         if ($this->isHttpException($exception)) {
-            if ($exception->getStatusCode() == 404 && Auth::check() && Auth::user()->is_admin) {
+            $isAdminRoute = strpos(request()->url(), 'admin') !== false;
+            if ($exception->getStatusCode() == 404 && $isAdminRoute && Auth::check() && Auth::user()->is_admin) {
                 return response()->view('admin.errors.404', [], 404);
             }
         }

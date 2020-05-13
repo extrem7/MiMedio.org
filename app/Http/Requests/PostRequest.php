@@ -31,7 +31,7 @@ class PostRequest extends FormRequest
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'body' => 'required|string',
-            'excerpt' => 'string|nullable',
+            'excerpt' => 'required|string',
             'image' => 'nullable|image|max:2048|mimes:jpg,jpeg,bmp,png',
             'status' => "in:$types|nullable",
         ];

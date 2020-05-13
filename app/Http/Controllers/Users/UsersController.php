@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
 
-use App\Models\Category;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\PostsService;
-use App\Services\SocialService;
 use Auth;
 use Butschster\Head\Contracts\MetaTags\MetaInterface;
-use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -46,11 +44,5 @@ class UsersController extends Controller
         $categoriesWithPosts = $this->postsService->getUserCategories($user);
 
         return view('users.show', compact('user', 'posts', 'shared', 'categoriesWithPosts'));
-    }
-
-    public function posts(User $user, int $page = 1)
-    {
-        $posts = $this->postsService->getPosts($user->posts(), $page);
-        return $posts;
     }
 }

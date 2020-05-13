@@ -29,8 +29,6 @@ class User extends Authenticatable implements HasMedia
         'name', 'email', 'provider', 'provider_id', 'password', 'slug', 'color', 'embed', 'saved_rss', 'link'
     ];
 
-    // protected $with = ['image'];
-
     protected $appends = ['has_password', 'link'];
 
     protected $hidden = [
@@ -122,7 +120,7 @@ class User extends Authenticatable implements HasMedia
     public function getLogo(string $size = ''): string
     {
         if ($this->logoImage !== null) {
-            return $this->logo->getUrl($size);
+            return $this->logoImage->getUrl($size);
         } else {
             return $this->getAvatar($size);
         }

@@ -2,7 +2,7 @@
     <div class="dropdown-menu dropdown-last-comment">
         <div class="semi-bold blue-color mb-2">Last Comments</div>
         <div class="last-comment">
-            @foreach($post->last_comments as $comment)
+            @foreach($post->comments as $comment)
                 <div class="last-comment-item">
                     <div class="d-flex align-items-center">
                         <div class="name title-nowrap">{{$comment->author->name}}</div>

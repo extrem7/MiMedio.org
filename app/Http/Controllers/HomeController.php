@@ -22,11 +22,6 @@ class HomeController extends Controller
         $this->postsService = new PostsService();
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index(RssService $rssService, MessengerService $messengerService)
     {
         $this->meta->prependTitle('Social network');
@@ -41,6 +36,8 @@ class HomeController extends Controller
                 $rss = $rssService->getForUser();
             }
 
+            Auth::user()->load('followings.avatarImage');
+
             $chats = $messengerService->getChats();
 
             $followings = Auth::user()->followings->map(function (User $user) {
@@ -52,13 +49,13 @@ class HomeController extends Controller
         return view('pages.home', compact('posts', 'rss', 'followings', 'chats'));
     }
 
-    public function posts(int $page = 1)
+    public function posts()
     {
-        $posts = $this->postsService->getHomeTimeLine($page);
+        $posts = $this->postsService->getHomeTimeLine();
         return $posts;
     }
 
-    public function messenger(User $user = null, MessengerService $messengerService)
+    public function messenger(MessengerService $messengerService, User $user = null)
     {
         $this->meta->prependTitle('Messenger');
 
