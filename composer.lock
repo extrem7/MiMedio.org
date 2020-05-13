@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a6074dc8f4acba336ef73ec85f9cecc",
+    "content-hash": "a7ac335bdd3dc4acee91780eded246ed",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -927,20 +927,20 @@
         },
         {
             "name": "inani/larapoll",
-            "version": "2.52",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/akiyamaSM/larapoll.git",
-                "reference": "9a2f779c5542bf48945e4233ba046dd29d584e52"
+                "reference": "ed6ea825bafc6fa6cc4d209f7265514859e0b2f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akiyamaSM/larapoll/zipball/9a2f779c5542bf48945e4233ba046dd29d584e52",
-                "reference": "9a2f779c5542bf48945e4233ba046dd29d584e52",
+                "url": "https://api.github.com/repos/akiyamaSM/larapoll/zipball/ed6ea825bafc6fa6cc4d209f7265514859e0b2f9",
+                "reference": "ed6ea825bafc6fa6cc4d209f7265514859e0b2f9",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "~5|~6"
+                "illuminate/support": "~5|~6|~7"
             },
             "require-dev": {
                 "fzaninotto/faker": "~1.4",
@@ -979,7 +979,7 @@
                 "polls",
                 "votes"
             ],
-            "time": "2019-11-11T16:03:47+00:00"
+            "time": "2020-05-06T11:34:32+00:00"
         },
         {
             "name": "intervention/image",

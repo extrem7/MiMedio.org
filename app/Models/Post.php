@@ -40,9 +40,9 @@ class Post extends Model implements HasMedia, Likeable
 
     protected $appends = [
         'date_dots',
-        'likes_count',
-        'dislikes_count',
-        'current_like',
+        //'likes_count',
+        //'dislikes_count',
+        //'current_like',
         'thumbnail',
         'link',
         'has_comments',
@@ -188,6 +188,17 @@ class Post extends Model implements HasMedia, Likeable
     public function getShareLinksAttribute()
     {
         return share_buttons($this->link);
+    }
+
+    public function toArray()
+    {
+        $fields = parent::toArray();
+        if ($this->relationLoaded('likesRaw')) {
+            $fields['likes_count'] = $this->likes_count;
+            $fields['dislikes_count'] = $this->dislikes_count;
+            $fields['current_like'] = $this->current_like;
+        }
+        return $fields;
     }
 
 }

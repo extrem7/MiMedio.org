@@ -89,19 +89,24 @@ class PostsService
 
     private function eagerLoad($relation)
     {
-        return $relation->with([
+        $relation->with([
             'author',
-            'author.followers',
-            'author.avatarImage',
-            'likesRaw',
             'image',
-            'comments' => function (Relation $query) {
-                $query->setEagerLoads([])
-                    ->with('author', 'likesRaw')
-                    ->orderByDesc('id')
-                    ->limit(3);
-            }
         ])->withCount('comments');
+        if (!(navIsRoute('users.show') || navIsRoute('users.show.posts'))) {
+            $relation->with([
+                'author.followers',
+                'author.avatarImage',
+                'likesRaw',
+                'comments' => function (Relation $query) {
+                    $query->setEagerLoads([])
+                        ->with('author', 'likesRaw')
+                        ->orderByDesc('id')
+                        ->limit(3);
+                }
+            ]);
+        }
+        return $relation;
     }
 
     public function perPage()
