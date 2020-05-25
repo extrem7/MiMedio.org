@@ -25,7 +25,7 @@ import MiShareModal from "./Messenger/MiShareModal"
 
 import ChannelsList from "./Channels/List"
 import ChannelItem from "./Channels/Item"
-import Poll from './Channels/Poll'
+import Poll from './Channel/Poll'
 
 import RssItem from "./Rss/Item"
 import RssFeedsList from "./Channel/RssFeedsList"

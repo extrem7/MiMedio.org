@@ -1,7 +1,7 @@
 <template>
     <div class="col-12 col-lg-8">
         <div class="row inline-blocks">
-            <post v-for="post in posts" class="col-md-6" :post="post" :key="post.id"></post>
+            <post v-for="post in posts" class="col-md-6 article-card card-lg" :post="post" :key="post.id"></post>
             <infinite-loading
                 :class="[direction==='right'?'loading-horizontal':'']"
                 :direction="direction"

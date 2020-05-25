@@ -12,7 +12,7 @@
     export default {
         mixins: [follow],
         props: {
-            initial_followers: Number
+            initial_followers: String
         },
         data() {
             return {
