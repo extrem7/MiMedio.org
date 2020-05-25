@@ -196,8 +196,8 @@ class User extends Authenticatable implements HasMedia
     {
         $attributes = parent::toArray();
         if (!navIsRoute('home')) {
-            if ($this->relationLoaded('avatarImage')) $attributes['avatar'] = $this->avatar;
-            if ($this->relationLoaded('logoImage')) $attributes['logo'] = $this->logo;
+            $attributes['avatar'] = $this->avatar;
+            $attributes['logo'] = $this->logo;
             if ($this->relationLoaded('followers')) $attributes['followers_count'] = $this->followers->count();
         }
         if ($this->relationLoaded('likesRaw')) {
