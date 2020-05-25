@@ -14,7 +14,7 @@ class Comment extends Model implements Likeable
 
     protected $fillable = ['user_id', 'post_id', 'parent_id', 'text'];
 
-    protected $with = ['author', 'children'];
+    protected $with = ['author'];
 
     protected $appends = ['date'];
 
@@ -45,8 +45,12 @@ class Comment extends Model implements Likeable
         $attributes['initial_likes'] = $this->likes_count;
         $attributes['initial_dislikes'] = $this->dislikes_count;
         $attributes['current_like'] = $this->current_like;
-        if ($this->children->count() == 0) {
-            $attributes['children'] = [];
+
+        if (navIsRoute('comments.index')) {
+            $attributes['children'] = $this->children;
+            if ($this->children->count() == 0) {
+                $attributes['children'] = [];
+            }
         }
 
         return $attributes;

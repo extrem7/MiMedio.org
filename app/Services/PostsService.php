@@ -106,6 +106,7 @@ class PostsService
             $relation->with([
                 'author.followers',
                 'author.avatarImage',
+                'author.logoImage',
                 'likesRaw',
                 'comments' => function (Relation $query) {
                     $query->setEagerLoads([])
