@@ -104,7 +104,6 @@ class PostsService
         ])->withCount('comments');
         if (!(navIsRoute('users.show') || navIsRoute('users.show.posts'))) {
             $relation->with([
-                'author.followers',
                 'author.avatarImage',
                 'author.logoImage',
                 'likesRaw',
@@ -115,6 +114,9 @@ class PostsService
                         ->limit(3);
                 }
             ]);
+        }
+        if (!navIsRoute('home')) {
+            $relation->with('author.followers');
         }
         return $relation;
     }
