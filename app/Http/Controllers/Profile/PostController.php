@@ -5,15 +5,14 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use App\Services\PostsService;
 use Auth;
-use Butschster\Head\Contracts\MetaTags\MetaInterface;
 
 class PostController extends Controller
 {
     private $postsService;
 
-    public function __construct(MetaInterface $meta)
+    public function __construct()
     {
-        parent::__construct($meta);
+        parent::__construct();
         $this->postsService = new PostsService();
     }
 

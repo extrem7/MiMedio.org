@@ -17,8 +17,8 @@
         </div>
         <div class="item">
             <user-follow-button :user_id="{{$channel->id}}"
-                                :initial_following="{{is_following($channel)}}"
-                                :initial_followers="{{$channel->followers_count}}"
+                                :initial_following="{{is_following($channel)?'true':'false'}}"
+                                :initial_followers="{{$channel->followers_count??0}}"
                 {{is_current_user($channel)?'disabled':''}}></user-follow-button>
         </div>
     </div>

@@ -14,15 +14,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::query()->delete();
-        User::create([
+        /*User::create([
             'name' => env('INITIAL_USER_NAME'),
             'email' => env('INITIAL_USER_EMAIL'),
             'password' => env('INITIAL_USER_PASSWORDHASH'),
             'is_admin' => true
         ]);
-
-        factory(User::class, 28)->create()->each(function (User $user) {
+*/
+        factory(User::class, 10)->create()->each(function (User $user) {
             $user->addMediaFromUrl('https://picsum.photos/320/200')
                 ->toMediaCollection('avatar');
             $user->playlist()->create([

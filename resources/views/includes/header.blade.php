@@ -11,7 +11,7 @@
                 <nav class="menu-container">
                     <ul class="menu">
                         <li><a href="{{route('home')}}">Home</a></li>
-                        <li><a href="{{route('users.index')}}">News Channels</a></li>
+                        <li><a href="{{route('users.index')}}">All Medias</a></li>
                     </ul>
                     <a href="{{route('posts.create')}}"
                        class="button btn-yellow b-lg sm-size mx-164 btn-transform d-block d-md-none">
@@ -29,8 +29,8 @@
             @auth
                 <nav class="d-none d-lg-block">
                     <ul class="menu">
-                        <li><a href="{{route('home')}}">Home</a></li>
-                        <li><a href="{{route('users.index')}}">Channels</a></li>
+                        <li><a href="{{Auth::user()->link}}">Mi media</a></li>
+                        <li><a href="{{route('users.index')}}">All Medias</a></li>
                     </ul>
                 </nav>
                 <div class="dropdown">

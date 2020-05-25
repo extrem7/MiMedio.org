@@ -1,9 +1,11 @@
 <template>
-    <div class="col-md-12 col-lg-8 message-wrapper justify-content-end">
-        <div class="swipe-back">
-            <div class="title-dark"><i class="fa fa-chevron-left mr-2"></i>Back to list users</div>
+    <div class="col-md-12 col-lg-8 message-wrapper justify-content-end" :class="{swipe:contact!==null}">
+        <div class="swipe-back" @click="$emit('swipe')">
+            <div class="title-dark"><i class="fa fa-chevron-left mr-2"></i>Back to list users
+                <span v-if="contact!==null" class="date-info ml-2">{{contact.last_seen}}</span>
+            </div>
         </div>
-        <MessagesFeed :contact="contact" :messages="messages"/>
+        <MessagesFeed v-if="contact" :contact="contact" :messages="messages"/>
         <MessageComposer @send="sendMessage"/>
     </div>
 </template>
@@ -35,7 +37,7 @@
                 }).then((response) => {
                     this.$emit('new', response.data);
                 })
-            }
+            },
         },
         components: {MessagesFeed, MessageComposer}
     }

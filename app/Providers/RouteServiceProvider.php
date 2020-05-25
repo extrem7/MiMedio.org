@@ -18,15 +18,6 @@ class RouteServiceProvider extends ServiceProvider
 
         parent::boot();
 
-        $this->app->booted(function () {
-            share([
-                'routes' => [
-                    'login' => route('login'),
-                    'register' => route('register')
-                ]
-            ]);
-        });
-
         Route::bind('post', function ($value) {
             return Post::where('slug', $value)
                 ->orWhere('id', $value)

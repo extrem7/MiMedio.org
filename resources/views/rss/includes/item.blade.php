@@ -21,7 +21,7 @@
                                class="article-title title-line-cap">{{$post->title}}</a>
                         </div>
                         <div
-                            class="title-dark extra-small-size date">{{Carbon::parse($post->date)->format('h:s')}}</div>
+                            class="title-dark extra-small-size date">{{Carbon::parse($post->date)->format('H:s')}}</div>
                     </div>
                 </div>
                 <div id="article-{{$post->id}}" class="collapse"

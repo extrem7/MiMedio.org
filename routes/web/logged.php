@@ -55,14 +55,15 @@ Route::post('/user/{user}/follow', 'Users\FollowingsController')
     ->middleware('not.self');
 
 Route::group([
-    'prefix' => '/rss/{id}',
+    'prefix' => '/rss',
     'as' => 'rss.'
 ], function () {
-    Route::post('/add', 'RssController@add')->name('add');
-    Route::delete('/remove', 'RssController@remove')->name('remove');
+    Route::post('/{id}/toggle', 'RssController@toggle')->name('toggle');
+    Route::post('/sort', 'RssController@sort')->name('sort');
 });
 
 Route::get('/messenger/{user?}', 'HomeController@messenger')->name('messenger');
 Route::get('/contacts', 'ContactsController@get');
 Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
 Route::post('/conversation/send', 'ContactsController@send');
+Route::post('/conversation/{user}/share', 'ContactsController@share')->name('messenger.share');

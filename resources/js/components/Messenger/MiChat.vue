@@ -1,7 +1,7 @@
 <template>
     <div class="row messenger w-100">
         <ContactsList v-if="contacts.length" :contacts="contacts" :user="user" @selected="startConversationWith"/>
-        <Conversation :contact="selectedContact" :messages="messages" @new="saveNewMessage"/>
+        <Conversation :contact="selectedContact" :messages="messages" @new="saveNewMessage" @swipe="swipe"/>
     </div>
 </template>
 
@@ -29,7 +29,7 @@
             };
         },
         mounted() {
-            Echo.private(`messages.${this.user.id}`)
+            this.$echo.private(`messages.${this.user.id}`)
                 .listen('NewMessage', (e) => {
                     this.handleIncoming(e.message);
                 });
@@ -45,23 +45,32 @@
 
                 this.axios.get(`/conversation/${contact.id}`)
                     .then((response) => {
-                        this.messages = response.data;
-                        this.selectedContact = contact;
+                        this.messages = response.data
+                        window.history.replaceState(null, null, this.route('messenger', contact.id))
+                        this.selectedContact = contact
                     })
             },
             saveNewMessage(message) {
                 this.messages.push(message)
-                this.contacts.find((contact) => {
+                let sender = this.contacts.find((contact) => {
                     return [message.to, message.from].includes(contact.id)
-                }).last = message
+                })
+                sender.last = message
             },
             handleIncoming(message) {
                 if (this.selectedContact && message.from == this.selectedContact.id) {
                     this.saveNewMessage(message);
                     return;
                 }
+                console.log(this.contacts.findIndex(({id}) => message.from === id))
+                if (this.contacts.findIndex(({id}) => message.from === id)) {
+                    console.log('new contact')
+                    const sender = message.from_contact
+                    sender.last = message
+                    this.contacts.push(sender)
+                }
 
-                this.updateUnreadCount(message.from_contact, false);
+                this.updateUnreadCount(message.from_contact, false)
             },
             updateUnreadCount(contact, reset) {
                 this.contacts = this.contacts.map((single) => {
@@ -76,6 +85,9 @@
 
                     return single;
                 })
+            },
+            swipe() {
+                this.selectedContact = null
             }
         },
         created() {

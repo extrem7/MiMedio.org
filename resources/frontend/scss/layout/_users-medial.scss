@@ -170,6 +170,11 @@
       border-radius: 50%;
     }
   }
+  &.two-column {
+    .profile-box .name {
+      max-width: 180px;
+    }
+  }
 }
 
 .channel-others-users {
@@ -219,6 +224,93 @@
  }
   .delete-icon {
     margin-left: 15px;
+  }
+}
+
+.rss-categories {
+  padding: 0;
+  max-width: 365px;
+  li {
+    display: flex;
+    border: 1px solid #e8e8e8;
+    border-bottom: 0;
+    &:nth-child(even) {
+      background-color: #fcfcfc;
+    }
+    &:last-child {
+      border-bottom: 1px solid #e8e8e8;
+    }
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    &:nth-child(2),
+    &:last-child {
+      border-left: 1px solid #e8e8e8;
+    }
+    &:first-child {
+      padding-right: 2px;
+    }
+    &:nth-child(2) {
+      flex: 1 1 100%;
+    }
+  }
+  .custom-control {
+    min-height: auto;
+  }
+  .custom-control-label {
+    height: 22px;
+  }
+  .rss-drag {
+    cursor: pointer;
+  }
+}
+
+
+@media (min-width: 1199px) {
+  .following-box {
+    .channel-info-box {
+      .item {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .profile-box {
+        .name {
+          max-width: 180px;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .following-box {
+    &.vertical-scroll {
+      max-height: 200px;
+    }
+    .channel-info-box {
+      .item {
+        & + .item {
+          max-width: 109px;
+        }
+      }
+      .profile-box {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .following-box {
+    .channel-info-box {
+      .profile-box {
+        .name {
+          max-width: 125px;
+        }
+      }
+    }
   }
 }
 
@@ -272,6 +364,17 @@
       display: none;
     }
   }
+  .following-mobile-box {
+    display: flex;
+    flex-wrap: wrap;
+    .channel-info-box {
+      width: calc(50% - 4px);
+      margin-top: 8px;
+      &:nth-child(even) {
+        margin-left: 8px;
+      }
+    }
+  }
 
   .repeater-video {
     flex-wrap: wrap;
@@ -289,7 +392,6 @@
 }
 
 @media (max-width: 767px) {
-
   .box-rounded.form-wrapper {
     padding: 10px;
   }
@@ -298,7 +400,7 @@
     max-width: 89px;
   }
 
- .my-own-media {
+  .my-own-media {
    .main-media {
      .article-mini-card {
        margin-top: 20px;
@@ -314,3 +416,15 @@
     margin-top: 20px;
   }
 }
+
+@media (max-width: 575px) {
+  .channels-category {
+    .item.category-name {
+      min-width: 130px;
+    }
+    .title-dark {
+      font-size: 13px;
+    }
+  }
+}
+

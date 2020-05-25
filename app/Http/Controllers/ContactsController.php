@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Message;
@@ -35,18 +36,15 @@ class ContactsController extends Controller
 
     public function getMessagesFor($id)
     {
-        // mark all messages with the selected contact as read
         Message::where('from', $id)->where('to', auth()->id())->update(['read' => true]);
 
-        // get all messages between the authenticated user and the selected user
         $messages = Message::where(function ($q) use ($id) {
             $q->where('from', auth()->id());
             $q->where('to', $id);
         })->orWhere(function ($q) use ($id) {
             $q->where('from', $id);
             $q->where('to', auth()->id());
-        })
-            ->get();
+        })->get();
 
         return response()->json($messages);
     }
@@ -62,5 +60,27 @@ class ContactsController extends Controller
         broadcast(new NewMessage($message));
 
         return response()->json($message);
+    }
+
+    public function share(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'post_id' => ['required', 'exists:posts,id']
+        ]);
+
+        $post = Post::find($request->post_id);
+        $link = "See: $post->title $post->link";
+
+        /* @var $message Message */
+        $message = \Auth::getUser()->messages()->create([
+            'to' => $user->id,
+            'text' => $link
+        ]);
+
+        broadcast(new NewMessage($message));
+
+        return response()->json([
+            'status' => 'ok'
+        ], 201);
     }
 }

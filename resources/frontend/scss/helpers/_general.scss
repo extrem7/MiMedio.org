@@ -565,9 +565,21 @@
 
 .modal-header .close {
   opacity: 1;
-  padding: 0;
-  margin: 0;
+  padding: 10px;
+  margin: -10px -10px -10px auto;
 }
+
+.toast-header,
+.toast {
+  color: #626262;
+  background-color: rgb(220, 234, 243);
+  .close {
+    font-weight: 400;
+    color: #444;
+    opacity: 1;
+  }
+}
+
 
 @media (max-width: 1199px) {
   .dynamic-content h2,

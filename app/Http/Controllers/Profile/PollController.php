@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PollRequest;
+use App\Services\PollsService;
 use Auth;
 use Illuminate\Http\Request;
-use Inani\Larapoll\Option;
-use Inani\Larapoll\Poll;
+use App\Models\Polls\Poll;
 
 class PollController extends Controller
 {
@@ -25,7 +25,6 @@ class PollController extends Controller
 
     public function store(PollRequest $request)
     {
-
         $user = Auth::user();
         $data = $request->all();
 
@@ -61,18 +60,24 @@ class PollController extends Controller
         return redirect()->back();
     }
 
-    public function vote(Poll $poll, Request $request)
+    public function vote(PollsService $pollsService, Poll $poll, Request $request)
     {
         $this->validate($request, [
-            'options' => 'required|int|exists:larapoll_options,id'
+            'option' => 'required|exists:larapoll_options,id'
         ]);
 
         $user = Auth::getUser();
 
-        $option = Option::findOrFail($request->get('options'));
+        $option = $poll->options->first(function ($item) use ($request) {
+            return $item->id == $request->get('option');
+        });
+
         $user->poll($poll)->vote($option->id);
         $option->updateTotalVotes();
 
-        return redirect()->back();
+        return response()->json([
+            'status' => 'ok',
+            'answers' => $pollsService->getAnswers($poll)
+        ]);
     }
 }

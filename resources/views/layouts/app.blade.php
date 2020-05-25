@@ -14,9 +14,15 @@
         @yield('content')
     </main>
     @include('includes.footer')
-    <error></error>
+    <comments-modal></comments-modal>
+    <alert></alert>
+    @auth
+        <mi-chat-notifications v-if="!route().current('messenger')"></mi-chat-notifications>
+        <mi-share-modal></mi-share-modal>
+    @endauth
 </div>
 @shared
+@routes
 <script src="{{mix('assets/js/main.js')}}"></script>
 <script src="{{mix('assets/js/app.js')}}"></script>
 @stack('scripts')

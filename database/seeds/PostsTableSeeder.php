@@ -16,7 +16,7 @@ class PostsTableSeeder extends Seeder
     public function run()
     {
         $users = User::take(5)->get();
-        factory(Post::class, 1500)->create()->each(function (Post $post) use ($users) {
+        factory(Post::class, (int)env('POSTS_SEEDER_COUNT', 250))->create()->each(function (Post $post) use ($users) {
             $users->each(function (User $user) use ($post) {
                 $post->likesRaw()->create([
                     'user_id' => $user->id,

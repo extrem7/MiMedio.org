@@ -14,7 +14,10 @@
                 <a :href="post.link" class="article-title title-line-cap">{{post.title}}</a>
             </div>
         </div>
-        <infinite-loading @infinite="load">
+        <infinite-loading
+            :class="[direction==='right'?'loading-horizontal':'']"
+            :direction="direction"
+            @infinite="load">
             <div slot="no-more"></div>
             <div slot="no-results"></div>
         </infinite-loading>
@@ -22,21 +25,19 @@
 </template>
 
 <script>
-    import InfiniteLoading from 'vue-infinite-loading'
+    import InfiniteLoading from "~/components/Includes/InfiniteLoadingExtra"
 
     export default {
         props: {
             user_id: Number,
             initial_posts: Object
         },
-        components: {
-            InfiniteLoading,
-        },
         data() {
             return {
                 posts: [],
                 page: 1,
-                lastPage: 1
+                lastPage: 1,
+                direction: window.innerWidth > 767 ? 'bottom' : 'right'
             }
         },
         methods: {
@@ -58,6 +59,21 @@
         created() {
             this.posts = this.initial_posts.data
             this.lastPage = this.initial_posts.last_page
-        }
+        },
+        components: {
+            InfiniteLoading,
+        },
     }
 </script>
+
+<style lang="scss" scoped>
+    .infinite-status-prompt {
+        display: block !important;
+    }
+
+    .infinite-loading-container.loading-horizontal {
+        padding: 0 50px;
+        display: flex;
+        align-items: center;
+    }
+</style>

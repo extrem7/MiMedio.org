@@ -33,6 +33,7 @@ class SocialController extends Controller
                 'provider_id' => $userSocial->getId(),
                 'provider' => $provider,
             ]);
+
             if ($avatar = $userSocial->getAvatar()) {
                 $user->addMediaFromUrl($avatar)->toMediaCollection('avatar');
             }

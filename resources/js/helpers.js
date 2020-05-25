@@ -28,3 +28,17 @@ export function copyTextToClipboard(text, callback = null) {
         console.error('Async: Could not copy text: ', err)
     })
 }
+
+export function createTextLinks(text) {
+
+    return (text || "").replace(
+        /([^\S]|^)(((https?\:\/\/)|(www\.))(\S+))/gi,
+        function(match, space, url){
+            var hyperlink = url;
+            if (!hyperlink.match('^https?:\/\/')) {
+                hyperlink = 'http://' + hyperlink;
+            }
+            return space + '<a href="' + hyperlink + '">' + url + '</a>';
+        }
+    );
+};

@@ -5,35 +5,41 @@ namespace App\Http\Controllers\Users;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\PostsService;
-use Auth;
-use Butschster\Head\Contracts\MetaTags\MetaInterface;
+use App\Services\RssFeedsService;
+use App\Services\RssService;
 
 class UsersController extends Controller
 {
     private $postsService;
 
-    public function __construct(MetaInterface $meta)
+    public function __construct()
     {
-        parent::__construct($meta);
+        parent::__construct();
         $this->postsService = new PostsService();
     }
 
-    public function index(int $page = 1)
+    public function index()
     {
-        $this->meta->prependTitle('Channels');
-
-        $user = Auth::user();
-        $users = User::withCount(['posts', 'followers', 'shares'])
+        $channels = User::withCount(['posts', 'followers', 'shares'])
             ->with('avatarImage', 'logoImage', 'likesRaw')
             ->orderBy('followers_count', 'desc')
-            ->paginateUri($this->postsService->perPage(), $page);
+            ->paginate($this->postsService->perPage());
 
-        return view('users.index', compact('user', 'users'));
+        if (request()->expectsJson()) return $channels;
+
+        share([
+            'channels' => $channels
+        ]);
+
+        $this->meta->prependTitle('Channels');
+
+        return view('users.index');
     }
 
-    public function show(User $user)
+    public function show(User $user, RssService $rssService, RssFeedsService $rssFeedsService)
     {
         $user->loadCount('followers');
+        $channel = $user->channel;
 
         $this->meta->prependTitle($user->name);
 
@@ -43,6 +49,20 @@ class UsersController extends Controller
 
         $categoriesWithPosts = $this->postsService->getUserCategories($user);
 
-        return view('users.show', compact('user', 'posts', 'shared', 'categoriesWithPosts'));
+        $rssFeeds = $rssFeedsService->getActive($channel);
+
+        $savedRss = $rssService->getForUser($user);
+
+        $randomFollowing = $user->followings()->limit(1)->inRandomOrder()->with(['posts' => function ($query) {
+            $query->published()->limit(5)->with('author', 'author.avatarImage', 'author.logoImage');
+        }])->first();
+
+        share([
+            'rssFeeds' => $rssFeeds,
+            'savedRss' => $savedRss->isNotEmpty() ? $savedRss->random() : null,
+            'randomFollowing' => $randomFollowing
+        ]);
+
+        return view('users.show', compact('user', 'channel', 'posts', 'shared', 'categoriesWithPosts'));
     }
 }

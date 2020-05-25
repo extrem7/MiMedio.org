@@ -13,18 +13,21 @@ class PostsService
     {
         if ($relation == null) {
             $relation = Post::published();
+        } elseif (!navIsRoute('profile.posts.index')) {
+            $relation = $relation->published();
         }
 
         $relation = $this->eagerLoad($relation);
 
         if ($paginate === true) {
-            $page = request()->route()->parameters()['page'] ?? 1;
+            $page = request()->get('page') ?? 1;
             $per_page = $this->perPage();
-            $posts = $relation->paginateUri($per_page, $page);
+            $posts = $relation->paginate($per_page, $page);
             if ($posts->count() === 0 && navIsRoute('profile.posts.index')) abort(404);
         } else {
             return $relation->get();
         }
+
         return $posts;
     }
 
@@ -52,6 +55,12 @@ class PostsService
 
     public function getUserCategories(User $user, bool $eagerLoad = true)
     {
+        $c = Category::whereHas('posts', function ($query) use ($user) {
+            return $query->published()->whereUserId($user->id);
+        })->with(['posts' => function ($query) use ($user) {
+            $query->published()->whereUserId($user->id)->limit(6);
+        }])->get();
+
         $categories = Category::all();
         $query = null;
         $categoriesWithPosts = [];

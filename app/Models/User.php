@@ -6,6 +6,7 @@ use App\Traits\FollowableTrait;
 use App\Traits\LikeableTrait;
 use App\Traits\PaginateTrait;
 use Cache;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,21 +25,33 @@ class User extends Authenticatable implements HasMedia
     use LikeableTrait;
     use Voter;
 
+    protected $fillable = ['name', 'email', 'slug', 'provider', 'provider_id', 'password'];
 
-    protected $fillable = [
-        'name', 'email', 'provider', 'provider_id', 'password', 'slug', 'color', 'embed', 'saved_rss', 'link'
-    ];
-
-    protected $appends = ['has_password', 'link'];
+    protected $appends = ['has_password', 'link', 'last_seen', 'is_online', 'is_following'];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'embed' => 'json'
+        'email_verified_at' => 'datetime'
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        static::created(function (self $user) {
+            $user->channel()->create([
+                'saved_rss' => [],
+                'rss_feeds' => []
+            ]);
+        });
+    }
+
+    public function channel()
+    {
+        return $this->hasOne(Channel::class);
+    }
 
     public function posts()
     {
@@ -95,8 +108,8 @@ class User extends Authenticatable implements HasMedia
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('icon')
-            ->width(68)
-            ->height(68)
+            ->width(200)
+            ->height(200)
             ->sharpen(0);
     }
 
@@ -156,10 +169,27 @@ class User extends Authenticatable implements HasMedia
         return route('users.show', $this->slug ?? $this->id);
     }
 
-    public function getSavedMediaRssAttribute()
+    public function getLastActivityAttribute()
     {
-        $items = $this->saved_rss ? explode(',', $this->saved_rss) : [];
-        return collect($items);
+        return Cache::get("user-$this->id-last-activity");
+    }
+
+    public function getLastSeenAttribute()
+    {
+        return 'Last seen ' . ($this->last_activity !== null ? Carbon::parse($this->last_activity)->diffForHumans() : 'a long time ago');
+    }
+
+    public function getIsOnlineAttribute()
+    {
+        if ($this->last_activity) {
+            return Carbon::parse($this->last_activity)->diffInMinutes() < 5;
+        }
+        return false;
+    }
+
+    public function getIsFollowingAttribute()
+    {
+        return is_following($this);
     }
 
     public function toArray()
@@ -167,6 +197,9 @@ class User extends Authenticatable implements HasMedia
         $attributes = parent::toArray();
 
         $attributes['avatar'] = $this->avatar;
+        $attributes['logo'] = $this->getLogo();
+        $attributes['likes_count'] = $this->likes_count;
+        $attributes['dislikes_count'] = $this->dislikes_count;
 
         return $attributes;
     }

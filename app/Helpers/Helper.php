@@ -61,9 +61,9 @@ function share_buttons(string $link): string
 function is_following(User $user): string
 {
     if (Auth::check()) {
-        return Auth::getUser()->isFollowing($user) ? 'true' : 'false';
+        return Auth::getUser()->isFollowing($user);
     }
-    return 'false';
+    return false;
 }
 
 function is_current_user(User $user): bool

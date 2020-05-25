@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="col-12 col-lg-4">
-        <div class="box-shadow-content channel-info-box mt-4 mt-lg-0">
+        <div class="box-shadow-content channel-info-box two-column mt-4 mt-lg-0">
             <div class="item">
                 <a href="{{$user->link}}" class="profile-box">
                     <img src="{{$user->avatar}}" alt="{{$user->name}}">

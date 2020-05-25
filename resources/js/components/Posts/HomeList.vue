@@ -1,7 +1,10 @@
 <template>
     <div class="main-h-news inline-blocks vertical-scroll pr-1">
         <post v-for="post in posts" :post="post" :key="post.id"></post>
-        <infinite-loading @infinite="load">
+        <infinite-loading
+            :class="[direction==='right'?'loading-horizontal':'']"
+            :direction="direction"
+            @infinite="load">
             <div slot="no-more"></div>
             <div slot="no-results"></div>
         </infinite-loading>
@@ -10,21 +13,16 @@
 
 <script>
     import Post from "./Post"
-    import InfiniteLoading from 'vue-infinite-loading'
+    import InfiniteLoading from "~/components/Includes/InfiniteLoadingExtra"
 
     export default {
-        props: {
-            initial_posts: Object
-        },
-        components: {
-            Post,
-            InfiniteLoading,
-        },
         data() {
+            const posts = this.shared('posts')
             return {
-                posts: [],
+                posts: posts.data || [],
                 page: 1,
-                lastPage: 1
+                lastPage: posts.last_page || 1,
+                direction: window.innerWidth > 767 ? 'bottom' : 'right'
             }
         },
         methods: {
@@ -32,7 +30,11 @@
                 if (this.page < this.lastPage) {
                     this.page += 1
                     try {
-                        const response = await this.axios.get(`/home/posts/${this.page}`)
+                        const response = await this.axios.get('', {
+                            params: {
+                                page: this.page
+                            }
+                        })
                         this.posts = this.posts.concat(response.data.data)
                         $state.loaded()
                     } catch (e) {
@@ -43,9 +45,21 @@
                 }
             },
         },
-        created() {
-            this.posts = this.initial_posts.data
-            this.lastPage = this.initial_posts.last_page
-        }
+        components: {
+            Post,
+            InfiniteLoading,
+        },
     }
 </script>
+
+<style lang="scss" scoped>
+    .infinite-status-prompt {
+        display: block !important;
+    }
+
+    .infinite-loading-container.loading-horizontal {
+        padding: 0 50px;
+        display: flex;
+        align-items: center;
+    }
+</style>

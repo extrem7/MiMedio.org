@@ -20,6 +20,7 @@
     align-items: center;
     transition: box-shadow .3s ease-in-out;
     &:hover {
+      background-color: #f8f8f8;
       box-shadow: 0 5px 10px rgba(219, 219, 219, 0.51), inset 0 0 0 rgba(255, 255, 255, 0.44);
       .avatar {
         background-color: $blue;
@@ -48,6 +49,7 @@
       background-color: #f8f8f8;
       padding: 17px 10px 17px 33px;
       margin-left: -23px;
+      width: 100%;
     }
     .name {
       color: #444444;
@@ -63,6 +65,7 @@
       -webkit-line-clamp: 2;
       max-height: 36px;
       color: #626262;
+      overflow-wrap: anywhere;
     }
     .avatar {
       width: 102px;
@@ -83,6 +86,52 @@
         object-fit: cover;
       }
     }
+  }
+}
+
+.modal-send-message {
+  .modal-body,
+  .modal-content {
+    padding: 0;
+    border: 0;
+  }
+  .modal-content {
+    border-radius: 3px;
+  }
+  .chat-list-sidebar {
+    .box-rounded:not(.see-more) {
+      max-height: 484px;
+    }
+    .chat-item {
+      .avatar {
+        width: 62px;
+        height: 62px;
+        img {
+          width: 51px;
+          height: 51px;
+        }
+      }
+      &.active {
+        background-color: $blue;
+        .name,
+        .silver-color {
+          color: #fff;
+        }
+        .avatar,
+        .chat-info {
+          background-color: $blue;
+        }
+      }
+      & + .chat-item {
+        margin-top: 5px;
+      }
+    }
+  }
+  .close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 999;
   }
 }
 
@@ -263,6 +312,15 @@
   }
 }
 
+.last-seen {
+  position: absolute;
+  top: 0;
+  padding: 10px;
+  left: 0;
+  background: #f7f7f7;
+  width: 100%;
+}
+
 @media (max-width: 1199px) {
   .chat-list-sidebar {
     .chat-item {
@@ -303,7 +361,6 @@
   .messenger {
     overflow: hidden;
   }
-
 
   .messenger-page {
     .content {
@@ -356,6 +413,10 @@
     }
   }
 
+  .last-seen {
+    display: none;
+  }
+
   .contact-list {
     margin-right: 0;
     li {
@@ -371,7 +432,6 @@
       }
     }
   }
-
 
 }
 

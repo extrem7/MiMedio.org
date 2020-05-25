@@ -22,11 +22,13 @@
         "laravel/framework": "^6.2",
         "laravel/scout": "^8.0",
         "laravel/socialite": "^4.3",
+        "laravel/telescope": "^3.5",
         "laravel/tinker": "^1.0",
         "pusher/pusher-php-server": "^4.1",
         "qcod/laravel-app-settings": "^1.2",
         "spatie/laravel-medialibrary": "^7.0.0",
-        "staudenmeir/eloquent-eager-limit": "^1.0"
+        "staudenmeir/eloquent-eager-limit": "^1.0",
+        "tightenco/ziggy": "^0.9.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

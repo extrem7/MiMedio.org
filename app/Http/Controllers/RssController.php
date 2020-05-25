@@ -3,60 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Services\RssService;
-use Butschster\Head\Contracts\MetaTags\MetaInterface;
+use Illuminate\Http\Request;
 
 class RssController extends Controller
 {
     private $rssService;
 
-    public function __construct(MetaInterface $meta)
+    public function __construct()
     {
-        parent::__construct($meta);
+        parent::__construct();
         $this->rssService = new RssService();
     }
 
-    public function index(RssService $rssService)
+    public function index()
     {
         $this->meta->prependTitle('News from RedMedial');
-        $items = $this->rssService->get();
 
-        return view('rss.index', compact('items'));
+        $rssItems = $this->rssService->get();
+        share(compact('rssItems'));
+
+        return view('rss.index', compact('rssItems'));
     }
 
-    public function add(int $id)
+    public function toggle(int $id)
     {
-        $items = $this->rssService->get();
-        foreach ($items as $item) {
-            if ($item->id == $id) {
-                $user = \Auth::user();
-                $saved = $user->saved_media_rss;
-                if ($saved->count() >= 2) return back()->with('error', 'You can add no more than two medias');
-                if (!$saved->contains($id))
-                    $saved[] = $id;
-                $user->fill(['saved_rss' => $saved->implode(',')]);
-                $user->save();
-                return back();
-            }
+        if (!\Auth::getUser()->channel->saved_rss->contains($id)) {
+            return $this->rssService->save($id);
+        } else {
+            return $this->rssService->remove($id);
         }
-        return back()->with('error', 'Good joke');
     }
 
-    public function remove(int $id)
+    public function sort(Request $request)
     {
-        $items = $this->rssService->get();
-        foreach ($items as $item) {
-            if ($item->id == $id) {
-                $user = \Auth::user();
-                $saved = $user->saved_media_rss;
-
-                if ($saved->contains($id))
-                    $saved->forget($saved->search($id));
-
-                $user->fill(['saved_rss' => $saved->implode(',')]);
-                $user->save();
-                return back();
-            }
-        }
-        return back()->with('error', 'Good joke');
+        $this->validate($request, [
+            'order' => ['required', 'array'],
+            'order.*' => ['numeric']
+        ]);
+        session(['rss-order' => $request->get('order')]);
+        return response()->json();
     }
 }

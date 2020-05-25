@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Middleware\Draft;
+
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/home/posts/{page?}', 'HomeController@posts')->name('home.posts');
 
 Route::get('/join-with-us', 'Auth\LoginController@join')->name('join');
 
@@ -15,11 +16,13 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::namespace('Posts')->group(function () {
-    Route::get('/posts{page?}', 'PostsController@index')->name('posts');
+    Route::get('/posts/{page?}', 'PostsController@index')->name('posts');
     Route::get('/search', 'SearchController')->name('search');
     Route::get('/post/{post}/comments', 'CommentsController@index')->name('comments.index');
     Route::get('/posts/{page?}', 'PostsController@index')->name('posts.index');
-    Route::get('/channel/{user}/post/{slug}', 'PostsController@show')->name('posts.show');
+    Route::get('/channel/{user}/post/{post}', 'PostsController@show')
+        ->name('posts.show')
+        ->middleware(Draft::class);
 
     Route::get('/category/{category}/{page?}', 'CategoriesController@show')->name('categories.show');
 });

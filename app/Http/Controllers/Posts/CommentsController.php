@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Services\LikesService;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class CommentsController extends Controller
 {
@@ -30,13 +31,19 @@ class CommentsController extends Controller
             'reply' => 'nullable|exists:comments,id'
         ]);
 
-        $user_id = Auth::getUser()->id;
-
         $data = [
-            'user_id' => Auth::getUser()->id,
+            'user_id' => auth()->id(),
             'text' => $request->input('text')
         ];
-        if ($request->has('reply')) $data['parent_id'] = $request->input('reply');
+        if ($request->has('reply')) {
+            $data['parent_id'] = $request->input('reply');
+
+            if ($data['parent_id'] !== null && !$post->comments->contains($request->has('reply'))) {
+                throw ValidationException::withMessages([
+                    'reply' => 'Provide real reply to.',
+                ]);
+            }
+        }
 
         $comment = $post->comments()->create($data);
         $comment->author = Auth::getUser();
@@ -44,7 +51,7 @@ class CommentsController extends Controller
         return response()->json([
             'status' => 'ok',
             'comment' => $comment,
-        ]);
+        ], 201);
     }
 
     public function like(int $comment, LikesService $likesService)

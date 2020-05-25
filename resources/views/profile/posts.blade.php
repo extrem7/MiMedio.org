@@ -12,5 +12,5 @@
             @include('profile.includes.post',['class'=>'col-md-6','edit'=>true,'showComments'=>true])
         @endforeach
     </div>
-    {!!$posts->linksUri!!}
+    {!!$posts->links()!!}
 @endsection

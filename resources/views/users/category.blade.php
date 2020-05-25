@@ -5,17 +5,11 @@
 @extends('layouts.app')
 
 @include('users.includes.custom-color')
+
 @section('content')
     @include('users.includes.header')
     <div class="row">
-        <div class="col-12 col-lg-8">
-            <div class="row inline-blocks">
-                @foreach($posts as $post)
-                    @include('users.includes.post-in-category')
-                @endforeach
-            </div>
-            {!!$posts->linksUri!!}
-        </div>
+        <user-category-list></user-category-list>
         @include('users.includes.sidebar')
     </div>
 @endsection

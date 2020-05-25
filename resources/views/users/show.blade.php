@@ -49,7 +49,7 @@
             @foreach($categoriesWithPosts as $category)
                 <section class="category-own-media mt-3 mt-md-5">
                     <div class="d-flex slider-header justify-content-between align-items-center">
-                        <div class="title-semi-bold blue-color medium-size">{{$category->name}} news feed</div>
+                        <div class="title-semi-bold blue-color medium-size">{{$category->name}} news</div>
                         <div class="d-flex slide-panel">
                             <button class="button btn-silver-light slide-prev"><i class="fas fa-chevron-left"></i>
                             </button>
@@ -72,6 +72,7 @@
                     </div>
                 </section>
             @endforeach
+            <rss-feeds-list></rss-feeds-list>
         </div>
         @include('users.includes.sidebar')
     </div>
@@ -79,5 +80,6 @@
 @push('scripts')
     <script async defer crossorigin="anonymous"
             src="https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v6.0&appId=2267874190154020&autoLogAppEvents=1"></script>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script async defer src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script async defer src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
 @endpush

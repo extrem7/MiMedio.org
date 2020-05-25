@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('slug')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_banned')->default(false);
             $table->string('provider')->nullable();
@@ -24,12 +25,6 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
-
-            $table->string('slug')->nullable();
-            $table->char('color', 6)->nullable();
-            $table->json('embed')->nullable();
-
-            $table->string('saved_rss')->nullable();
 
             $table->timestamps();
         });
@@ -42,8 +37,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('users');
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

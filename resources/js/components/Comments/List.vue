@@ -5,7 +5,7 @@
         </div>
         <div class="box-rounded up-to-top border-top-0" :class="{'pt-0':this.comments.length}">
             <transition-group appear name="comments-transition" tag="ul" class="comment-list" v-if="comments.length">
-                <item v-for="(comment,i) in comments" :comment="comment" :key="comment.id"></item>
+                <comment v-for="(comment,i) in comments" :comment="comment" :key="comment.id"></comment>
             </transition-group>
             <form @submit.prevent="send" class="submit-comment">
                 <textarea v-model="text" rows="3" class="control-form" required></textarea>
@@ -16,23 +16,18 @@
 </template>
 
 <script>
-    import Item from "./Item"
-    import {CLEAR_REPLY_TO} from "../../store/modules/comments/mutation-types"
+    import Comment from "./Item"
 
     export default {
         props: {
             post_id: Number,
             initial_count: Number
         },
-        components: {
-            Item
-        },
         data() {
             return {
                 comments: [],
                 commentsCount: null,
                 text: '',
-                reply: null
             }
         },
         computed: {
@@ -46,47 +41,37 @@
         },
         methods: {
             async send() {
-                try {
-                    const {data} = await this.axios.post(`/post/${this.post_id}/comment`, {
-                        text: this.text,
-                        reply: this.$store.state.comments.replyTo
-                    })
-                    if (data.status === 'ok') {
-                        this.text = ''
-                        this.$store.commit(CLEAR_REPLY_TO)
+                const comment = await this.$store.dispatch('comments/store', {
+                    post_id: this.post_id,
+                    text: this.text,
+                })
+                this.text = ''
 
-                        this.commentsCount++
-                        const {comment} = data
-                        const {parent_id} = comment
-                        comment.children = []
-                        if (parent_id) {
-                            let parent = null
+                this.commentsCount++
+                const {parent_id} = comment
+                comment.children = []
+                if (parent_id) {
+                    let parent = null
 
-                            function findParent(comment) {
-                                console.log(comment.id, parent_id, comment.id == parent_id)
-                                if (comment.id == parent_id) {
-                                    parent = comment
-                                } else {
-                                    comment.children.forEach(findParent)
-                                }
-                            }
-
-                            this.comments.forEach(findParent)
-                            parent.children.push(comment)
+                    function findParent(comment) {
+                        console.log(comment.id, parent_id, comment.id == parent_id)
+                        if (comment.id == parent_id) {
+                            parent = comment
                         } else {
-                            this.comments.push(data.comment)
+                            comment.children.forEach(findParent)
                         }
                     }
 
-                } catch (e) {
-
+                    this.comments.forEach(findParent)
+                    parent.children.push(comment)
+                } else {
+                    this.comments.push(comment)
                 }
             },
         },
         async created() {
             try {
                 const {data} = await this.axios.get(`/post/${this.post_id}/comments`)
-                console.log(typeof data.comments)
                 if (typeof data.comments == 'object') {
                     this.comments = Object.values(data.comments)
                 } else {
@@ -96,6 +81,9 @@
             } catch (e) {
 
             }
+        },
+        components: {
+            Comment
         }
     }
 </script>

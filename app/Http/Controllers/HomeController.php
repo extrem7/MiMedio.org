@@ -9,30 +9,31 @@ use App\Services\MessengerService;
 use App\Services\PostsService;
 use App\Services\RssService;
 use Auth;
-use Butschster\Head\Contracts\MetaTags\MetaInterface;
-use Carbon\Carbon;
 
 class HomeController extends Controller
 {
     private $postsService;
 
-    public function __construct(MetaInterface $meta)
+    public function __construct()
     {
-        parent::__construct($meta);
+        parent::__construct();
         $this->postsService = new PostsService();
     }
 
     public function index(RssService $rssService, MessengerService $messengerService)
     {
-        $this->meta->prependTitle('Social network');
         $posts = $this->postsService->getHomeTimeLine();
+
+        if (request()->expectsJson()) return $posts;
+
+        $this->meta->prependTitle('Social network');
         $rss = collect($rssService->get())->slice(0, 2);
         $chats = [];
         $followings = [];
 
         if (Auth::check()) {
 
-            if (Auth::user()->saved_media_rss->isNotEmpty()) {
+            if (Auth::getUser()->channel->saved_rss->isNotEmpty()) {
                 $rss = $rssService->getForUser();
             }
 
@@ -40,19 +41,14 @@ class HomeController extends Controller
 
             $chats = $messengerService->getChats();
 
-            $followings = Auth::user()->followings->map(function (User $user) {
-                $user->new_posts = $user->posts()->published()->whereDate('created_at', Carbon::today())->count();
-                return $user;
-            });
+            $followings = Auth::user()->followings;
         }
 
-        return view('pages.home', compact('posts', 'rss', 'followings', 'chats'));
-    }
+        share([
+            'posts' => $posts
+        ]);
 
-    public function posts()
-    {
-        $posts = $this->postsService->getHomeTimeLine();
-        return $posts;
+        return view('pages.home', compact('rss', 'followings', 'chats'));
     }
 
     public function messenger(MessengerService $messengerService, User $user = null)

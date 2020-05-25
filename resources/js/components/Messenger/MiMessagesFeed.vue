@@ -1,5 +1,6 @@
 <template>
     <div class="message-list" v-if="contact" ref="feed">
+        <div class="date-info last-seen">{{contact.last_seen}}</div>
         <div class="message-li" v-for="(message,i) in messages">
             <div class="box-shadow-content date" v-if="newDay(message,i-1)">{{message.day}}</div>
             <div class="message-item user-message"
@@ -10,7 +11,7 @@
                     </div>
                     <div>
                         <div v-if="message.to != contact.id" class="name text-nowrap mb-2">{{ contact.name }}</div>
-                        <div class="message-full-text" v-html="message.text"></div>
+                        <div class="message-full-text" v-html="parseLinks(message.text)"></div>
                     </div>
                 </div>
                 <div class="text-right silver-color">{{message.date}}</div>
@@ -20,6 +21,8 @@
 </template>
 
 <script>
+    import {createTextLinks} from '~/helpers'
+
     export default {
         props: {
             contact: {
@@ -34,6 +37,9 @@
             newDay(curr, prev) {
                 if (prev == -1) return true
                 return curr.day !== this.messages[prev].day
+            },
+            parseLinks(text) {
+                return createTextLinks(text)
             },
             scrollToBottom() {
                 setTimeout(() => {

@@ -29,12 +29,14 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $rssService = new RssService();
             $rssService->update();
-        })->everyFiveMinutes();
+        })->everyThirtyMinutes();
 
         $schedule->call(function () {
             $socialService = new SocialService();
             $socialService->update();
-        })->daily();
+        })->hourly();
+
+        $schedule->command('telescope:prune --hours=48')->daily();
     }
 
     /**

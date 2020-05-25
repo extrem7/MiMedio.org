@@ -10,6 +10,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+
 //use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -22,6 +23,7 @@ class Post extends Model implements HasMedia, Likeable
     use Sluggable;
     use LikeableTrait;
     use PaginateTrait;
+
     //use Searchable;
     use SearchTrait;
     use HasEagerLimit;
@@ -181,7 +183,7 @@ class Post extends Model implements HasMedia, Likeable
     {
         return route('posts.show', [
             'user' => $this->author->slug ?? $this->author->id,
-            'slug' => $this->slug
+            'post' => $this->slug ?? $this->id
         ]);
     }
 

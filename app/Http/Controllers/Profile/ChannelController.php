@@ -4,40 +4,64 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChannelRequest;
+use App\Services\RssFeedsService;
 use Auth;
-use Illuminate\Http\Request;
 
 class ChannelController extends Controller
 {
-    public function page()
+    public function page(RssFeedsService $rssFeedsService)
     {
-        $user = Auth::user();
+        $this->meta->prependTitle('Channel settings');
+
+        $user = Auth::getUser();
+        $channel = $user->channel;
         $facebook = null;
+        $instagram = null;
         $twitter = null;
-        if ($user->embed !== null) {
-            $facebook = $user->embed['facebook'] ?? null;
-            $twitter = $user->embed['twitter'] ?? null;
+        if ($channel->embed !== null) {
+            $facebook = $channel->embed['facebook'] ?? null;
+            $instagram = $channel->embed['instagram'] ?? null;
+            $twitter = $channel->embed['twitter'] ?? null;
         }
         $logo = $user->getLogo();
 
-        $this->meta->prependTitle('Channel settings');
-        return view('profile.channel', compact('user', 'facebook', 'twitter', 'logo'));
+        $rssFeeds = $rssFeedsService->get($channel);
+
+        share([
+            'rssFeeds' => $rssFeeds
+        ]);
+
+        return view('profile.channel', compact('user', 'facebook', 'instagram', 'twitter', 'logo'));
     }
 
     public function update(ChannelRequest $request)
     {
-        $user = Auth::user();
+        $user = Auth::getUser();
 
-        $data = $request->input();
+        $data = $request->except(['slug']);
+
+        if (!isset($data['rss_feeds'])) {
+            $data['rss_feeds'] = [];
+        }
+
         if ($data['color'] == '2c95d8') unset($data['color']);
 
-        $user->fill($data);
+        if (in_array(null, [$data['embed']['facebook'], $data['embed']['instagram'], $data['embed']['twitter']]))
+            $data['embed'] = null;
+
+        if ($data['embed'] !== null) {
+            $data['embed'] = collect($data['embed'])->map(function ($embed) {
+                if ($embed === null) return;
+                return preg_replace('#<script(.*?)>(.*?)</script>#is', '', $embed) ?? null;
+            })->toArray();
+        }
+
+        $user->update(['slug' => $request->get('slug')]);
+        $user->channel->update($data);
 
         if ($request->hasFile('logo')) {
             $user->addMedia($request->file('logo'))->toMediaCollection('logo');
         }
-
-        $user->save();
 
         return redirect()->back()->with('status', 'Channel has been successfully updated.');
     }

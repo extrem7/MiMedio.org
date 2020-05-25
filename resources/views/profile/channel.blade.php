@@ -32,11 +32,19 @@
                     @include('includes.field-error',['error'=>'embed.facebook'])
                 </div>
                 <div class="form-group">
+                    <div class="label mb-1">Instagram embed (<a href="https://lightwidget.com/" target="_blank">create embed code</a>)</div>
+                    <textarea name="embed[instagram]" rows="7"
+                              class="control-form {{valid_class('embed.instagram',$errors)}}">{{old('embed.instagram',$instagram)}}</textarea>
+                    @include('includes.field-error',['error'=>'embed.instagram'])
+                </div>
+                <div class="form-group">
                     <div class="label mb-1">Twitter embed (<a href="https://publish.twitter.com/" target="_blank">create embed code</a>)</div>
                     <textarea name="embed[twitter]" rows="7"
                               class="control-form {{valid_class('embed.twitter',$errors)}}">{{old('embed.twitter',$twitter)}}</textarea>
                     @include('includes.field-error',['error'=>'embed.twitter'])
                 </div>
+                <div class="label mb-1">Rss feeds in Mimedia</div>
+                <rss-feeds></rss-feeds>
                 <div class="text-center text-md-left">
                     <button class="button btn-blue btn-transform mx-164 mt-4">Save</button>
                 </div>

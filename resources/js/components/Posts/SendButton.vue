@@ -1,19 +1,16 @@
 <template>
-    <a @click.prevent="copy" :href="link">Share in Message</a>
+    <a @click.prevent="send" href="#">Share in Message</a>
 </template>
 
 <script>
-    import {copyTextToClipboard} from '../../helpers'
-
     export default {
         props: {
-            link: String
+            post_id: Number
         },
         methods: {
-            copy() {
-                copyTextToClipboard(this.link, () => {
-                    this.$bus.emit('copy-alert')
-                })
+            send() {
+                this.$bus.emit('mi-share', this.post_id)
+                this.$bvModal.show('mi-share')
             }
         }
     }

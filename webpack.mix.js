@@ -1,4 +1,6 @@
 const mix = require('laravel-mix')
+const config = require('./webpack.config')
+mix.webpackConfig(config)
 mix.options({processCssUrls: false})
 
 // admin mix

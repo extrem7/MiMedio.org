@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Models\Message;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 
 class MessengerService
 {
@@ -27,21 +26,26 @@ class MessengerService
 
     public function getContacts(bool $useFollowings = false)
     {
-        $followings = \Auth::user()->followings;
-
-        $receivers = User::with('avatarImage')
-            ->whereHas('messages', function ($query) {
-                $query->where('to', '=', auth()->id());
-            })
-            ->orWhereHas('receivedMessages', function ($query) {
-                $query->where('from', '=', auth()->id());
-            });
+        $receivers = User::with('avatarImage');
+        $followings = [];
 
         if ($useFollowings) {
-            $receivers = $receivers->whereNotIn('id', $followings->pluck('id'))->get();
+            $followings = \Auth::user()->followings;
+            $receivers = $receivers->whereNotIn('id', $followings->pluck('id'));
+        }
+
+        $receivers = $receivers->where(function (Builder $query) {
+            $query->whereHas('messages', function ($query) {
+                $query->where('to', '=', auth()->id());
+            })->orWhereHas('receivedMessages', function ($query) {
+                $query->where('from', '=', auth()->id());
+            });
+        })->get();
+
+        if ($useFollowings) {
             return collect()->merge($receivers)->merge($followings);
         }
 
-        return $receivers->get();
+        return $receivers;
     }
 }

@@ -5,8 +5,7 @@
         <div class="col-lg-4 col-md-6 col-12">
             <a href="{{route(Auth::check()?'posts.create':'join')}}"
                class="button btn-yellow w-100 mb-4 btn-transform">Create the new post</a>
-            <posts-home-list :initial_posts="{{json_encode($posts)}}"></posts-home-list>
-            <!--<a href="" class="box-rounded see-more mt-4 link d-block">Load more</a>-->
+            <posts-home-list></posts-home-list>
         </div>
         <div class="col-lg-4 col-md-6 col-12 mt-5 mt-md-0">
             <a href="{{route('rss')}}" class="button btn-blue btn-transform w-100 mb-4">Add news channel</a>

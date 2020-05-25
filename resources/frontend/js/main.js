@@ -25,12 +25,11 @@ function upButton() {
     let btn = $('.header'),
         tempScrollTop,
         currentScrollTop = 0;
-    $(window).scroll(function() {
+    $(window).scroll(function () {
         currentScrollTop = $(window).scrollTop();
         if (tempScrollTop < currentScrollTop || currentScrollTop < 100) {
             $(btn).removeClass('show-category');
-        }
-        else if (tempScrollTop > currentScrollTop && currentScrollTop > 100) {
+        } else if (tempScrollTop > currentScrollTop && currentScrollTop > 100) {
             $(btn).addClass('show-category');
         }
         tempScrollTop = currentScrollTop;
@@ -43,32 +42,17 @@ $(() => {
         $('.mob-wrapper').slideToggle();
     });
 
-
-    $(".contact-list li, .swipe-back").click( function () {
-        $(".contact-list li").removeClass('active');
-        $(this).toggleClass('active');
-        $('.message-wrapper').toggleClass('swipe')
-    });
-
-
-
-    $(function () {
-        $('[data-toggle="popover"]').popover()
-    });
+    $('[data-toggle="popover"]').popover()
     menu();
     upButton();
-    //header();
-    $('*[data-url]').on('click', function () {
-        window.open($(this).data('url'));
     });
-});
 
 $(window).on('load resize scroll', () => header());
 
 $(window).on('load', () => {
-    setTimeout(()=>{
+    setTimeout(() => {
         $('.preloader .box').fadeOut(1000);
-    },1000);
+    }, 1000);
 });
 
 

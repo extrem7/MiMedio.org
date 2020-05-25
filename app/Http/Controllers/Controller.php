@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Butschster\Head\Contracts\MetaTags\MetaInterface;
+use Butschster\Head\MetaTags\Meta;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -14,8 +15,8 @@ class Controller extends BaseController
 
     protected $meta;
 
-    public function __construct(MetaInterface $meta)
+    public function __construct()
     {
-        $this->meta = $meta;
+        $this->meta = app(Meta::class);
     }
 }

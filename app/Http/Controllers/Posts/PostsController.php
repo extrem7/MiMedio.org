@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Posts;
 
 use App\Http\Requests\PostRequest;
+use Butschster\Head\Packages\Entities\OpenGraphPackage;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -12,11 +13,15 @@ class PostsController extends BaseController
 {
     public function index()
     {
+        $posts = $this->postsService->getPosts();
+
+        if (request()->expectsJson()) return $posts;
+
         $this->meta->prependTitle('Latest news');
 
         $categories = $this->postsService->getCategories();
 
-        $posts = $this->postsService->getPosts();
+        share(compact('posts'));
 
         return view('posts.index', compact('categories', 'posts'));
     }
@@ -54,15 +59,15 @@ class PostsController extends BaseController
         }
     }
 
-    public function show(User $user, string $slug)
+    public function show(User $user, Post $post)
     {
-        $post = $user->posts()->whereSlug($slug)->firstOrFail();
-
-        if ($post->status !== Post::PUBLISHED) {
-            if (!Auth::check() || Auth::id() !== $post->author->id) {
-                abort(403);
-            }
-        }
+        $og = new OpenGraphPackage('post');
+        $og->setType('article')
+            ->setTitle($post->title)
+            ->setDescription(strip_tags($post->excerpt))
+            ->addImage($post->thumbnail)
+            ->setUrl($post->link);
+        $this->meta->registerPackage($og);
 
         $this->meta->prependTitle($post->title);
 
