@@ -37,11 +37,10 @@ class HomeController extends Controller
                 $rss = $rssService->getForUser();
             }
 
-            Auth::user()->load('followings.avatarImage');
-
             $chats = $messengerService->getChats();
 
-            $followings = Auth::user()->followings;
+            Auth::getUser()->load('followings.avatarImage');
+            $followings = Auth::getUser()->followings;
         }
 
         share([

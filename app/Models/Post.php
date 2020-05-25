@@ -42,9 +42,6 @@ class Post extends Model implements HasMedia, Likeable
 
     protected $appends = [
         'date_dots',
-        //'likes_count',
-        //'dislikes_count',
-        //'current_like',
         'thumbnail',
         'link',
         'has_comments',
