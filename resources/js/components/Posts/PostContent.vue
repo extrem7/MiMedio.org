@@ -1,5 +1,5 @@
 <template>
-    <div class="article-card card-lg">
+    <div class="">
         <a :href="post.link" class="article-img mb-3 lg-img">
             <img :src="post.thumbnail" alt="name-article">
         </a>

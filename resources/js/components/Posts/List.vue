@@ -11,7 +11,7 @@
                 <followers :user_id="post.author.id"
                            :initial_followers="post.author.followers.length"></followers>
                 <follow-button
-                    v-if="shared('user').id!==post.author.id"
+                    v-if="shared('user')!==null && shared('user').id!==post.author.id"
                     :user_id="post.author.id" :initial_following="!!post.author.is_following">
                 </follow-button>
             </div>

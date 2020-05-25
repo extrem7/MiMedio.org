@@ -167,6 +167,14 @@
   padding: 10px 10px 0 20px;
 }
 
+.dropup-custom {
+  .dropdown-last-comment {
+    top: auto!important;
+    bottom: 100% !important;
+  }
+}
+
+
 .last-comment-box {
   .submit-comment {
     margin: 15px 0;
@@ -651,8 +659,10 @@
 
 @media (max-width: 350px) {
   .article-card {
-    &.card-lg.box-rounded.up-to-top {
-      padding: 15px 8px;
+    &.card-lg {
+      .box-rounded.up-to-top {
+        padding: 15px 8px;
+      }
     }
   }
 }

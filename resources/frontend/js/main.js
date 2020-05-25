@@ -55,6 +55,18 @@ $(window).on('load', () => {
     }, 1000);
 });
 
+$(document).on("shown.bs.dropdown", ".d-inline-flex", function () {
+    // calculate the required sizes, spaces
+    let $ul = $(this).find(".dropdown-last-comment");
+    let $button = $(this).find(".btn-comment");
+    let ulOffset = $ul.offset();
+    let spaceUp = (ulOffset.top - $button.height() - $ul.height()) - $(window).scrollTop();
+    let spaceDown = $(window).scrollTop() + $(window).height() - (ulOffset.top + $ul.height());
+    if (spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown))
+        $(this).addClass("dropup-custom");
+}).on("hidden.bs.dropdown", ".d-inline-flex", function() {
+    $(this).removeClass("dropup-custom");
+});
 
 
 
