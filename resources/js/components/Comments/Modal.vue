@@ -1,7 +1,7 @@
 <template>
     <b-modal id="last-comments" @hide="hide" size="sm" centered footer-class="d-none">
         <template v-slot:modal-title>
-            <div class="semi-bold blue-color">Last Comments</div>
+            <div class="semi-bold blue-color">{{lang('comments.last')}}</div>
         </template>
         <template v-slot:modal-header-close>
             <img src="/assets/img/icons/close.svg" alt="close">

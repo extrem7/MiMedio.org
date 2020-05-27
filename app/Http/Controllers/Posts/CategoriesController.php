@@ -32,7 +32,7 @@ class CategoriesController extends BaseController
 
         $user->loadCount('followers');
 
-        $categoriesWithPosts = $this->postsService->getUserCategories($user, false);
+        $categoriesWithPosts = $this->postsService->getUserCategories($user);
 
         share(compact('posts'));
 

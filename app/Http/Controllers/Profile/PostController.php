@@ -18,11 +18,17 @@ class PostController extends Controller
 
     public function index()
     {
-        $this->meta->prependTitle('My posts');
-
         $user = Auth::getUser();
 
         $posts = $this->postsService->getPosts($user->posts());
+
+        if (request()->expectsJson()) return $posts;
+
+        $this->meta->prependTitle('My posts');
+
+        share([
+            'posts' => $posts
+        ]);
 
         return view('profile.posts', compact('posts'));
     }

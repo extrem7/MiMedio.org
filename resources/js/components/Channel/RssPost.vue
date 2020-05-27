@@ -1,5 +1,5 @@
 <template>
-    <div class="article-column-card">
+    <div class="article-column-card rss-feed">
         <div class="left-column">
             <a :href="link" class="article-img" target="_blank">
                 <img :src="image" :alt="title">

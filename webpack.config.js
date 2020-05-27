@@ -8,4 +8,12 @@ module.exports = {
             '~': path.resolve('resources/js/')
         },
     },
+    module: {
+        rules: [
+            {
+                test: /resources[\\\/]lang.+\.(php|json)$/,
+                loader: 'laravel-localization-loader',
+            }
+        ]
+    }
 }

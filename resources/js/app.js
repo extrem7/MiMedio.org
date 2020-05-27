@@ -2,6 +2,7 @@ window._ = require('lodash')
 
 import Vue from 'vue'
 
+import './lang'
 import './plugins'
 
 import store from './store'

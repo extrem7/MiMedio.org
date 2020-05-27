@@ -29,7 +29,7 @@
                 @click="toggle"
                 class="button btn-transform b-lg w-100 semi-bold shadow-none mt-2"
                 :class="[saved?'btn-danger':'btn-blue']">
-            {{saved?'Remove from my Media':'Add to My Media'}}
+            {{lang(saved?'rss.remove':'rss.save')}}
         </button>
     </div>
 </template>
@@ -60,12 +60,12 @@
                         this.$emit('toggle', {id: this.id, saved})
                         if (saved) {
                             this.$bus.emit('alert', {
-                                text: 'Rss has been saved to your Media',
+                                text: this.lang('rss.saved'),
                                 variant: 'primary'
                             })
                         } else {
                             this.$bus.emit('alert', {
-                                text: 'Rss has been removed from your Media',
+                                text: this.lang('rss.removed'),
                                 variant: 'secondary'
                             })
                         }
@@ -73,7 +73,7 @@
                 } catch ({response}) {
                     if (response.status === 409) {
                         this.$bus.emit('alert', {
-                            text: 'You can add no more than two medias.',
+                            text: this.lang('rss.no_more'),
                             variant: 'warning'
                         })
                     }

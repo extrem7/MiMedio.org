@@ -32,7 +32,7 @@
                 <list-mini v-if="commentsCount" :post_id="post.id" :initial-comments="post.comments"></list-mini>
             </div>
             <div class="d-flex align-items-center">
-                <div class="text-muted ml-15 mr-2">Share:</div>
+                <div class="text-muted ml-15 mr-2">{{lang('posts.share')}}:</div>
                 <div class="btn-group">
                     <button class="button btn-silver-light extra-bold dropdown-toggle"
                             data-toggle="dropdown">Mi
@@ -54,6 +54,7 @@
     import CopyButton from "./CopyButton"
     import ShareButton from "./ShareButton"
     import SendButton from "./SendButton"
+    import commentInModal from "~/mixins/commentInModal"
 
     export default {
         props: ['post'],
@@ -62,6 +63,7 @@
                 commentsCount: this.post.comments_count
             }
         },
+        mixins: [commentInModal],
         components: {
             ListMini,
             Likes,

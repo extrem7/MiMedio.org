@@ -48,18 +48,33 @@ class PostsService
         return Category::pluck('name', 'slug');
     }
 
-    public function getShared(User $user, bool $eagerLoad = true)
+    public function getUserPosts(User $user)
     {
-        return $this->getPosts($user->shared(), false);
+        return $user->posts()
+            ->with('image', 'author', 'author.avatarImage', 'author.logoImage')
+            ->published()
+            ->paginate();
     }
 
-    public function getUserCategories(User $user, bool $eagerLoad = true)
+    public function getShared(User $user)
     {
-        $c = Category::whereHas('posts', function ($query) use ($user) {
+        return $user->shared()->published()->with([
+            'author',
+            'author.avatarImage',
+            'author.logoImage',
+            'image',
+            'likesRaw',
+            'comments' => $this->commentsQuery()
+        ])->withCount('comments')->get();
+    }
+
+    public function getUserCategories(User $user)
+    {
+        /*$c = Category::whereHas('posts', function ($query) use ($user) {
             return $query->published()->whereUserId($user->id);
         })->with(['posts' => function ($query) use ($user) {
             $query->published()->whereUserId($user->id)->limit(6);
-        }])->get();
+        }])->get();*/
 
         $categories = Category::all();
         $query = null;
@@ -68,10 +83,14 @@ class PostsService
         foreach ($categories as $item) {
             $query = $user->posts()
                 ->published()
-                ->where('category_id', '=', $item->id);
-            if ($eagerLoad) {
-                $query = $this->eagerLoad($query);
-            }
+                ->where('category_id', '=', $item->id)
+                ->with([
+                    'author',
+                    'image',
+                    'author.avatarImage',
+                    'author.logoImage',
+                    'comments' => $this->commentsQuery()
+                ])->withCount('comments');
 
             $postsInCategory = $query->take(6)->get();
             if ($postsInCategory->isNotEmpty())
@@ -102,23 +121,31 @@ class PostsService
             'author',
             'image',
         ])->withCount('comments');
-        if (!(navIsRoute('users.show') || navIsRoute('users.show.posts'))) {
-            $relation->with([
-                'author.avatarImage',
-                'author.logoImage',
-                'likesRaw',
-                'comments' => function (Relation $query) {
-                    $query->setEagerLoads([])
-                        ->with('author', 'likesRaw')
-                        ->orderByDesc('id')
-                        ->limit(3);
-                }
-            ]);
-        }
-        if (!navIsRoute('home')) {
+        $relation->with([
+            'author.avatarImage',
+            'author.logoImage',
+            'likesRaw',
+            'comments' => function (Relation $query) {
+                $query->setEagerLoads([])
+                    ->with('author', 'likesRaw')
+                    ->orderByDesc('id')
+                    ->limit(3);
+            }
+        ]);
+        if (!(navIsRoute('home') || navIsRoute('users.show') || navIsRoute('users.show.posts'))) {
             $relation->with('author.followers');
         }
         return $relation;
+    }
+
+    private function commentsQuery()
+    {
+        return function (Relation $query) {
+            $query->setEagerLoads([])
+                ->with('author', 'likesRaw')
+                ->orderByDesc('id')
+                ->limit(3);
+        };
     }
 
     public function perPage()
@@ -127,7 +154,7 @@ class PostsService
             return 6;
         }
         if (navIsRoute('profile.posts.index')) {
-            return 8;
+            return 12;
         }
         return config('mimedio.posts_per_page');
     }

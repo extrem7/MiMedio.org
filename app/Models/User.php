@@ -195,11 +195,11 @@ class User extends Authenticatable implements HasMedia
     public function toArray()
     {
         $attributes = parent::toArray();
-        if (!navIsRoute('home')) {
-            $attributes['avatar'] = $this->avatar;
-            $attributes['logo'] = $this->logo;
-            if ($this->relationLoaded('followers')) $attributes['followers_count'] = $this->followers->count();
-        }
+        //if (!navIsRoute('home')) {
+        $attributes['avatar'] = $this->avatar;
+        if ($this->relationLoaded('logoImage')) $attributes['logo'] = $this->logo;
+        if ($this->relationLoaded('followers')) $attributes['followers_count'] = $this->followers->count();
+        //  }
         if ($this->relationLoaded('likesRaw')) {
             $attributes['likes_count'] = $this->likes_count;
             $attributes['dislikes_count'] = $this->dislikes_count;

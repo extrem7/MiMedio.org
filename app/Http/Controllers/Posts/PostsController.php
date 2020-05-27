@@ -53,7 +53,7 @@ class PostsController extends BaseController
         }
 
         if ($post) {
-            return redirect()->route('posts.edit', $post->id)->with('status', 'Post has been updated');
+            return redirect()->route('posts.edit', $post->id)->with('status', trans('mimedio.profile.post.created'));
         } else {
             return back()->withErrors('msg', "Error")->withInput();
         }
@@ -105,7 +105,7 @@ class PostsController extends BaseController
         }
 
         if ($post) {
-            return redirect()->back()->with('status', 'Post has been updated');
+            return redirect()->back()->with('status',  trans('mimedio.profile.post.updated'));
         } else {
             return back()->withErrors('msg', "Error")->withInput();
         }
@@ -114,6 +114,6 @@ class PostsController extends BaseController
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->back()->with('status', 'Post has been deleted');
+        return response()->json();
     }
 }

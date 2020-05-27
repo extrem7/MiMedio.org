@@ -27,7 +27,7 @@
                         :disabled="selected===null"
                         :class="[selected===null?'btn-secondary':'btn-blue btn-transform']"
                         class="button w-75 semi-bold shadow-none mt-2 mb-2">
-                    Send message
+                    {{lang('messenger.send')}}
                 </button>
             </div>
         </div>
@@ -54,7 +54,7 @@
                 if (status === 201) {
                     this.selected = null
                     this.$bvModal.hide('mi-share')
-                    this.$bus.emit('alert', {text: 'Message with link has been sent'})
+                    this.$bus.emit('alert', {text: this.lang('messenger.sent')})
                 }
             },
             select(id) {

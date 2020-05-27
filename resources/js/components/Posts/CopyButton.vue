@@ -1,5 +1,6 @@
 <template>
-    <a @click.prevent="copy" :href="link" class="copy-link" v-b-tooltip.hover :title="`Copy ${subject} link`">
+    <a @click.prevent="copy" :href="link" class="copy-link" v-b-tooltip.hover
+       :title="`${lang('posts.copy.copy')} ${subject} ${lang('posts.copy.link')}`">
         <i class="far fa-copy"></i>
     </a>
 </template>
@@ -23,7 +24,7 @@
         methods: {
             copy() {
                 copyTextToClipboard(this.link, () => {
-                    this.$bus.emit('alert', {text: `Link to this ${this.subject} has been copied to the clipboard.`})
+                    this.$bus.emit('alert', {text: `${this.lang('posts.copy.link_to')} ${this.subject} ${this.lang('posts.copy.copied')}`})
                 })
             }
         }

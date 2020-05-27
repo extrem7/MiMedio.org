@@ -4,8 +4,8 @@
 <div class="chat-list-sidebar">
     @if($chats->isNotEmpty())
         <div class="box-shadow-content text-center">
-            <div class="title-semi-bold blue-color">Chat</div>
-            <div class="small-size medium-bold silver-color">Last messages</div>
+            <div class="title-semi-bold blue-color">@lang('mimedio.home.chat.title')</div>
+            <div class="small-size medium-bold silver-color">@lang('mimedio.home.chat.last_messages')</div>
         </div>
         <div class="box-rounded border-top-0 vertical-scroll">
             @foreach($chats as $user)
@@ -26,5 +26,5 @@
         </div>
     @endif
     <a href="{{route('messenger')}}"
-       class="box-rounded see-more {{$chats->isNotEmpty()?'border-top-0':''}} link d-block">Messages</a>
+       class="box-rounded see-more {{$chats->isNotEmpty()?'border-top-0':''}} link d-block">@lang('mimedio.home.chat.link')</a>
 </div>

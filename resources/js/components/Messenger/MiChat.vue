@@ -46,7 +46,6 @@
                 this.axios.get(`/conversation/${contact.id}`)
                     .then((response) => {
                         this.messages = response.data
-                        window.history.replaceState(null, null, this.route('messenger', contact.id))
                         this.selectedContact = contact
                     })
             },

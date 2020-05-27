@@ -28,50 +28,8 @@
                 </div>
             @endif
             @include('users.includes.social')
-            @if($shared->isNotEmpty())
-                <section class="category-own-media mt-3 mt-md-5">
-                    <div class="d-flex slider-header justify-content-between align-items-center">
-                        <div class="title-semi-bold blue-color medium-size">Shared news</div>
-                        <div class="d-flex slide-panel">
-                            <button class="button btn-silver-light slide-prev"><i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="button btn-silver-light slide-next ml-1"><i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="inline-block-pc">
-                        @foreach($shared as $post)
-                            @include('profile.includes.post')
-                        @endforeach
-                    </div>
-                </section>
-            @endif
-            @foreach($categoriesWithPosts as $category)
-                <section class="category-own-media mt-3 mt-md-5">
-                    <div class="d-flex slider-header justify-content-between align-items-center">
-                        <div class="title-semi-bold blue-color medium-size">{{$category->name}} news</div>
-                        <div class="d-flex slide-panel">
-                            <button class="button btn-silver-light slide-prev"><i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="button btn-silver-light slide-next ml-1"><i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="inline-block-pc">
-                        @foreach($category->posts as $post)
-                            @include('profile.includes.post',['hideAuthor'=>true])
-                        @endforeach
-                        @if($category->load_more)
-                            <div class="d-flex align-items-center ml-2">
-                                <a href="{{route('users.show.category',[
-                           'user'=>$user->id,
-                           'category'=>$category->slug
-                           ])}}" class="button btn-yellow btn-transform">See all news</a>
-                            </div>
-                        @endif
-                    </div>
-                </section>
-            @endforeach
+            <shared-list></shared-list>
+            <categories-list></categories-list>
             <rss-feeds-list></rss-feeds-list>
         </div>
         @include('users.includes.sidebar')

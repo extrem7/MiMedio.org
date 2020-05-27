@@ -1,6 +1,6 @@
 <template>
     <div class="dropdown-menu dropdown-last-comment last-comment-box" @click.stop>
-        <div class="semi-bold blue-color mb-2">Last Comments</div>
+        <div class="semi-bold blue-color mb-2">{{lang('comments.last')}}</div>
         <div class="last-comment">
             <comment v-for="comment in comments" :key="comment.id" :comment="comment"></comment>
         </div>

@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Butschster\Head\Contracts\MetaTags\MetaInterface;
-use Butschster\Head\MetaTags\Meta;
+use Butschster\Head\Contracts\MetaTags\MetaInterface as Meta;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;

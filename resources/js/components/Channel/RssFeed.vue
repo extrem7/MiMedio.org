@@ -1,7 +1,7 @@
 <template>
     <section class="category-own-media mt-3 mt-md-5">
         <div class="d-flex slider-header justify-content-between align-items-center">
-            <div class="title-semi-bold blue-color medium-size">{{name}} rss news feed</div>
+            <div class="title-semi-bold blue-color medium-size">{{name}} {{lang('channel.rss.title')}}</div>
             <div class="d-flex slide-panel">
                 <button class="button btn-silver-light slide-prev"><i class="fas fa-chevron-left"></i>
                 </button>

@@ -4,7 +4,7 @@
 @endphp
 <div class="d-flex align-items-center">
     @if(!isset($hide_text))
-        <div class="text-muted ml-15 mr-2">Share:</div>
+        <div class="text-muted ml-15 mr-2">@lang('mimedio.posts.share'):</div>
     @endif
     <div class="btn-group">
         <button class="button btn-silver-light extra-bold dropdown-toggle" data-toggle="dropdown">Mi</button>

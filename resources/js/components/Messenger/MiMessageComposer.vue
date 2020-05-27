@@ -1,7 +1,7 @@
 <template>
     <div class="submit-message d-flex align-items-center">
         <textarea v-model="message" @keydown.enter="send" placeholder="Message..." class="control-form"></textarea>
-        <button @click.prevent="send" class="btn-transform btn-blue button mx-164 ml-2">Send</button>
+        <button @click.prevent="send" class="btn-transform btn-blue button mx-164 ml-2">{{lang('messenger.send')}}</button>
     </div>
 </template>
 

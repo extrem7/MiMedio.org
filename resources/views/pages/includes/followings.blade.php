@@ -7,7 +7,7 @@
 @if($followings)
     <div class="mob-accordion following-box vertical-scroll mb-3">
         <button class="button btn-silver-light mob-accordion-btn mx-164"><i
-                class="fas fa-user mr-2"></i>Following
+                class="fas fa-user mr-2"></i>@lang('mimedio.home.followings')
         </button>
         <div class="mob-wrapper">
             <div class="following-mobile-box">

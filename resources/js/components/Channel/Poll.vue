@@ -1,13 +1,13 @@
 <template>
     <div class="vote box-rounded" v-if="poll">
-        <div class="title-semi-bold blue-color medium-size">What our users think</div>
+        <div class="title-semi-bold blue-color medium-size">{{lang('channel.poll.title')}}</div>
         <div class="title-dark semi-bold mt-2">{{poll.question}}</div>
         <div class="progress-bars">
             <div v-for="option in answers">
                 <div class="answer">
                     <span class="blue-color">{{ option.percent||0 }}% - </span>
                     {{ option.name }}
-                    {{option.voted?' (You voted for it)':''}}
+                    {{option.voted?` (${lang('channel.poll.you_voted')})`:''}}
                 </div>
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" :style="{width:option.percent+'%'}"
@@ -24,10 +24,12 @@
                 <label class="custom-control-label blue-color"
                        :for="`option-${option.id}`">{{option.name}}</label>
             </div>
-            <button class="button btn-yellow btn-transform mt-3" @click="vote">Vote!</button>
+            <button class="button btn-yellow btn-transform mt-3" @click="vote">{{lang('channel.poll.vote')}}!
+            </button>
         </div>
-        <p class="mt-3" v-if="!shared('logged_in')">Please <a :href="route('login')">login</a> or <a
-            :href="route('register')">register</a> to vote
+        <p class="mt-3" v-if="!shared('logged_in')">{{lang('channel.poll.please')}} <a :href="route('login')">{{lang('channel.poll.login')}}</a>
+            {{lang('channel.poll.or')}} <a
+                :href="route('register')">{{lang('channel.poll.register')}}</a> {{lang('channel.poll.to_vote')}}
         </p>
     </div>
 </template>

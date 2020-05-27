@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Message;
+use App\Models\User;
 use App\Services\MessengerService;
 use App\Services\PollsService;
 use App\Services\SocialService;
@@ -89,8 +90,19 @@ class MiMedioServiceProvider extends ServiceProvider
             $view->with('social', $social);
         });
         View::composer('users.includes.sidebar', function ($view) {
+            /* @var User $user */
+            $user = request()->route()->parameter('user');
+
             $pollsService = app(PollsService::class);
-            $pollsService->sharePoll(request()->route()->parameter('user'));
+            $pollsService->sharePoll($user);
+            /* @var User $randomFollowing */
+            $randomFollowing = $user->followings()->limit(1)->inRandomOrder()->with(['posts' => function ($query) {
+                $query->published()->limit(5);
+            }])->first();
+            $randomFollowing->load('logoImage');
+            share([
+                'randomFollowing' => $randomFollowing
+            ]);
         });
     }
 

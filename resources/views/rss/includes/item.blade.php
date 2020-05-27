@@ -57,21 +57,16 @@
                 <form action="{{route('rss.remove',$item->id)}}" method="post">
                     @csrf
                     @method('DELETE')
-                    <button class="button btn-danger btn-transform b-lg w-100 semi-bold shadow-none mt-2">
-                        Remove from My Media
-                    </button>
+                    <button class="button btn-danger btn-transform b-lg w-100 semi-bold shadow-none mt-2">@lang('mimedio.rss.remove')</button>
                 </form>
             @else
                 <form action="{{route('rss.add',$item->id)}}" method="post">
                     @csrf
-                    <button class="button btn-blue btn-transform b-lg w-100 semi-bold shadow-none mt-2">
-                        Add to My Media
-                    </button>
+                    <button class="button btn-blue btn-transform b-lg w-100 semi-bold shadow-none mt-2">@lang('mimedio.rss.add')</button>
                 </form>
             @endif
         @endauth
     @else
-        <a href="{{$item->link}}" class="box-rounded see-more border-top-0 link d-block" target="_blank">See all
-            news</a>
+        <a href="{{$item->link}}" class="box-rounded see-more border-top-0 link d-block" target="_blank">@lang('mimedio.rss.see_all')</a>
     @endif
 </div>

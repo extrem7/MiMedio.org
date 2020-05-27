@@ -1,5 +1,5 @@
 <template>
-    <a @click.prevent="send" href="#">Share in Message</a>
+    <a @click.prevent="send" href="#">{{lang('posts.share_messenger')}}</a>
 </template>
 
 <script>

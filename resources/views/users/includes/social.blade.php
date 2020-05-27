@@ -3,7 +3,7 @@
 @endphp
 @if($channel->embed !== null && isset($channel->embed['facebook'],$channel->embed['instagram'],$channel->embed['twitter']))
     <section class="social-network mt-3 mt-md-5">
-        <div class="title-semi-bold blue-color medium-size mb-4">Social Networks</div>
+        <div class="title-semi-bold blue-color medium-size mb-4">@lang('mimedio.channels.social')</div>
         <div class="nav custom-tab horizontal-overflow">
             @if(isset($channel->embed['facebook']))
                 <a href="#facebook" class="" data-toggle="tab">Facebook</a>

@@ -37,6 +37,8 @@
                 posts: posts.data || [],
                 page: 1,
                 lastPage: posts.last_page || 1,
+
+                isSearch: this.route().current('search'),
             }
         },
         methods: {
@@ -44,11 +46,10 @@
                 if (this.page < this.lastPage) {
                     this.page += 1
                     try {
-                        const response = await this.axios.get('', {
-                            params: {
-                                page: this.page
-                            }
-                        })
+                        const params = {page: this.page}
+                        if (this.isSearch) params.query = this.shared('query')
+
+                        const response = await this.axios.get('', {params})
                         this.posts = this.posts.concat(response.data.data)
                         $state.loaded()
                     } catch (e) {

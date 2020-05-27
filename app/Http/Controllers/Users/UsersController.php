@@ -43,7 +43,7 @@ class UsersController extends Controller
 
         $this->meta->prependTitle($user->name);
 
-        $posts = $this->postsService->getPosts($user->posts());
+        $posts = $this->postsService->getUserPosts($user);
 
         $shared = $this->postsService->getShared($user);
 
@@ -53,16 +53,14 @@ class UsersController extends Controller
 
         $savedRss = $rssService->getForUser($user);
 
-        $randomFollowing = $user->followings()->limit(1)->inRandomOrder()->with(['posts' => function ($query) {
-            $query->published()->limit(5)->with('author', 'author.avatarImage', 'author.logoImage');
-        }])->first();
-
         share([
+            'channel' => $user,
+            'sharedPosts' => $shared,
+            'categoriesWithPosts' => $categoriesWithPosts,
             'rssFeeds' => $rssFeeds,
             'savedRss' => $savedRss->isNotEmpty() ? $savedRss->random() : null,
-            'randomFollowing' => $randomFollowing
         ]);
 
-        return view('users.show', compact('user', 'channel', 'posts', 'shared', 'categoriesWithPosts'));
+        return view('users.show', compact('user', 'channel', 'posts', 'categoriesWithPosts'));
     }
 }

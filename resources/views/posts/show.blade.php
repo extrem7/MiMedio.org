@@ -48,7 +48,7 @@
         @if($related->count())
             <div class="col-12">
                 <div class="box-rounded similar">
-                    <div class="blue-color semi-bold medium-size">Similar articles</div>
+                    <div class="blue-color semi-bold medium-size">@lang('mimedio.posts.similar')</div>
                     <div class="row inline-blocks">
                         @foreach($related as $post)
                             @include('posts.includes.related')

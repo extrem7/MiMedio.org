@@ -2,7 +2,7 @@
     <button @click.prevent="follow" class="btn b-sm" :class="{'btn-blue':!following,'btn-yellow':following}">
         <span class="small-size semi-bold mr-2">{{followers}}
             <i class="fas fa-user"></i>
-        </span> followers
+        </span> {{lang('channels.followers')}}
     </button>
 </template>
 

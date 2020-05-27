@@ -9,5 +9,9 @@ return [
         'messenger',
         'messenger.share',
         'comments.store',
+        'users.show.category',
+        'posts.edit',
+        'posts.destroy',
+        'search'
     ]
 ];

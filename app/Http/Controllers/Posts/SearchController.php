@@ -14,10 +14,14 @@ class SearchController extends BaseController
 
         $query = $request->get('query');
 
-        $this->meta->prependTitle($query . ' - Search results');
-
         $posts = $this->postsService->search($query);
 
-        return view('posts.search', compact('posts', 'query'));
+        if (request()->expectsJson()) return $posts;
+
+        $this->meta->prependTitle($query . ' - Search results');
+
+        share(compact('query', 'posts'));
+
+        return view('posts.search', compact('query'));
     }
 }

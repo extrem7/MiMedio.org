@@ -7,7 +7,7 @@
 @extends('layouts.profile')
 
 @section('sub-content')
-    <div class="semi-bold blue-color medium-size mt-4 mb-3">Channel settings</div>
+    <div class="semi-bold blue-color medium-size mt-4 mb-3">@lang('mimedio.profile.channel.title')</div>
     @include('includes.alerts.success')
     <form action="{{route('settings.channel.update')}}" method="post" class="{{was_validated($errors)}}"
           enctype="multipart/form-data">
@@ -16,63 +16,70 @@
         <div class="row">
             <div class="col-lg-8 col-md-6">
                 <div class="form-group">
-                    <div class="label mb-1">Url slug of channel (mimedio.org/channel/{slug})</div>
+                    <div class="label mb-1">@lang('mimedio.profile.channel.slug')</div>
                     <input type="text" name="slug" value="{{old('slug',$user->slug)}}"
                            class="control-form {{valid_class('slug',$errors)}} mx-365">
                     @include('includes.field-error',['error'=>'slug'])
                 </div>
                 <div class="form-group">
                     <div class="label mb-1">Facebook embed (<a
-                            href="https://developers.facebook.com/docs/plugins/page-plugin" target="_blank">embed page</a>,
-                        <a href="https://developers.facebook.com/docs/plugins/embedded-posts" target="_blank">embed post</a>, <a
-                            href="https://developers.facebook.com/docs/plugins/embedded-video-player" target="_blank">embed video</a>)
+                            href="https://developers.facebook.com/docs/plugins/page-plugin" target="_blank">embed
+                            page</a>,
+                        <a href="https://developers.facebook.com/docs/plugins/embedded-posts" target="_blank">embed
+                            post</a>, <a
+                            href="https://developers.facebook.com/docs/plugins/embedded-video-player" target="_blank">embed
+                            video</a>)
                     </div>
                     <textarea name="embed[facebook]" rows="7"
                               class="control-form {{valid_class('embed.facebook',$errors)}}">{{old('embed.facebook',$facebook)}}</textarea>
                     @include('includes.field-error',['error'=>'embed.facebook'])
                 </div>
                 <div class="form-group">
-                    <div class="label mb-1">Instagram embed (<a href="https://lightwidget.com/" target="_blank">create embed code</a>)</div>
+                    <div class="label mb-1">Instagram embed (<a href="https://lightwidget.com/" target="_blank">create
+                            embed code</a>)
+                    </div>
                     <textarea name="embed[instagram]" rows="7"
                               class="control-form {{valid_class('embed.instagram',$errors)}}">{{old('embed.instagram',$instagram)}}</textarea>
                     @include('includes.field-error',['error'=>'embed.instagram'])
                 </div>
                 <div class="form-group">
-                    <div class="label mb-1">Twitter embed (<a href="https://publish.twitter.com/" target="_blank">create embed code</a>)</div>
+                    <div class="label mb-1">Twitter embed (<a href="https://publish.twitter.com/" target="_blank">create
+                            embed code</a>)
+                    </div>
                     <textarea name="embed[twitter]" rows="7"
                               class="control-form {{valid_class('embed.twitter',$errors)}}">{{old('embed.twitter',$twitter)}}</textarea>
                     @include('includes.field-error',['error'=>'embed.twitter'])
                 </div>
-                <div class="label mb-1">Rss feeds in Mimedia</div>
+                <div class="label mb-1">@lang('mimedio.profile.channel.rss_feeds')</div>
                 <rss-feeds></rss-feeds>
                 <div class="text-center text-md-left">
-                    <button class="button btn-blue btn-transform mx-164 mt-4">Save</button>
+                    <button class="button btn-blue btn-transform mx-164 mt-4">@lang('mimedio.profile.settings.save')</button>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 design-channel">
                 <div class="box-shadow-content d-flex align-items-center justify-content-center">
-                    <div class="title-dark bold">Design of my channel</div>
+                    <div class="title-dark bold">@lang('mimedio.profile.channel.design')</div>
                 </div>
                 <div class="box-rounded up-to-top">
                     <div class="form-group mb-3 mt-3">
-                        <div class="label mb-1 text-center">Channel logo</div>
+                        <div class="label mb-1 text-center">@lang('mimedio.profile.channel.logo')</div>
                         <div class="text-center">
                             <img src="{{$logo}}" class="img-fluid mb-2" style="max-height: 200px"
                                  alt="avatar">
                         </div>
                         <div class="custom-file {{valid_class('logo',$errors)}}">
                             <input type="file" class="custom-file-input" id="logo" name="logo">
-                            <label class="custom-file-label" for="logo">Upload logo</label>
+                            <label class="custom-file-label" for="logo">@lang('mimedio.profile.channel.upload_logo')</label>
                         </div>
                         @include('includes.field-error',['error'=>'logo'])
                     </div>
-                    <div class="text-center title-dark bold">Choose the color of your channel</div>
+                    <div class="text-center title-dark bold">@lang('mimedio.profile.channel.color')</div>
                     <div class="mt-2 mb-3 text-center text-danger {{valid_class('color',$errors)}}">
                         <color-picker @if($user->color) initial="{{$user->color}}" @endif></color-picker>
                     </div>
                     @include('includes.field-error',['error'=>'color'])
                     <div class="text-center">
-                        <button class="button btn-blue btn-transform mx-164">Save</button>
+                        <button class="button btn-blue btn-transform mx-164">@lang('mimedio.profile.settings.save')</button>
                     </div>
                 </div>
             </div>

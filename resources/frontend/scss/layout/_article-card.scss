@@ -85,10 +85,26 @@
     line-height: 1.4;
   }
   .date-info {
+    &.bottom-line {
+      padding-bottom: 8px;
+    }
     .profile-link {
       max-width: 94px;
     }
   }
+  &.rss-feed {
+    .article-short-text {
+      max-height: 54px;
+      min-height: 54px;
+      -webkit-line-clamp: 3;
+    }
+    .date-info {
+      &.bottom-line {
+        padding-bottom: 12px;
+      }
+    }
+  }
+
 }
 
 .box-date {
@@ -173,7 +189,6 @@
     bottom: 100% !important;
   }
 }
-
 
 .last-comment-box {
   .submit-comment {
@@ -542,6 +557,12 @@
   }
 }
 
+@media (min-width: 992px) and (max-width: 1199px) {
+  .article-card.card-lg .box-rounded.up-to-top {
+    padding: 15px 8px;
+  }
+}
+
 @media (max-width: 991px) {
   .article-collapse {
     .b-lg {
@@ -669,14 +690,16 @@
 
 @media (max-width: 500px) {
   .article-column-card {
-    .article-title,
     .article-short-text {
       min-height: auto;
-      text-align: center;
     }
     &.vertical-column-mob {
       flex-direction: column;
       align-items: center;
+      .article-short-text,
+      .article-title {
+        text-align: center;
+      }
       .right-column {
         display: flex;
         flex-direction: column;

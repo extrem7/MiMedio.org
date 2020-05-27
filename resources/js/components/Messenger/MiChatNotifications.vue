@@ -11,7 +11,7 @@
                         href = this.route('messenger', sender.id),
                         text = createTextLinks(message.text)
 
-                    const title = this.$createElement('a', {attrs: {href}}, `New message from ${sender.name}`)
+                    const title = this.$createElement('a', {attrs: {href}}, `${lang('messenger.new_message')} ${sender.name}`)
 
                     this.$bvToast.toast(this.$createElement('div', {domProps: {innerHTML: text}}), {
                         toaster: 'b-toaster-bottom-right',

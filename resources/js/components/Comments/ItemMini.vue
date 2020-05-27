@@ -13,7 +13,7 @@
                 <i class="fa-thumbs-down text-danger" :class="{fas:disliked,far:!dislikes}"></i> {{dislikes}}
             </button>
             <button class="blue-color text-uppercase extra-small-size ml-2 icon" @click="reply">
-                {{isReplyTo?'CANCEL REPLY':'REPLY'}}
+                {{lang(isReplyTo?'comments.cancel_reply':'comments.reply')}}
             </button>
         </div>
     </div>

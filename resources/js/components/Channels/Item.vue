@@ -20,19 +20,19 @@
                 <div class="d-flex flex-wrap mr-3">
                     <a href="" class="inherit-color medium-bold">
                         <span class="blue-color semi-bold">{{channel.posts_count}}</span>
-                        posts
+                        {{lang('channels.posts')}}
                     </a>
                     <a href="" class="inherit-color medium-bold">
                         <span class="blue-color semi-bold">{{channel.likes_count}}</span>
-                        likes
+                        {{lang('channels.likes')}}
                     </a>
                     <a href="" class="inherit-color medium-bold">
                         <span class="blue-color semi-bold">{{channel.dislikes_count}}</span>
-                        dislikes
+                        {{lang('channels.dislikes')}}
                     </a>
                     <a href="" class="inherit-color medium-bold">
                         <span class="blue-color semi-bold">{{channel.shares_count}}</span>
-                        shares
+                        {{lang('channels.shares')}}
                     </a>
                 </div>
                 <copy-button :link="channel.link" subject="channel"></copy-button>
@@ -55,7 +55,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

@@ -18,6 +18,7 @@ import Followers from "./Posts/Followers"
 
 import ColorPicker from "./Includes/ColorPicker"
 import RssFeeds from "~/components/Settings/Channel/RssFeeds"
+import SettingsPostsList from "./Settings/Posts/List"
 
 import MiChat from "./Messenger/MiChat"
 import MiChatNotifications from "./Messenger/MiChatNotifications"
@@ -30,6 +31,8 @@ import Poll from './Channel/Poll'
 import RssItem from "./Rss/Item"
 import RssFeedsList from "./Channel/RssFeedsList"
 import RandomFollowingFeed from "./Channel/RandomFollowingFeed"
+import SharedList from "./Channel/SharedList"
+import CategoriesList from "./Channel/CategoriesList"
 
 import RssList from './Rss/List'
 
@@ -54,6 +57,7 @@ export default {
 
     ColorPicker,
     RssFeeds,
+    SettingsPostsList,
 
     MiChatNotifications,
     MiShareModal,
@@ -66,6 +70,8 @@ export default {
     RssItem,
     RssFeedsList,
     RandomFollowingFeed,
+    SharedList,
+    CategoriesList,
 
     RssList
 }

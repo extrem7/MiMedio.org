@@ -16,7 +16,7 @@
                     <div class="title-dark extra-small-size date">{{post.date | moment("HH:mm")}}</div>
                 </div>
             </div>
-            <b-collapse :id="'article-'+post.id" :accordion="'accordion-'+id">
+            <b-collapse :id="'article-'+post.id" :accordion="'accordion-'+user.id">
                 <div class="box-rounded border-top-0">
                     <div class="box-date mb-2">{{post.date | moment("DD.MM.YYYY")}}</div>
                     <div class="article-short-text title-line-cap" v-html="post.excerpt"></div>

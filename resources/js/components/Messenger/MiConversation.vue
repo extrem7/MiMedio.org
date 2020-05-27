@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-12 col-lg-8 message-wrapper justify-content-end" :class="{swipe:contact!==null}">
         <div class="swipe-back" @click="$emit('swipe')">
-            <div class="title-dark"><i class="fa fa-chevron-left mr-2"></i>Back to list users
+            <div class="title-dark"><i class="fa fa-chevron-left mr-2"></i>{{lang('messenger.back')}}
                 <span v-if="contact!==null" class="date-info ml-2">{{contact.last_seen}}</span>
             </div>
         </div>

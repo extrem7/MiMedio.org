@@ -14,7 +14,7 @@
                         <div class="name text-nowrap mt-1">{{ contact.name }}</div>
                         <div class="message-short-text title-line-cap mt-2"
                              v-if="contact.last"
-                             v-html="(contact.last.from==user.id?'You: ':'' ) + contact.last.text">
+                             v-html="(contact.last.from==user.id?`${lang('messenger.you')}: `:'' ) + contact.last.text">
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                 if (!this.loaded) {
                     if (shared().chat) {
                         this.selected = contacts.find((contact) => contact.id == shared().chat)
-                    } else {
+                    } else if (window.innerWidth > 991) {
                         this.selected = contacts[0]
                     }
                     this.$emit('selected', this.selected)

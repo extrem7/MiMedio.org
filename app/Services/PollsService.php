@@ -15,7 +15,7 @@ class PollsService
         $poll = $user->ownPoll;
 
         if ($poll !== null) {
-            $poll->voted = Auth::user()->hasVoted($poll->id);
+            $poll->voted = Auth::getUser()->hasVoted($poll->id);
 
             $answers = $this->getAnswers($poll);
             share(compact('poll', 'answers'));
@@ -23,7 +23,7 @@ class PollsService
             if (Auth::check()) {
                 share([
                     'logged_in' => true,
-                    'voted' => Auth::user()->hasVoted($poll->id)
+                    'voted' => Auth::getUser()->hasVoted($poll->id)
                 ]);
             }
         }

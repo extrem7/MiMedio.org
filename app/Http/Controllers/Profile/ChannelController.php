@@ -63,6 +63,6 @@ class ChannelController extends Controller
             $user->addMedia($request->file('logo'))->toMediaCollection('logo');
         }
 
-        return redirect()->back()->with('status', 'Channel has been successfully updated.');
+        return redirect()->back()->with('status', trans('mimedio.profile.channel.updated'));
     }
 }
