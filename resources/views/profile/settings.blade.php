@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <div
-                        class="label mb-1">@lang('mimedio.auth.forms.email'){{!$user->has_password?trans('mimedio.profile.settings.no_password') :''}}</div>
+                        class="label mb-1">@lang('mimedio.auth.forms.email') {!! !$user->has_password?trans('mimedio.profile.settings.no_password') :''!!}</div>
                     <input id="email" type="email"
                            class="form-control {{valid_class('email',$errors)}}" name="email"
                            value="{{ old('email',$user->email) }}" required placeholder="@lang('mimedio.auth.forms.email')"
