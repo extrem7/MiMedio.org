@@ -30,7 +30,7 @@
     export default {
         data() {
             return {
-                user: this.shared('randomFollowing')
+                user: this.shared('randomFollowing') || null
             }
         }
     }

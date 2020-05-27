@@ -99,10 +99,12 @@ class MiMedioServiceProvider extends ServiceProvider
             $randomFollowing = $user->followings()->limit(1)->inRandomOrder()->with(['posts' => function ($query) {
                 $query->published()->limit(5);
             }])->first();
-            $randomFollowing->load('logoImage');
-            share([
-                'randomFollowing' => $randomFollowing
-            ]);
+            if ($randomFollowing != null) {
+                $randomFollowing->load('logoImage');
+                share([
+                    'randomFollowing' => $randomFollowing
+                ]);
+            }
         });
     }
 
