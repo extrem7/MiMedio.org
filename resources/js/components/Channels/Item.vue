@@ -51,7 +51,7 @@
         },
         data() {
             return {
-                disabled: this.shared('user') !== null && channel.id === this.shared('user').id
+                disabled: this.shared('user') !== null && this.channel.id === this.shared('user').id
             }
         },
         components: {

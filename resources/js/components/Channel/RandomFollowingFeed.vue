@@ -1,5 +1,5 @@
 <template>
-    <div class="article-collapse mt-4">
+    <div class="article-collapse mb-4">
         <div class="box-shadow-content channel-box">
             <a :href="user.link" class="channel-img">
                 <img :src="user.logo" :alt="user.name">

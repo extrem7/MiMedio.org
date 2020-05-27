@@ -37,10 +37,10 @@
                     </button>
                 </div>
             </div>
-            <div class="date-info bottom-line d-flex align-items-center justify-content-center mb-2">
+            <div class="date-info bottom-line d-flex align-items-center mb-2">
                 {{post.date_dots}}
                 <a v-if="showAuthor" :href="post.author.link" class="profile-link title-nowrap">{{post.author.name}}</a>
-                <div v-if="showViews"  class="item ml-2"><i class="far fa-eye mr-1"></i>{{post.views}}</div>
+                <div v-if="showViews" class="item ml-2"><i class="far fa-eye mr-1"></i>{{post.views}}</div>
             </div>
             <div class="article-short-text title-line-cap" v-html="post.excerpt"></div>
         </div>
