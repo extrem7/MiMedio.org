@@ -5,16 +5,11 @@
             <div class="blue-color title-error">404</div>
         </div>
         <div class="ml-25 error-text">
-            <div class="large-size blue-color">Page is not found</div>
+            <div class="large-size blue-color">@lang('mimedio.404.title')</div>
             <div class="mt-2">
-                change your search query
-                or go to the <br> <a href="{{route('home')}}" class="link">home page</a>
+                @lang('mimedio.404.text') <br> <a href="{{route('home')}}" class="link">@lang('mimedio.404.home')</a>
             </div>
-            <div class="mt-2">
-                The URL or its content was either deleted
-                or moved (without adjusting any internal l
-                inks accordingly)
-            </div>
+            <div class="mt-2">@lang('mimedio.404.description')</div>
         </div>
     </div>
 @endsection
