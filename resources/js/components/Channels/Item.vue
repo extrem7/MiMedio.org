@@ -8,7 +8,7 @@
                 <follow-button :user_id="channel.id"
                                :initial_following="!!channel.is_following"
                                :initial_followers="channel.followers_count"
-                               :disabled="channel.id===shared('user').id">
+                               :disabled="disabled">
                 </follow-button>
             </div>
         </div>
@@ -48,6 +48,11 @@
     export default {
         props: {
             channel: Object
+        },
+        data() {
+            return {
+                disabled: this.shared('user') !== null && channel.id === this.shared('user').id
+            }
         },
         components: {
             FollowButton,
