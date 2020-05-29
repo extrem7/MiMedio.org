@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Posts;
 
 use App\Http\Requests\PostRequest;
 use Butschster\Head\Packages\Entities\OpenGraphPackage;
+use Butschster\Head\Packages\Entities\TwitterCardPackage;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -61,13 +62,22 @@ class PostsController extends BaseController
 
     public function show(User $user, Post $post)
     {
-        $og = new OpenGraphPackage('post');
+        $og = new OpenGraphPackage('facebook');
         $og->setType('article')
             ->setTitle($post->title)
             ->setDescription(strip_tags($post->excerpt))
             ->addImage($post->thumbnail)
             ->setUrl($post->link);
         $this->meta->registerPackage($og);
+
+        $twitterCard = new TwitterCardPackage('twitter');
+        $twitterCard->setType('http://mimedio.org/')
+            ->setSite(config('app.url'))
+            ->setTitle($post->title)
+            ->setDescription(strip_tags($post->excerpt))
+            ->addImage($post->thumbnail)
+            ->addMeta('url', $post->link);
+        $this->meta->registerPackage($twitterCard);
 
         $this->meta->prependTitle($post->title);
 
@@ -105,7 +115,7 @@ class PostsController extends BaseController
         }
 
         if ($post) {
-            return redirect()->back()->with('status',  trans('mimedio.profile.post.updated'));
+            return redirect()->back()->with('status', trans('mimedio.profile.post.updated'));
         } else {
             return back()->withErrors('msg', "Error")->withInput();
         }
