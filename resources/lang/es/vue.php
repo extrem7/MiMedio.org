@@ -2,65 +2,65 @@
 
 return [
     'channel' => [
-        'shared' => 'Shared news',
+        'shared' => 'Compartir noticia',
         'categories' => [
-            'news' => 'news',
-            'see_all' => 'See all news'
+            'news' => 'Noticias',
+            'see_all' => 'Ver todas las noticias'
         ],
         'poll' => [
-            'title' => 'What our users think',
-            'you_voted' => 'You voted for it',
-            'vote' => 'Vote',
-            'please' => 'Please',
+            'title' => 'Qué piensan los usuarios',
+            'you_voted' => 'Yo voto por',
+            'vote' => 'Voto',
+            'please' => 'Por favor',
             'login' => 'login',
-            'or' => 'or',
-            'register' => 'register',
-            'to_vote' => 'to vote'
+            'or' => 'o',
+            'register' => 'registrar',
+            'to_vote' => 'votar'
         ],
         'rss' => [
             'title' => 'rss news feed'
         ],
     ],
     'channels' => [
-        'followers' => 'followers',
+        'followers' => 'seguidores',
         'posts' => 'posts',
-        'likes' => 'likes',
-        'dislikes' => 'dislikes',
-        'shares' => 'shares',
+        'likes' => 'me gusta',
+        'dislikes' => 'no me gusta',
+        'shares' => 'compartido',
     ],
     'comments' => [
-        'reply' => 'REPLY',
-        'cancel_reply' => 'CANCEL REPLY',
-        'last' => 'Last Comments'
+        'reply' => 'RESPONDER',
+        'cancel_reply' => 'CANCELAR RESPUESTA',
+        'last' => 'últimos comentarios'
     ],
     'messenger' => [
-        'new_message' => 'New message from',
-        'you' => 'You',
-        'back' => 'Back to list users',
-        'send' => 'Send',
-        'sent' => 'Message with link has been sent.'
+        'new_message' => 'Nuevo mensaje de',
+        'you' => 'tu',
+        'back' => 'Volver a la lista de usuarios',
+        'send' => 'Enviar',
+        'sent' => 'Tu mensaje ha sido enviado.'
     ],
     'posts' => [
         'copy' => [
-            'copy' => 'Copy',
+            'copy' => 'Copiar',
             'link' => 'link',
-            'link_to' => 'Link to this',
-            'copied' => 'has been copied to the clipboard.'
+            'link_to' => 'Enlazar a',
+            'copied' => 'Ha sido copiado.'
         ],
-        'follow' => 'Follow',
-        'unfollow' => 'Unfollow',
-        'sure' => 'Are you sure?',
-        'share' => 'Share',
-        'share_messenger' => 'Share in Message',
-        'share_feed' => 'Share in My Feed',
-        'shared' => 'This post has been shared to your channel.',
-        'deleted' => 'Post has been deleted.',
+        'follow' => 'Seguir',
+        'unfollow' => 'Dejar de Seguir',
+        'sure' => 'Estás seguro?',
+        'share' => 'Compartir',
+        'share_messenger' => 'Compartir como mensaje',
+        'share_feed' => 'Compartir en tu medio',
+        'shared' => 'El post ha sido compartido en tu canal.',
+        'deleted' => 'El post ha sido borrado.',
     ],
     'rss' => [
-        'save' => 'Add to My Media',
-        'remove' => 'Remove from My Media',
-        'saved' => 'Rss has been saved to your Media.',
-        'removed' => 'Rss has been removed from your Media',
-        'no_more' => 'You can add no more than two medias.'
+        'save' => 'Agregar a Mi Medio',
+        'remove' => 'Remover de Mi Medio',
+        'saved' => 'Rss ha sido guardado en tu  Medio.',
+        'removed' => 'Rss ha sido removido de tu Medio',
+        'no_more' => 'No se pueden agregar más de dos medios.'
     ],
 ];

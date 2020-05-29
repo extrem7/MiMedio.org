@@ -19,12 +19,12 @@ class SocialController extends Controller
     public function callback($provider)
     {
         $userSocial = Socialite::driver($provider)->user();
-
+        /* @var $registered User */
         $registered = User::where(['email' => $userSocial->getEmail()])->first();
         if (!$registered) $registered = User::where(['provider_id' => $userSocial->getId()])->first();
 
         if ($registered) {
-            Auth::login($registered);
+            Auth::login($registered, true);
             return redirect()->route('home');
         } else {
             $user = User::create([

@@ -1,5 +1,5 @@
 <template>
-    <div class="vote box-rounded" v-if="poll">
+    <div class="vote box-rounded mb-4" v-if="poll">
         <div class="title-semi-bold blue-color medium-size">{{lang('channel.poll.title')}}</div>
         <div class="title-dark semi-bold mt-2">{{poll.question}}</div>
         <div class="progress-bars">
