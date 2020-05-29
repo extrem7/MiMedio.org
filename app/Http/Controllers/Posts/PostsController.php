@@ -71,7 +71,7 @@ class PostsController extends BaseController
         $this->meta->registerPackage($og);
 
         $twitterCard = new TwitterCardPackage('twitter');
-        $twitterCard->setType('http://mimedio.org/')
+        $twitterCard->setType('summary')
             ->setSite(config('app.url'))
             ->setTitle($post->title)
             ->setDescription(strip_tags($post->excerpt))
