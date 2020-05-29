@@ -72,7 +72,7 @@ class PostsController extends BaseController
 
         $twitterCard = new TwitterCardPackage('twitter');
         $twitterCard->setType('summary')
-           // ->setSite(config('app.url'))
+            ->setSite('@el_ciudadano')
             ->setTitle($post->title)
             ->setDescription(strip_tags($post->excerpt))
             ->addImage($post->thumbnail)
