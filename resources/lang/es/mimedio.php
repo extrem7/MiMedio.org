@@ -11,10 +11,9 @@ return [
         'search' => 'Search news',
         'login/register' => 'Login/Registrarse',
         'dropdown' => [
-            'my_channel' => 'Mi medio',
-            'all_channels' => 'Canales',
             'edit_profile' => 'Editar Perfil',
-            'edit_channel' => 'Editar Canal',
+            'all_channels' => 'Canales',
+            'edit_channel' => 'Editar mi medio',
             'posts' => 'Mis posts',
             'playlist' => 'Mis videos',
             'poll' => 'Mi Encuesta',

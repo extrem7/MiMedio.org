@@ -1,7 +1,7 @@
 <header class="header ">
     <div class="container d-flex align-items-center justify-content-between">
         <a href="{{route('home')}}" class="logo"><img src="{{get_image('logo')}}" class="img-fluid" alt="logo-site"></a>
-        <a href="{{route(Auth::check()?'posts.create':'join')}}"
+        <a href="{{route(Auth::check()?'settings.channel':'join')}}"
            class="button btn-yellow b-lg sm-size mx-164 btn-transform d-none d-md-block">@lang('mimedio.header.create_post')</a>
         @include('includes.search')
         <div class="d-flex align-items-center">
@@ -39,7 +39,7 @@
                         <span class="profile-name">{{Auth::getUser()->name}}</span>
                     </a>
                     <div class="dropdown-menu dropdown-account dropdown-menu-right">
-                        <a href="{{Auth::getUser()->link}}" class="dropdown-item">@lang('mimedio.header.dropdown.my_channel')</a>
+                        <a href="{{route('settings.channel')}}" class="dropdown-item">@lang('mimedio.header.dropdown.edit_channel')</a>
                         <a href="{{route('users.index')}}" class="dropdown-item d-block d-lg-none">@lang('mimedio.header.dropdown.all_channels')</a>
                         <a href="{{route('settings.page')}}" class="dropdown-item">@lang('mimedio.header.dropdown.edit_profile')</a>
                         <a href="{{route('settings.channel')}}" class="dropdown-item">@lang('mimedio.header.dropdown.edit_channel')</a>
