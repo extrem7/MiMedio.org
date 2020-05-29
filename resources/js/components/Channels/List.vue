@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row justify-content-center">
         <channel v-for="channel in channels" :key="channel.id" :channel="channel"></channel>
         <infinite-loading @infinite="load">
             <div slot="no-more"></div>
