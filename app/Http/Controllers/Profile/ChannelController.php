@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChannelRequest;
 use App\Services\RssFeedsService;
+use App\Services\RssService;
 use Auth;
 
 class ChannelController extends Controller
 {
-    public function page(RssFeedsService $rssFeedsService)
+    public function page(RssFeedsService $rssFeedsService, RssService $rssService)
     {
         $this->meta->prependTitle('Channel settings');
 
@@ -26,12 +27,15 @@ class ChannelController extends Controller
         $logo = $user->getLogo();
 
         $rssFeeds = $rssFeedsService->get($channel);
+        $rssChannels = $rssService->get();
+
+        $user->load('followings');
 
         share([
             'rssFeeds' => $rssFeeds
         ]);
 
-        return view('profile.channel', compact('user', 'facebook', 'instagram', 'twitter', 'logo'));
+        return view('profile.channel', compact('user', 'channel', 'facebook', 'instagram', 'twitter', 'rssChannels', 'logo'));
     }
 
     public function update(ChannelRequest $request)

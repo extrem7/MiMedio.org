@@ -52,6 +52,15 @@ class RssService
         return $items;
     }
 
+    public function getById(int $id)
+    {
+        $channels = $this->get();
+        $index = collect($this->get())->search(function ($channel) use ($id) {
+            return $channel->id == $id;
+        });
+        return $index !== false ? $channels[$index] : null;
+    }
+
     public function getForUser(User $user = null)
     {
         if ($user === null) {

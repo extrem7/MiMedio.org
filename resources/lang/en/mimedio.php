@@ -113,6 +113,8 @@ return [
             'title' => 'Channel settings',
             'updated' => 'Channel has been successfully updated.',
             'slug' => 'Url slug of channel (mimedio.org/channel/{slug})',
+            'rss_to_show' => 'Show Rss Channel in Mi Medio',
+            'following_to_show' => 'Show Following in Mi Medio',
             'rss_feeds' => 'Rss feeds in Mi Media',
             'design' => 'Design of my channel',
             'logo' => 'Channel logo',

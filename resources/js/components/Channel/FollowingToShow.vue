@@ -13,12 +13,12 @@
                     <div class="collapse-wrapper">
                         <a :href="post.link" class="article-title title-line-cap">{{post.title}}</a>
                     </div>
-                    <div class="title-dark extra-small-size date">{{post.date | moment("HH:mm")}}</div>
+                    <div class="title-dark extra-small-size date">{{post.created_at | moment("HH:mm")}}</div>
                 </div>
             </div>
             <b-collapse :id="'article-'+post.id" :accordion="'accordion-'+user.id">
                 <div class="box-rounded border-top-0">
-                    <div class="box-date mb-2">{{post.date | moment("DD.MM.YYYY")}}</div>
+                    <div class="box-date mb-2">{{post.date_dots}}</div>
                     <div class="article-short-text title-line-cap" v-html="post.excerpt"></div>
                 </div>
             </b-collapse>
@@ -30,7 +30,7 @@
     export default {
         data() {
             return {
-                user: this.shared('randomFollowing') || null
+                user: this.shared('followingToShow') || null
             }
         }
     }

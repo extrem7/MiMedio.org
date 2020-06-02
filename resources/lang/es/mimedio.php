@@ -112,6 +112,8 @@ return [
             'title' => 'Ajustes del Canal',
             'updated' => 'El Canal ha sido exitosamente actualizado.',
             'slug' => 'Url nombre del canal (mimedio.org/channel/{slug})',
+            'rss_to_show' => 'Mostrar Canal RSS en Mi Medio',
+            'following_to_show' => 'Mostrar Seguidor en Mi Medio',
             'rss_feeds' => 'Rss feeds en Mi Medio',
             'design' => 'Diseño de mi canal',
             'logo' => 'Logo del Canal',

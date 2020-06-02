@@ -96,13 +96,12 @@ class MiMedioServiceProvider extends ServiceProvider
             $pollsService = app(PollsService::class);
             $pollsService->sharePoll($user);
             /* @var User $randomFollowing */
-            $randomFollowing = $user->followings()->limit(1)->inRandomOrder()->with(['posts' => function ($query) {
+            $followingToShow = $user->channel->followingToShow()->with(['logoImage', 'avatarImage', 'posts' => function ($query) {
                 $query->published()->limit(5);
             }])->first();
-            if ($randomFollowing != null) {
-                $randomFollowing->load('logoImage');
+            if ($followingToShow != null) {
                 share([
-                    'randomFollowing' => $randomFollowing
+                    'followingToShow' => $followingToShow
                 ]);
             }
         });

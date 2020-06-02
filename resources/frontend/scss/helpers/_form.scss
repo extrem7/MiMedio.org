@@ -139,6 +139,12 @@
     background-color: #fff;
     color: #444444;
   }
+  &.btn-transform {
+    background-color: #444444;
+    &:after {
+      background-color: #fff;
+    }
+  }
 }
 
 .btn-silver-light {

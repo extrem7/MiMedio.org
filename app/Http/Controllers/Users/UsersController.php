@@ -51,14 +51,12 @@ class UsersController extends Controller
 
         $rssFeeds = $rssFeedsService->getActive($channel);
 
-        $savedRss = $rssService->getForUser($user);
-
         share([
             'channel' => $user,
             'sharedPosts' => $shared,
             'categoriesWithPosts' => $categoriesWithPosts,
             'rssFeeds' => $rssFeeds,
-            'savedRss' => $savedRss->isNotEmpty() ? $savedRss->random() : null,
+            'rss_to_show' => $channel->rss_to_show ? $rssService->getById($channel->rss_to_show) : null,
         ]);
 
         return view('users.show', compact('user', 'channel', 'posts', 'categoriesWithPosts'));

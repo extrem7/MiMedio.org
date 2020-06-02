@@ -30,7 +30,7 @@ import Poll from './Channel/Poll'
 
 import RssItem from "./Rss/Item"
 import RssFeedsList from "./Channel/RssFeedsList"
-import RandomFollowingFeed from "./Channel/RandomFollowingFeed"
+import FollowingToShow from "./Channel/FollowingToShow"
 import SharedList from "./Channel/SharedList"
 import CategoriesList from "./Channel/CategoriesList"
 
@@ -69,7 +69,7 @@ export default {
 
     RssItem,
     RssFeedsList,
-    RandomFollowingFeed,
+    FollowingToShow,
     SharedList,
     CategoriesList,
 

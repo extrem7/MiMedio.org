@@ -50,10 +50,43 @@
                               class="control-form {{valid_class('embed.twitter',$errors)}}">{{old('embed.twitter',$twitter)}}</textarea>
                     @include('includes.field-error',['error'=>'embed.twitter'])
                 </div>
+                <div class="form-group">
+                    <div class="label mb-1">@lang('mimedio.profile.channel.rss_to_show')</div>
+                    <select
+                        class="control-form custom-select mt-2 mx-365 {{valid_class('rss_to_show',$errors)}}"
+                        name="rss_to_show">
+                        <option value="" selected>Choose</option>
+                        @foreach($rssChannels as $rssChannel)
+                            <option
+                                value="{{$rssChannel->id}}"
+                                {{selected(old('rss_to_show',$channel->rss_to_show)==$rssChannel->id)}}>
+                                {{$rssChannel->name}}
+                            </option>
+                        @endforeach
+                    </select>
+                    @include('includes.field-error',['error'=>'rss_to_show'])
+                </div>
+                <div class="form-group">
+                    <div class="label mb-1">@lang('mimedio.profile.channel.following_to_show')</div>
+                    <select
+                        class="control-form custom-select mt-2 mx-365 {{valid_class('following_to_show_id',$errors)}}"
+                        name="following_to_show_id">
+                        <option value="" selected>Choose</option>
+                        @foreach($user->followings as $following)
+                            <option
+                                value="{{$following->id}}"
+                                {{selected(old('following_to_show_id',$channel->following_to_show_id)==$following->id)}}>
+                                {{$following->name}}
+                            </option>
+                        @endforeach
+                    </select>
+                    @include('includes.field-error',['error'=>'following_to_show'])
+                </div>
                 <div class="label mb-1">@lang('mimedio.profile.channel.rss_feeds')</div>
                 <rss-feeds></rss-feeds>
                 <div class="text-center text-md-left">
-                    <button class="button btn-blue btn-transform mx-164 mt-4">@lang('mimedio.profile.settings.save')</button>
+                    <button
+                        class="button btn-blue btn-transform mx-164 mt-4">@lang('mimedio.profile.settings.save')</button>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 design-channel">
@@ -69,7 +102,8 @@
                         </div>
                         <div class="custom-file {{valid_class('logo',$errors)}}">
                             <input type="file" class="custom-file-input" id="logo" name="logo">
-                            <label class="custom-file-label" for="logo">@lang('mimedio.profile.channel.upload_logo')</label>
+                            <label class="custom-file-label"
+                                   for="logo">@lang('mimedio.profile.channel.upload_logo')</label>
                         </div>
                         @include('includes.field-error',['error'=>'logo'])
                     </div>
@@ -79,7 +113,8 @@
                     </div>
                     @include('includes.field-error',['error'=>'color'])
                     <div class="text-center">
-                        <button class="button btn-blue btn-transform mx-164">@lang('mimedio.profile.settings.save')</button>
+                        <button
+                            class="button btn-blue btn-transform mx-164">@lang('mimedio.profile.settings.save')</button>
                     </div>
                 </div>
             </div>
