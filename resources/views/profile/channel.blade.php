@@ -35,11 +35,10 @@
                     @include('includes.field-error',['error'=>'embed.facebook'])
                 </div>
                 <div class="form-group">
-                    <div class="label mb-1">Instagram embed (<a href="https://lightwidget.com/" target="_blank">create
-                            embed code</a>)
+                    <div class="label mb-1">Instagram embed (pasado su enlace de instagram)
                     </div>
-                    <textarea name="embed[instagram]" rows="7"
-                              class="control-form {{valid_class('embed.instagram',$errors)}}">{{old('embed.instagram',$instagram)}}</textarea>
+                    <input name="embed[instagram]" class="control-form {{valid_class('embed.instagram',$errors)}}"
+                           value="{{old('embed.instagram',$instagram)}}">
                     @include('includes.field-error',['error'=>'embed.instagram'])
                 </div>
                 <div class="form-group">

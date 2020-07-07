@@ -61,6 +61,43 @@
   }
 }
 
+.gallery-widget {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gallery-widget-item {
+  padding: 5px;
+  width: 33%;
+  height: 160px;
+  img {
+    object-fit: cover;
+  }
+}
+
+.widget-account {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.widget-account-avatar {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  object-position: top;
+}
+
+.widget-account-name {
+  margin-left: 15px;
+  font-weight: 700;
+  &:hover {
+    color: $yellow;
+  }
+}
+
 .custom-tab {
   display: flex ;
   align-items: center;
@@ -432,6 +469,16 @@
     .title-dark {
       font-size: 13px;
     }
+  }
+
+  .widget-account-avatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .gallery-widget-item {
+    width: 50%;
+    height: 140px;
   }
 }
 

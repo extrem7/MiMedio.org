@@ -24,6 +24,7 @@ class ChannelRequest extends FormRequest
             'slug' => ['nullable', 'string', 'min:3', 'unique:users,slug,' . $this->user()->id],
             'embed' => 'nullable|array',
             'embed.*' => ['nullable', 'string'],
+            'embed.instagram' => ['nullable', 'url', 'regex:/^https:\/\/www\.instagram\.com\//'],
             'rss_to_show' => ['nullable', 'numeric', function ($attribute, $value, $fail) use ($rssChannels) {
                 if (!$rssChannels->contains($value)) $fail('Rss channel is invalid.');
             }],

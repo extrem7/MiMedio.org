@@ -25,7 +25,7 @@ mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/admin/we
 mix.sass('resources/sass/app.scss', 'public/assets/css/').version()
 mix.sass('resources/frontend/scss/main.scss', 'public/assets/css/').version()
 
-mix.js('resources/js/app.js', 'public/assets/js/').version()
+mix.js('resources/js/app.js', 'public/assets/js/').version().sourceMaps()
 
 mix.scripts([
     'node_modules/jquery/dist/jquery.min.js',

@@ -50,8 +50,8 @@ class ChannelController extends Controller
 
         if ($data['color'] == '2c95d8') unset($data['color']);
 
-        if (in_array(null, [$data['embed']['facebook'], $data['embed']['instagram'], $data['embed']['twitter']]))
-            $data['embed'] = null;
+        /*if (in_array(null, [$data['embed']['facebook'], $data['embed']['instagram'], $data['embed']['twitter']]))
+            $data['embed'] = null;*/
 
         if ($data['embed'] !== null) {
             $data['embed'] = collect($data['embed'])->map(function ($embed) {

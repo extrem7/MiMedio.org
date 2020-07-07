@@ -51,6 +51,26 @@ class UsersController extends Controller
 
         $rssFeeds = $rssFeedsService->getActive($channel);
 
+        $photos = [];
+        if (isset($channel->embed['instagram'])) {
+            $photos = \Cache::remember('instagram-' . $user->id, now()->addHour(), function () use ($channel) {
+                try {
+                    $json = json_decode(file_get_contents($channel->embed['instagram'] . '?__a=1'));
+                    $profile = $json->graphql->user;
+                    $photos = $profile->edge_owner_to_timeline_media->edges;
+                    return array_map(function ($element) {
+                        $photo = $element->node;
+                        return [
+                            'src' => $photo->thumbnail_resources[1]->src,
+                            'code' => $photo->shortcode
+                        ];
+                    }, $photos);
+                } catch (\Exception $e) {
+
+                }
+            });
+        }
+
         share([
             'channel' => $user,
             'sharedPosts' => $shared,
@@ -59,6 +79,6 @@ class UsersController extends Controller
             'rss_to_show' => $channel->rss_to_show ? $rssService->getById($channel->rss_to_show) : null,
         ]);
 
-        return view('users.show', compact('user', 'channel', 'posts', 'categoriesWithPosts'));
+        return view('users.show', compact('user', 'channel', 'posts', 'photos', 'categoriesWithPosts'));
     }
 }

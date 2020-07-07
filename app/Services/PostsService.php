@@ -23,7 +23,7 @@ class PostsService
             $page = request()->get('page') ?? 1;
             $per_page = $this->perPage();
             $posts = $relation->paginate($per_page, $page);
-            if ($posts->count() === 0 && navIsRoute('profile.posts.index')) abort(404);
+            if ($posts->count() === 0 && !navIsRoute('profile.posts.index')) abort(404);
         } else {
             return $relation->get();
         }

@@ -223,4 +223,5 @@ $(function () {
     })
     share()
     horizontalScroll()
+    $('.tab-pane:first').addClass('show').addClass('active')
 })

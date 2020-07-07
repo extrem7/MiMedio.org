@@ -1,7 +1,7 @@
 @php
     /* @var $channel App\Models\Channel */
 @endphp
-@if($channel->embed !== null && isset($channel->embed['facebook'],$channel->embed['instagram'],$channel->embed['twitter']))
+@if($channel->embed !== null && (isset($channel->embed['facebook'])||isset($channel->embed['instagram'])||isset($channel->embed['twitter'])))
     <section class="social-network mt-3 mt-md-5">
         <div class="title-semi-bold blue-color medium-size mb-4">@lang('mimedio.channels.social')</div>
         <div class="nav custom-tab horizontal-overflow">
@@ -21,9 +21,15 @@
                     </div>
                 </div>
             @endif
-            @if(isset($channel->embed['instagram']))
+            @if(isset($channel->embed['instagram']) && !empty($photos))
                 <div class="tab-pane fade" id="instagram" role="tabpanel">
-                    {!!$channel->embed['instagram']!!}
+                    <div class="gallery-widget">
+                        @foreach($photos as $photo)
+                            <a href="https://www.instagram.com/p/{{$photo['code']}}" target="_blank" class="gallery-widget-item">
+                                <img src="{{$photo['src']}}" class="img-fit" alt="alt">
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
             @endif
             @if(isset($channel->embed['twitter']))
