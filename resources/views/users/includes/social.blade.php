@@ -21,15 +21,9 @@
                     </div>
                 </div>
             @endif
-            @if(isset($channel->embed['instagram']) && !empty($photos))
+            @if(isset($channel->embed['instagram']))
                 <div class="tab-pane fade" id="instagram" role="tabpanel">
-                    <div class="gallery-widget">
-                        @foreach($photos as $photo)
-                            <a href="https://www.instagram.com/p/{{$photo['code']}}" target="_blank" class="gallery-widget-item">
-                                <img src="{{$photo['src']}}" class="img-fit" alt="alt">
-                            </a>
-                        @endforeach
-                    </div>
+                    {!! $channel->embed['instagram'] !!}
                 </div>
             @endif
             @if(isset($channel->embed['twitter']))
