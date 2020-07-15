@@ -21,6 +21,7 @@ class MiMedioServiceProvider extends ServiceProvider
 
     public function boot()
     {
+
         $this->sharedData();
 
         $this->viewComposer();

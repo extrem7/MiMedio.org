@@ -52,22 +52,22 @@ class UsersController extends Controller
         $rssFeeds = $rssFeedsService->getActive($channel);
 
         $photos = [];
-        if (isset($channel->embed['instagram'])) {
+        if ($channel->instagram !== null && !empty($channel->instagram)) {
             $photos = \Cache::remember('instagram-' . $user->id, now()->addHour(), function () use ($channel) {
-                try {
-                    $json = json_decode(file_get_contents($channel->embed['instagram'] . '?__a=1'));
-                    $profile = $json->graphql->user;
-                    $photos = $profile->edge_owner_to_timeline_media->edges;
-                    return array_map(function ($element) {
-                        $photo = $element->node;
+                $photos = array_map(function ($link) {
+                    try {
+                        $json = json_decode(file_get_contents("https://api.instagram.com/oembed/?url=$link"));
                         return [
-                            'src' => $photo->thumbnail_resources[1]->src,
-                            'code' => $photo->shortcode
+                            'src' => $json->thumbnail_url,
+                            'link' => $link
                         ];
-                    }, $photos);
-                } catch (\Exception $e) {
-
-                }
+                    } catch (\Exception $exception) {
+                    }
+                    return null;
+                }, $channel->instagram);
+                return array_filter($photos, function ($photo) {
+                    return $photo !== null;
+                });
             });
         }
 

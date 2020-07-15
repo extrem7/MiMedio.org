@@ -17,11 +17,10 @@ class ChannelController extends Controller
         $user = Auth::getUser();
         $channel = $user->channel;
         $facebook = null;
-        $instagram = null;
+        $instagram = !empty($channel->instagram) ? $channel->instagram : [''];
         $twitter = null;
         if ($channel->embed !== null) {
             $facebook = $channel->embed['facebook'] ?? null;
-            $instagram = $channel->embed['instagram'] ?? null;
             $twitter = $channel->embed['twitter'] ?? null;
         }
         $logo = $user->getLogo();
@@ -50,6 +49,12 @@ class ChannelController extends Controller
 
         if ($data['color'] == '2c95d8') unset($data['color']);
 
+        if (!empty($data['instagram'])) {
+            $data['instagram'] = array_filter($data['instagram'], function ($link) {
+                return $link !== null;
+            });
+        }
+
         /*if (in_array(null, [$data['embed']['facebook'], $data['embed']['instagram'], $data['embed']['twitter']]))
             $data['embed'] = null;*/
 
@@ -61,6 +66,10 @@ class ChannelController extends Controller
         }
 
         $user->update(['slug' => $request->get('slug')]);
+
+        if ($user->channel->instagram !== $request->get('instagram'))
+            \Cache::delete('instagram-' . $user->id);
+
         $user->channel->update($data);
 
         if ($request->hasFile('logo')) {

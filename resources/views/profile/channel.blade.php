@@ -35,10 +35,22 @@
                     @include('includes.field-error',['error'=>'embed.facebook'])
                 </div>
                 <div class="form-group">
-                    <div class="label mb-1">Instagram embed (pasado su enlace de instagram)
+                    <div class="label mb-1">Instagram embed (pasado su enlace de instagram media)
                     </div>
-                    <input name="embed[instagram]" class="control-form {{valid_class('embed.instagram',$errors)}}"
-                           value="{{old('embed.instagram',$instagram)}}">
+                    <div class="repeater">
+                        @foreach(old('instagram',$instagram) as $row)
+                            <div class="form-group d-flex align-items-center repeater-video repeater-row">
+                                <input type="text" name="instagram[{{$loop->index}}]"
+                                       class="form-control @error('instagram.'.$loop->index) is-invalid @enderror"
+                                       value="{{$row}}"
+                                       placeholder="" {{$loop->index!==0?'required':''}}>
+                                <button class="icon delete-icon repeater-remove">
+                                    {!! get_svg('close') !!}
+                                </button>
+                            </div>
+                        @endforeach
+                    </div>
+                    <a href="#" class="link ml-2 repeater-add">Agregar un nuevo link</a>
                     @include('includes.field-error',['error'=>'embed.instagram'])
                 </div>
                 <div class="form-group">
@@ -124,6 +136,7 @@
 @push('scripts')
     <script>
         $(function () {
+            repeater()
             bsCustomFileInput.init();
         });
     </script>
