@@ -77,6 +77,7 @@ class UsersController extends Controller
             'categoriesWithPosts' => $categoriesWithPosts,
             'rssFeeds' => $rssFeeds,
             'rss_to_show' => $channel->rss_to_show ? $rssService->getById($channel->rss_to_show) : null,
+            'feeds_api' => config('mimedio.feeds_api')
         ]);
 
         return view('users.show', compact('user', 'channel', 'posts', 'photos', 'categoriesWithPosts'));

@@ -1,13 +1,13 @@
 <template>
     <draggable class="rss-categories" tag="ul" handle=".rss-drag">
-        <li v-for="({name},slug) in feeds" :key="slug">
+        <li v-for="({id,name,active}) in feeds" :key="id">
             <div class="item">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" name="rss_feeds[]" class="custom-control-input"
-                           v-model="feeds[slug].active"
-                           :id="`feed-item-${slug}`"
-                           :value="slug">
-                    <label class="custom-control-label" :for="`feed-item-${slug}`"></label>
+                           v-model="active"
+                           :id="`feed-item-${id}`"
+                           :value="id">
+                    <label class="custom-control-label" :for="`feed-item-${id}`"></label>
                 </div>
             </div>
             <div class="item label">{{name}}</div>

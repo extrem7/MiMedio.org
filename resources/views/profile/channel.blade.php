@@ -95,6 +95,7 @@
                 </div>
                 <div class="label mb-1">@lang('mimedio.profile.channel.rss_feeds')</div>
                 <rss-feeds></rss-feeds>
+                @include('includes.field-error',['error'=>'rss_feeds'])
                 <div class="text-center text-md-left">
                     <button
                         class="button btn-blue btn-transform mx-164 mt-4">@lang('mimedio.profile.settings.save')</button>

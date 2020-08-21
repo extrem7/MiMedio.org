@@ -1,6 +1,6 @@
 <template>
     <div class="rss-feeds-list">
-        <rss-feed v-for="({name,rss},slug) in rssFeeds" :key="slug" :name="name" :rss="rss"></rss-feed>
+        <rss-feed v-for="({name,id}) in rssFeeds" :key="id" :name="name" :category_id="id"></rss-feed>
     </div>
 </template>
 

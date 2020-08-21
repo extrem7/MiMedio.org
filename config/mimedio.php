@@ -19,5 +19,6 @@ return [
             'id' => 'ciudadanotv',
             'link' => 'https://www.youtube.com/channel/UCJrlV1drEWg2OEZFLUcFbTQ'
         ]
-    ]
+    ],
+    'feeds_api' => env('FEEDS_API')
 ];

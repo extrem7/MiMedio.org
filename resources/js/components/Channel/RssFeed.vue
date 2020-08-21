@@ -32,7 +32,7 @@
     export default {
         props: {
             name: String,
-            rss: Number
+            category_id: Number
         },
         data() {
             return {
@@ -47,7 +47,7 @@
                 if (this.page < this.lastPage) {
                     this.page += 1
                     try {
-                        const {posts} = await redmedial.rssFeed(this.rss, this.page)
+                        const {posts} = await redmedial.feed(this.category_id, this.page)
                         this.posts = this.posts.concat(posts)
                         $state.loaded()
                     } catch (e) {
@@ -59,7 +59,7 @@
             },
         },
         async created() {
-            const {posts, lastPage} = await redmedial.rssFeed(this.rss)
+            const {posts, lastPage} = await redmedial.feed(this.category_id)
             this.posts = posts
             this.lastPage = lastPage
         },

@@ -14,8 +14,8 @@ class RssFeedsService
     public function update()
     {
         $client = new Client();
-        $result = $client->request('GET', 'http://redmedial.com/wp-json/app/v1/mimedio/feeds');
-        return json_decode($result->getBody()->getContents(), true)['data'];
+        $result = $client->request('GET', config('mimedio.feeds_api') . '/categories');
+        return json_decode($result->getBody()->getContents(), true);
     }
 
     public function get(Channel $channel)
@@ -26,11 +26,11 @@ class RssFeedsService
         $rss_feeds = $channel->rss_feeds;
         if ($rss_feeds !== null) {
             $feeds = collect($feeds)->sortBy(function ($value, $key) use ($rss_feeds) {
-                $index = $rss_feeds->search($key);
+                $index = $rss_feeds->search($value['id']);
                 if ($index === false) return 100;
                 return $index;
             })->map(function ($feed, $key) use ($rss_feeds) {
-                if ($rss_feeds->contains($key)) {
+                if ($rss_feeds->contains($feed['id'])) {
                     $feed['active'] = true;
                 }
                 return $feed;
