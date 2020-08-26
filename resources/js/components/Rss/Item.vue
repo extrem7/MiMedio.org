@@ -2,7 +2,7 @@
     <div class="article-collapse">
         <div class="box-shadow-content channel-box">
             <a :href="link" class="channel-img" target="_blank">
-                <img :src="image" :alt="`rss item - ${id}`">
+                <img :src="logo" :alt="`rss item - ${id}`">
             </a>
             <i v-if="draggable" class="far fa-hand-rock handle"></i>
         </div>
@@ -38,7 +38,7 @@
     export default {
         props: {
             id: Number,
-            image: String,
+            logo: String,
             link: String,
             posts: Array,
             saved: Boolean,

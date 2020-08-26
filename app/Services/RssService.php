@@ -12,8 +12,8 @@ class RssService
     public function update()
     {
         $client = new Client();
-        $result = $client->request('GET', 'http://redmedial.com/wp-json/app/v1/home-rss');
-        $items = json_decode($result->getBody()->getContents())->data;
+        $result = $client->request('GET', config('mimedio.feeds_api') . '/channels');
+        $items = json_decode($result->getBody()->getContents());
         $items = collect($items)->map(function ($item) {
             $item->posts = collect($item->posts)->map(function ($post) {
                 $post->title = strip_tags($post->title);

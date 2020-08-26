@@ -6,7 +6,7 @@
      id="article-collapse-{{$item->id}}">
     <div class="box-shadow-content channel-box">
         <a href="{{$item->link}}" target="_blank" class="channel-img">
-            <img src="{{$item->image}}" alt="chanel logo">
+            <img src="{{$item->logo}}" alt="chanel logo">
         </a>
     </div>
     @if(!isset($home) || (isset($home) && $loop->index==0))
@@ -39,7 +39,7 @@
                 <div class="article-mini-card">
                     <div class="left-column">
                         <a href="{{$post->link}}" class="article-img">
-                            <img src="{{$post->image}}" alt="name-article">
+                            <img src="{{$post->thumbnail}}" alt="name-article">
                         </a>
                         <div class="divider"></div>
                     </div>
