@@ -15,6 +15,7 @@ return [
             'all_channels' => 'Canales',
             'edit_channel' => 'Editar mi medio',
             'posts' => 'Mis posts',
+            'add_post' => 'Create un post',
             'playlist' => 'Mis videos',
             'poll' => 'Mi Encuesta',
             'logout' => 'Salir'

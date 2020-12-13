@@ -16,6 +16,7 @@ return [
             'edit_profile' => 'Edit profile',
             'edit_channel' => 'Edit channel',
             'posts' => 'My posts',
+            'add_post' => 'Create a post',
             'playlist' => 'My playlist',
             'poll' => 'My poll',
             'logout' => 'Logout'

@@ -43,6 +43,7 @@
                         <a href="{{route('users.index')}}" class="dropdown-item d-block d-lg-none">@lang('mimedio.header.dropdown.all_channels')</a>
                         <a href="{{route('settings.page')}}" class="dropdown-item">@lang('mimedio.header.dropdown.edit_profile')</a>
                         <a href="{{route('profile.posts.index')}}" class="dropdown-item">@lang('mimedio.header.dropdown.posts')</a>
+                        <a href="{{route('posts.create')}}" class="dropdown-item">@lang('mimedio.header.dropdown.add_post')</a>
                         <a href="{{route('settings.playlist')}}" class="dropdown-item">@lang('mimedio.header.dropdown.playlist')</a>
                         <a href="{{route('poll.page')}}" class="dropdown-item">@lang('mimedio.header.dropdown.poll')</a>
                         <div class="dropdown-divider"></div>
