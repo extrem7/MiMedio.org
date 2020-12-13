@@ -31,7 +31,7 @@
                     </a>
                 </div>
                 <div class="mt-3">@lang('mimedio.footer.copyright')</div>
-                <div class="mt-3">@lang('mimedio.footer.dev') <a href="https://raxkor.com/" class="copyright" target="_blank">Raxkor</a>
+                <div class="mt-3 d-none">@lang('mimedio.footer.dev') <a href="https://raxkor.com/" class="copyright" target="_blank">Raxkor</a>
                 </div>
             </div>
             <div class="col-md-6">
