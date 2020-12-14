@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChannelRequest;
+use App\Models\User;
 use App\Services\RssFeedsService;
 use App\Services\RssService;
 use Auth;
@@ -16,8 +17,8 @@ class ChannelController extends Controller
 
         $user = Auth::getUser();
         $channel = $user->channel;
+
         $facebook = null;
-        $instagram = !empty($channel->instagram) ? $channel->instagram : [''];
         $twitter = null;
         if ($channel->embed !== null) {
             $facebook = $channel->embed['facebook'] ?? null;
@@ -34,11 +35,12 @@ class ChannelController extends Controller
             'rssFeeds' => $rssFeeds
         ]);
 
-        return view('profile.channel', compact('user', 'channel', 'facebook', 'instagram', 'twitter', 'rssChannels', 'logo'));
+        return view('profile.channel', compact('user', 'channel', 'facebook', 'twitter', 'rssChannels', 'logo'));
     }
 
     public function update(ChannelRequest $request)
     {
+        /* @var $user User */
         $user = Auth::getUser();
 
         $data = $request->except(['slug']);
@@ -47,7 +49,9 @@ class ChannelController extends Controller
             $data['rss_feeds'] = [];
         }
 
-        if ($data['color'] == '2c95d8') unset($data['color']);
+        if (isset($data['color']) && $data['color'] === '2c95d8') {
+            unset($data['color']);
+        }
 
         if (!empty($data['instagram'])) {
             $data['instagram'] = array_filter($data['instagram'], function ($link) {

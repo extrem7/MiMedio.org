@@ -27,6 +27,8 @@
         "mariuzzo/laravel-js-localization": "^1.6",
         "pusher/pusher-php-server": "^4.1",
         "qcod/laravel-app-settings": "^1.2",
+        "socialiteproviders/instagram": "^4.1",
+        "socialiteproviders/instagram-basic": "^4.1",
         "spatie/laravel-medialibrary": "^7.0.0",
         "staudenmeir/eloquent-eager-limit": "^1.0",
         "tightenco/ziggy": "^0.9.3"

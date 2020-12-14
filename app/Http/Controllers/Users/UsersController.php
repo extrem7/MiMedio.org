@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Services\PostsService;
 use App\Services\RssFeedsService;
 use App\Services\RssService;
+use Carbon\Carbon;
+use GuzzleHttp\Client;
 
 class UsersController extends Controller
 {
@@ -52,22 +54,29 @@ class UsersController extends Controller
         $rssFeeds = $rssFeedsService->getActive($channel);
 
         $photos = [];
-        if ($channel->instagram !== null && !empty($channel->instagram)) {
+
+        if ($channel->instagram && $channel->instagram->is_actual) {
             $photos = \Cache::remember('instagram-' . $user->id, now()->addHour(), function () use ($channel) {
-                $photos = array_map(function ($link) {
-                    try {
-                        $json = json_decode(file_get_contents("https://api.instagram.com/oembed/?url=$link"));
+                $client = new Client();
+                try {
+                    $response = $client->request('get', "https://graph.instagram.com/me/media", [
+                        'query' => [
+                            'fields' => 'media_url,thumbnail_url,permalink',
+                            'access_token' => $channel->instagram->token
+                        ]
+                    ]);
+                    $medias = json_decode($response->getBody()->getContents(), true)['data'];
+
+                    return array_map(function ($media) {
                         return [
-                            'src' => $json->thumbnail_url,
-                            'link' => $link
+                            'src' => $media['thumbnail_url'] ?? $media['media_url'],
+                            'link' => $media['permalink']
                         ];
-                    } catch (\Exception $exception) {
-                    }
-                    return null;
-                }, $channel->instagram);
-                return array_filter($photos, function ($photo) {
-                    return $photo !== null;
-                });
+                    }, $medias);
+                } catch (\Exception $e) {
+                    \Log::error('Instagram parsing error: ' . $e->getMessage());
+                    return [];
+                }
             });
         }
 

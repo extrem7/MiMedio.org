@@ -1,5 +1,6 @@
 @php
     /* @var $user App\Models\User
+    * @var $channel \App\Models\Channel
     * @var $logo
     */
 @endphp
@@ -35,23 +36,21 @@
                     @include('includes.field-error',['error'=>'embed.facebook'])
                 </div>
                 <div class="form-group">
-                    <div class="label mb-1">Instagram embed (pasado su enlace de instagram media)
+                    <div class="label mb-1">Instagram
+                        @if($instagram = $channel->instagram)
+                            <span class="{{$instagram->is_actual?'text-success':'text-danger'}}">
+                            ( {{$instagram->is_actual?'Actual':'Expired'}} )
+                            </span>
+                        @endif
                     </div>
-                    <div class="repeater">
-                        @foreach(old('instagram',$instagram) as $row)
-                            <div class="form-group d-flex align-items-center repeater-video repeater-row">
-                                <input type="text" name="instagram[{{$loop->index}}]"
-                                       class="form-control @error('instagram.'.$loop->index) is-invalid @enderror"
-                                       value="{{$row}}"
-                                       placeholder="" {{$loop->index!==0?'required':''}}>
-                                <button class="icon delete-icon repeater-remove">
-                                    {!! get_svg('close') !!}
-                                </button>
-                            </div>
-                        @endforeach
-                    </div>
-                    <a href="#" class="link ml-2 repeater-add">Agregar un nuevo link</a>
-                    @include('includes.field-error',['error'=>'embed.instagram'])
+                    <a href="{{route('auth.instagram.redirect')}}"
+                       class="button btn-blue btn-transform mx-164">
+                        {{$channel->instagram?'Reconnect':'Connect'}}
+                        Instagram
+                    </a>
+                    @if($instagram = $channel->instagram)
+                        <p class="mt-2">Expires at: {{$instagram->expires_at}}</p>
+                    @endif
                 </div>
                 <div class="form-group">
                     <div class="label mb-1">Twitter embed (<a href="https://publish.twitter.com/" target="_blank">create

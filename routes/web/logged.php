@@ -1,5 +1,8 @@
 <?php
 
+Route::get('auth/instagram/login', 'Auth\SocialController@redirectInstagram')->name('auth.instagram.redirect');
+Route::get('auth/instagram', 'Auth\SocialController@instagram');
+
 Route::prefix('/profile')->group(function () {
 
     Route::namespace('Profile')->group(function () {

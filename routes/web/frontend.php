@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @routeNamespace("App\Http\Controller")
+ */
+
 use App\Http\Middleware\Draft;
 
 Route::get('/', 'HomeController@index')->name('home');
