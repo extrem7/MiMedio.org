@@ -3,52 +3,33 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Butschster\Head\Facades\Meta;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\View\View;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers {
         showLoginForm as show;
     }
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
+    protected string $redirectTo = '/';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
+        parent::__construct();
+
         $this->middleware('guest')->except('logout');
     }
 
-    public function showLoginForm()
+    public function showLoginForm(): View
     {
-        Meta::prependTitle('Login');
+        $this->meta->prependTitle('Login');
         return $this->show();
     }
 
-    public function join()
+    public function join(): View
     {
-        Meta::prependTitle('Join With Us');
+        $this->meta->prependTitle('Join With Us');
         return view('auth.join');
     }
 }
