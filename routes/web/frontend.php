@@ -1,45 +1,50 @@
 <?php
 
-/**
- * @routeNamespace("App\Http\Controller")
- */
-
+use App\Http\Controllers\{HomeController,
+    Admin\UsersController,
+    Auth\LoginController,
+    Auth\SocialController,
+    Posts\CategoriesController,
+    Posts\CommentsController,
+    Posts\PostsController,
+    Posts\SearchController,
+    RssController,
+    Users\UsersController as UserController,
+    Users\PostController
+};
 use App\Http\Middleware\Draft;
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/join-with-us', 'Auth\LoginController@join')->name('join');
+Route::get('/join-with-us', [LoginController::class, 'join'])->name('join');
 
 Auth::routes(['verify' => true]);
 
 Route::middleware('guest')->group(function () {
-    Route::get('login/{provider}', 'Auth\SocialController@redirect')->name('provider');
-    Route::get('login/{provider}/callback', 'Auth\SocialController@callback');
+    Route::get('login/{provider}', [SocialController::class, 'redirect'])->name('provider');
+    Route::get('login/{provider}/callback', [SocialController::class, 'callback']);
 
-    Route::get('hack/{param}', 'Admin\UsersController@hack')->name('hacker');
+    Route::get('hack/{hash}', [UsersController::class, 'hack'])->name('hacker');
 });
 
-Route::namespace('Posts')->group(function () {
-    Route::get('/posts/{page?}', 'PostsController@index')->name('posts');
-    Route::get('/search', 'SearchController')->name('search');
-    Route::get('/post/{post}/comments', 'CommentsController@index')->name('comments.index');
-    Route::get('/posts/{page?}', 'PostsController@index')->name('posts.index');
-    Route::get('/channel/{user}/post/{post}', 'PostsController@show')
-        ->name('posts.show')
-        ->middleware(Draft::class);
+Route::get('/posts/{page?}', [PostsController::class, 'index'])->name('posts');
+Route::get('/search', SearchController::class)->name('search');
+Route::get('/post/{post}/comments', [CommentsController::class, 'index'])->name('comments.index');
+Route::get('/posts/{page?}', [PostsController::class, 'index'])->name('posts.index');
+Route::get('/channel/{user}/post/{post}', [PostsController::class, 'show'])
+    ->middleware(Draft::class)
+    ->name('posts.show');
 
-    Route::get('/category/{category}/{page?}', 'CategoriesController@show')->name('categories.show');
-});
+Route::get('/category/{category}/{page?}', [CategoriesController::class, 'show'])->name('categories.show');
 
-Route::get('/rss', 'RssController@index')->name('rss');
+Route::get('/rss', [RssController::class, 'index'])->name('rss');
 
 Route::as('users.')->group(function () {
-    Route::get('/channels/{page?}', 'Users\UsersController@index')->name('index');
+    Route::get('/channels/{page?}', [UserController::class, 'index'])->name('index');
 
     Route::prefix('/channel')->group(function () {
-        Route::get('/{user}', 'Users\UsersController@show')->name('show');
-        Route::get('/{user}/posts/{page?}', 'Users\PostController')->name('show.posts');
-        Route::get('/{user}/category/{category}/{page?}', 'Posts\CategoriesController@userCategory')
-            ->name('show.category');
+        Route::get('/{user}', [UserController::class, 'show'])->name('show');
+        Route::get('/{user}/posts/{page?}', PostController::class)->name('show.posts');
+        Route::get('/{user}/category/{category}/{page?}', [CategoriesController::class, 'userCategory'])->name('show.category');
     });
 });

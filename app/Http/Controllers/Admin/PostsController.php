@@ -33,6 +33,6 @@ class PostsController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->back()->with('status', "Post `$post->title` has been removed");
+        return back()->with('status', "Post `$post->title` has been removed");
     }
 }

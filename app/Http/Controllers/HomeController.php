@@ -3,44 +3,48 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
-use App\Models\Post;
 use App\Models\User;
 use App\Services\MessengerService;
 use App\Services\PostsService;
 use App\Services\RssService;
-use Auth;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
-    private $postsService;
+    private PostsService $postsService;
 
     public function __construct()
     {
         parent::__construct();
-        $this->postsService = new PostsService();
+
+        $this->postsService = app(PostsService::class);
     }
 
+    /* @return View|LengthAwarePaginator */
     public function index(RssService $rssService, MessengerService $messengerService)
     {
         $posts = $this->postsService->getHomeTimeLine();
 
-        if (request()->expectsJson()) return $posts;
+        if (request()->expectsJson()) {
+            return $posts;
+        }
 
         $this->meta->prependTitle('Social network');
         $rss = collect($rssService->get())->slice(0, 2);
         $chats = [];
         $followings = [];
 
-        if (Auth::check()) {
+        if ($user = \Auth::user()) {
 
-            if (Auth::getUser()->channel->saved_rss->isNotEmpty()) {
+            if ($user->channel->saved_rss->isNotEmpty()) {
                 $rss = $rssService->getForUser();
             }
 
             $chats = $messengerService->getChats();
 
-            Auth::getUser()->load('followings.avatarImage');
-            $followings = Auth::getUser()->followings;
+            $user->load('followings.avatarImage');
+            $followings = $user->followings;
         }
 
         share([
@@ -50,7 +54,7 @@ class HomeController extends Controller
         return view('pages.home', compact('rss', 'followings', 'chats'));
     }
 
-    public function messenger(MessengerService $messengerService, User $user = null)
+    public function messenger(MessengerService $messengerService, User $user = null): View
     {
         $this->meta->prependTitle('Messenger');
 

@@ -12,7 +12,7 @@ class RouteServiceProvider extends ServiceProvider
 {
     protected $namespace = 'App\Http\Controllers';
 
-    public function boot()
+    public function boot(): void
     {
         Route::pattern('page', '[0-9]+');
 
@@ -35,7 +35,7 @@ class RouteServiceProvider extends ServiceProvider
         });
     }
 
-    public function map()
+    public function map(): void
     {
         $this->mapApiRoutes();
 
@@ -44,21 +44,20 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapAdminRoutes();
     }
 
-    protected function mapFrontendRoutes()
+    protected function mapFrontendRoutes(): void
     {
         Route::middleware('web')
-            ->namespace($this->namespace)
             ->group(base_path('routes/web/frontend.php'));
     }
 
-    public function mapLoggedRoutes()
+    public function mapLoggedRoutes(): void
     {
         Route::middleware(['web', 'auth'])
             ->namespace($this->namespace)
             ->group(base_path('routes/web/logged.php'));
     }
 
-    public function mapAdminRoutes()
+    public function mapAdminRoutes(): void
     {
         Route::middleware(['web', 'auth'])
             ->namespace($this->namespace . '\Admin')
@@ -67,7 +66,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/web/admin.php'));
     }
 
-    protected function mapApiRoutes()
+    protected function mapApiRoutes(): void
     {
         Route::prefix('api')
             ->middleware('api')

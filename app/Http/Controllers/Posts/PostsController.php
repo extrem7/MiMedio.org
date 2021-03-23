@@ -8,15 +8,21 @@ use Butschster\Head\Packages\Entities\TwitterCardPackage;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
-use Auth;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 class PostsController extends BaseController
 {
+    /* @return View|LengthAwarePaginator<Post> */
     public function index()
     {
         $posts = $this->postsService->getPosts();
 
-        if (request()->expectsJson()) return $posts;
+        if (request()->expectsJson()) {
+            return $posts;
+        }
 
         $this->meta->prependTitle('Latest news');
 
@@ -27,7 +33,7 @@ class PostsController extends BaseController
         return view('posts.index', compact('categories', 'posts'));
     }
 
-    public function create()
+    public function create(): View
     {
         $this->meta->prependTitle('Create post');
 
@@ -37,7 +43,7 @@ class PostsController extends BaseController
         return view('posts.create', compact('categories', 'statuses'));
     }
 
-    public function store(PostRequest $request)
+    public function store(PostRequest $request): RedirectResponse
     {
         $data = $request->validated();
 
@@ -46,21 +52,19 @@ class PostsController extends BaseController
             $data['excerpt'] = substr($body, 0, 140);
         }
 
-        $post = Auth::getUser()->posts()->create($data);
+        $post = \Auth::user()->posts()->create($data);
         $post->save();
 
         if ($request->hasFile('image')) {
             $post->uploadImage($request->file('image'));
         }
 
-        if ($post) {
-            return redirect()->route('posts.edit', $post->id)->with('status', trans('mimedio.profile.post.created'));
-        } else {
-            return back()->withErrors('msg', "Error")->withInput();
-        }
+        return redirect()
+            ->route('posts.edit', $post->id)
+            ->with('status', __('mimedio.profile.post.created'));
     }
 
-    public function show(User $user, Post $post)
+    public function show(User $user, Post $post): View
     {
         $og = new OpenGraphPackage('facebook');
         $og->setType('article')
@@ -75,7 +79,7 @@ class PostsController extends BaseController
             ->setSite('@el_ciudadano')
             ->setTitle($post->title)
             ->setDescription(strip_tags($post->excerpt))
-            ->addImage($post->thumbnail)
+            ->setImage($post->thumbnail)
             ->addMeta('url', $post->link);
         $this->meta->registerPackage($twitterCard);
 
@@ -88,7 +92,7 @@ class PostsController extends BaseController
         return view('posts.show', compact('post', 'related'));
     }
 
-    public function edit(Post $post)
+    public function edit(Post $post): View
     {
         $this->meta->prependTitle('Edit post');
 
@@ -98,7 +102,7 @@ class PostsController extends BaseController
         return view('posts.edit', compact('post', 'categories', 'statuses'));
     }
 
-    public function update(PostRequest $request, Post $post)
+    public function update(PostRequest $request, Post $post): RedirectResponse
     {
         $data = $request->validated();
 
@@ -114,16 +118,13 @@ class PostsController extends BaseController
             $post->uploadImage($request->file('image'));
         }
 
-        if ($post) {
-            return redirect()->back()->with('status', trans('mimedio.profile.post.updated'));
-        } else {
-            return back()->withErrors('msg', "Error")->withInput();
-        }
+        return back()->with('status', __('mimedio.profile.post.updated'));
     }
 
-    public function destroy(Post $post)
+    public function destroy(Post $post): JsonResponse
     {
         $post->delete();
-        return response()->json();
+
+        return response()->json(null, 204);
     }
 }

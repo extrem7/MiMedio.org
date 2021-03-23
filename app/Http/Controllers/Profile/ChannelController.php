@@ -7,15 +7,16 @@ use App\Http\Requests\ChannelRequest;
 use App\Models\User;
 use App\Services\RssFeedsService;
 use App\Services\RssService;
-use Auth;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class ChannelController extends Controller
 {
-    public function page(RssFeedsService $rssFeedsService, RssService $rssService)
+    public function page(RssFeedsService $rssFeedsService, RssService $rssService): View
     {
         $this->meta->prependTitle('Channel settings');
 
-        $user = Auth::getUser();
+        $user = \Auth::user();
         $channel = $user->channel;
 
         $facebook = null;
@@ -24,6 +25,7 @@ class ChannelController extends Controller
             $facebook = $channel->embed['facebook'] ?? null;
             $twitter = $channel->embed['twitter'] ?? null;
         }
+
         $logo = $user->getLogo();
 
         $rssFeeds = $rssFeedsService->get($channel);
@@ -31,48 +33,48 @@ class ChannelController extends Controller
 
         $user->load('followings');
 
-        share([
-            'rssFeeds' => $rssFeeds
-        ]);
+        share(compact('rssFeeds'));
 
-        return view('profile.channel', compact('user', 'channel', 'facebook', 'twitter', 'rssChannels', 'logo'));
+        return view(
+            'profile.channel',
+            compact('user', 'channel', 'facebook', 'twitter', 'rssChannels', 'logo'
+            )
+        );
     }
 
-    public function update(ChannelRequest $request)
+    public function update(ChannelRequest $request): RedirectResponse
     {
         /* @var $user User */
-        $user = Auth::getUser();
+        $user = \Auth::user();
 
         $data = $request->except(['slug']);
 
         if (!isset($data['rss_feeds'])) {
             $data['rss_feeds'] = [];
         }
-
         if (isset($data['color']) && $data['color'] === '2c95d8') {
             unset($data['color']);
         }
-
         if (!empty($data['instagram'])) {
-            $data['instagram'] = array_filter($data['instagram'], function ($link) {
-                return $link !== null;
-            });
+            $data['instagram'] = array_filter($data['instagram'], fn($link) => $link !== null);
         }
-
-        /*if (in_array(null, [$data['embed']['facebook'], $data['embed']['instagram'], $data['embed']['twitter']]))
-            $data['embed'] = null;*/
 
         if ($data['embed'] !== null) {
-            $data['embed'] = collect($data['embed'])->map(function ($embed) {
-                if ($embed === null) return;
-                return preg_replace('#<script(.*?)>(.*?)</script>#is', '', $embed) ?? null;
-            })->toArray();
+            $data['embed'] = collect($data['embed'])
+                ->map(function ($embed) {
+                    if ($embed === null) {
+                        return null;
+                    }
+                    return preg_replace('#<script(.*?)>(.*?)</script>#is', '', $embed);
+                })
+                ->toArray();
         }
 
-        $user->update(['slug' => $request->get('slug')]);
+        $user->update(['slug' => $request->input('slug')]);
 
-        if ($user->channel->instagram !== $request->get('instagram'))
+        if ($user->channel->instagram !== $request->input('instagram')) {
             \Cache::delete('instagram-' . $user->id);
+        }
 
         $user->channel->update($data);
 
@@ -80,6 +82,6 @@ class ChannelController extends Controller
             $user->addMedia($request->file('logo'))->toMediaCollection('logo');
         }
 
-        return redirect()->back()->with('status', trans('mimedio.profile.channel.updated'));
+        return back()->with('status', trans('mimedio.profile.channel.updated'));
     }
 }

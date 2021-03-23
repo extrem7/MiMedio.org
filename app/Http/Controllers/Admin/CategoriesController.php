@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use Str;
 
 class CategoriesController extends Controller
@@ -41,7 +42,7 @@ class CategoriesController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @return Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(CategoryRequest $request)
     {
@@ -109,6 +110,6 @@ class CategoriesController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->back()->with('status', "Category `$category->name` has been removed");
+        return back()->with('status', "Category `$category->name` has been removed");
     }
 }

@@ -6,25 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Services\LikesService;
-use Auth;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class CommentsController extends Controller
 {
-    public function index(Post $post)
+    public function index(Post $post): JsonResponse
     {
-        $comments = $post->comments;
-
-        $count = $comments->count();
-
-        $comments = $comments
-            ->where('parent_id', '=', null);
+        $count = $post->comments->count();
+        $comments = $post->comments->whereNull('parent_id');
 
         return response()->json(compact('count', 'comments'));
     }
 
-    public function store(Post $post, Request $request)
+    public function store(Post $post, Request $request): JsonResponse
     {
         $this->validate($request, [
             'text' => 'required',
@@ -35,10 +31,11 @@ class CommentsController extends Controller
             'user_id' => auth()->id(),
             'text' => $request->input('text')
         ];
-        if ($request->has('reply')) {
+
+        if ($request->filled('reply')) {
             $data['parent_id'] = $request->input('reply');
 
-            if ($data['parent_id'] !== null && !$post->comments->contains($request->has('reply'))) {
+            if (!$post->comments->contains($data['parent_id'])) {
                 throw ValidationException::withMessages([
                     'reply' => 'Provide real reply to.',
                 ]);
@@ -46,7 +43,7 @@ class CommentsController extends Controller
         }
 
         $comment = $post->comments()->create($data);
-        $comment->author = Auth::getUser();
+        $comment->setRelation('author', \Auth::user());
 
         return response()->json([
             'status' => 'ok',
@@ -54,23 +51,19 @@ class CommentsController extends Controller
         ], 201);
     }
 
-    public function like(int $comment, LikesService $likesService)
+    public function like(int $id, LikesService $likesService): JsonResponse
     {
-        $comment = Comment::without(['children', 'author'])->find($comment);
+        $comment = Comment::without(['children', 'author'])->find($id);
         $data = $likesService->toggle($comment);
 
-        return response()->json(array_merge([
-            'status' => 'ok'
-        ], $data));
+        return response()->json(array_merge(['status' => 'ok'], $data));
     }
 
-    public function dislike(int $comment, LikesService $likesService)
+    public function dislike(int $id, LikesService $likesService): JsonResponse
     {
-        $comment = Comment::without(['children', 'author'])->find($comment);
+        $comment = Comment::without(['children', 'author'])->find($id);
         $data = $likesService->toggle($comment, false);
 
-        return response()->json(array_merge([
-            'status' => 'ok'
-        ], $data));
+        return response()->json(array_merge(['status' => 'ok'], $data));
     }
 }

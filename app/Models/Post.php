@@ -8,6 +8,7 @@ use App\Traits\PaginateTrait;
 use App\Traits\SearchTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
@@ -19,14 +20,14 @@ use Spatie\MediaLibrary\Models\Media;
 
 class Post extends Model implements HasMedia, Likeable
 {
-    use HasMediaTrait;
-    use Sluggable;
-    use LikeableTrait;
-    use PaginateTrait;
-
-    //use Searchable;
-    use SearchTrait;
-    use HasEagerLimit;
+    use HasMediaTrait,
+        HasFactory,
+        Sluggable,
+        LikeableTrait,
+        PaginateTrait,
+        //use Searchable;
+        SearchTrait,
+        HasEagerLimit;
 
     public const DRAFT = 'DRAFT';
     public const PUBLISHED = 'PUBLISHED';

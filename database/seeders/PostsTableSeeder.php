@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -13,9 +15,10 @@ class PostsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $users = User::take(5)->get();
+        /*
         factory(Post::class, (int)env('POSTS_SEEDER_COUNT', 250))->create()->each(function (Post $post) use ($users) {
             $users->each(function (User $user) use ($post) {
                 $post->likesRaw()->create([
@@ -34,9 +37,9 @@ class PostsTableSeeder extends Seeder
                     ]);
                 });
             });
-            $post->addMediaFromUrl('https://picsum.photos/750/370')
-                ->toMediaCollection('image');
+            $post->addMediaFromUrl('https://picsum.photos/750/370')->toMediaCollection('image');
         });
+        */
         User::all()->each(function (User $user) {
             $user->shared()->attach(Post::all()->random(5));
         });

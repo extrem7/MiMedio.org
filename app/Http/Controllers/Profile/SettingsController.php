@@ -43,6 +43,6 @@ class SettingsController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('status', trans('mimedio.profile.settings.updated'));
+        return back()->with('status', trans('mimedio.profile.settings.updated'));
     }
 }

@@ -4,31 +4,32 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Services\PostsService;
-use Auth;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\View\View;
 
 class PostController extends Controller
 {
-    private $postsService;
+    private PostsService $postsService;
 
     public function __construct()
     {
         parent::__construct();
-        $this->postsService = new PostsService();
+
+        $this->postsService = app(PostsService::class);
     }
 
+    /* @return View|LengthAwarePaginator */
     public function index()
     {
-        $user = Auth::getUser();
+        $posts = $this->postsService->getPosts(\Auth::user()->posts());
 
-        $posts = $this->postsService->getPosts($user->posts());
-
-        if (request()->expectsJson()) return $posts;
+        if (request()->expectsJson()) {
+            return $posts;
+        }
 
         $this->meta->prependTitle('My posts');
 
-        share([
-            'posts' => $posts
-        ]);
+        share(compact('posts'));
 
         return view('profile.posts', compact('posts'));
     }

@@ -8,6 +8,7 @@ use App\Traits\PaginateTrait;
 use Cache;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Polls\Poll;
@@ -18,12 +19,13 @@ use Spatie\MediaLibrary\Models\Media;
 
 class User extends Authenticatable implements HasMedia
 {
-    use Notifiable;
-    use FollowableTrait;
-    use HasMediaTrait;
-    use PaginateTrait;
-    use LikeableTrait;
-    use Voter;
+    use Notifiable,
+        HasFactory,
+        FollowableTrait,
+        HasMediaTrait,
+        PaginateTrait,
+        LikeableTrait,
+        Voter;
 
     protected $fillable = ['name', 'email', 'slug', 'provider', 'provider_id', 'password'];
 

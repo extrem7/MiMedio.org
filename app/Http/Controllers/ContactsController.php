@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Message;
@@ -10,7 +11,7 @@ use App\Events\NewMessage;
 
 class ContactsController extends Controller
 {
-    public function get()
+    public function get(): JsonResponse
     {
         $contacts = User::where('id', '!=', auth()->id())->get();
 
@@ -34,7 +35,7 @@ class ContactsController extends Controller
         return response()->json($contacts);
     }
 
-    public function getMessagesFor($id)
+    public function getMessagesFor($id): JsonResponse
     {
         Message::where('from', $id)->where('to', auth()->id())->update(['read' => true]);
 
@@ -49,10 +50,10 @@ class ContactsController extends Controller
         return response()->json($messages);
     }
 
-    public function send(Request $request)
+    public function send(Request $request): JsonResponse
     {
         $message = Message::create([
-            'from' => auth()->id(),
+            'from' => $request->user()->id,
             'to' => $request->contact_id,
             'text' => $request->text
         ]);
@@ -62,7 +63,7 @@ class ContactsController extends Controller
         return response()->json($message);
     }
 
-    public function share(Request $request, User $user)
+    public function share(Request $request, User $user): JsonResponse
     {
         $this->validate($request, [
             'post_id' => ['required', 'exists:posts,id']
@@ -79,8 +80,6 @@ class ContactsController extends Controller
 
         broadcast(new NewMessage($message));
 
-        return response()->json([
-            'status' => 'ok'
-        ], 201);
+        return response()->json(['status' => 'ok'], 201);
     }
 }

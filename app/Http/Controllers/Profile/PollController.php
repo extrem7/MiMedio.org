@@ -5,29 +5,34 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PollRequest;
 use App\Services\PollsService;
-use Auth;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Polls\Poll;
+use Inani\Larapoll\Option;
 
 class PollController extends Controller
 {
-    public function page()
+    public function page(): View
     {
         $this->meta->prependTitle('My poll');
 
-        $poll = Auth::getUser()->ownPoll;
+        $poll = \Auth::getUser()->ownPoll;
         $answers = null;
-        if ($poll !== null)
+        if ($poll !== null) {
             $answers = $poll->options->pluck('name');
+        }
 
         return view('profile.poll', compact('poll', 'answers'));
     }
 
-    public function store(PollRequest $request)
+    public function store(PollRequest $request): RedirectResponse
     {
-        $user = Auth::user();
-        $data = $request->all();
+        $user = \Auth::user();
+        $data = $request->validated();
 
+        /* @var $poll Poll */
         $poll = $user->ownPoll()->updateOrCreate(['user_id' => $user->id], [
             'question' => $data['question']
         ]);
@@ -35,44 +40,36 @@ class PollController extends Controller
         $answers = $data['answers'];
         if ($poll->options->isNotEmpty()) {
             $options = $poll->options->pluck('name');
-            $answers = array_filter($answers, function ($answer) use ($options) {
-                return !$options->contains($answer);
-            });
+            $answers = array_filter($answers, fn($answer) => !$options->contains($answer));
         }
 
         if (!empty($answers)) {
             if ($poll->options->isNotEmpty()) {
                 $poll->attach($answers);
             } else {
-                $poll->addOptions($answers)
-                    ->maxSelection()
-                    ->generate();
+                $poll->addOptions($answers)->maxSelection()->generate();
             }
         }
 
-        return redirect()->back();
+        return back();
     }
 
-    public function destroy()
+    public function destroy(): RedirectResponse
     {
-        $user = Auth::user();
-        $user->ownPoll->delete();
-        return redirect()->back();
+        \Auth::user()->ownPoll->delete();
+        return back();
     }
 
-    public function vote(PollsService $pollsService, Poll $poll, Request $request)
+    public function vote(PollsService $pollsService, Poll $poll, Request $request): JsonResponse
     {
         $this->validate($request, [
-            'option' => 'required|exists:larapoll_options,id'
+            'option' => ['required', 'integer', 'exists:larapoll_options,id']
         ]);
 
-        $user = Auth::getUser();
+        /* @var $option Option */
+        $option = $poll->options->where('id', '=', $request->input('option'))->first();
 
-        $option = $poll->options->first(function ($item) use ($request) {
-            return $item->id == $request->get('option');
-        });
-
-        $user->poll($poll)->vote($option->id);
+        \Auth::user()->poll($poll)->vote($option->id);
         $option->updateTotalVotes();
 
         return response()->json([

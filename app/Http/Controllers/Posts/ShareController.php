@@ -5,21 +5,20 @@ namespace App\Http\Controllers\Posts;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Share;
+use Illuminate\Http\JsonResponse;
 
 class ShareController extends Controller
 {
-    public function __invoke(Post $post)
+    public function __invoke(Post $post): JsonResponse
     {
-        $old = Share::where('user_id', auth()->id())->where('post_id', $post->id)->first();
-        if ($old !== null) {
+        $user = \Auth::user();
+
+        if ($old = $user->shared()->where('post_id', '=', $post->id)->first()) {
             $old->delete();
         }
 
-        $shared = new Share(['user_id' => auth()->id(), 'post_id' => $post->id]);
-        $shared->save();
+        \Auth::user()->shared()->save($post);
 
-        return response()->json([
-            'status' => 'ok'
-        ]);
+        return response()->json(['status' => 'ok']);
     }
 }

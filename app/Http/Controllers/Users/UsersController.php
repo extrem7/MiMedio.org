@@ -7,19 +7,21 @@ use App\Models\User;
 use App\Services\PostsService;
 use App\Services\RssFeedsService;
 use App\Services\RssService;
-use Carbon\Carbon;
-use GuzzleHttp\Client;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\View\View;
 
 class UsersController extends Controller
 {
-    private $postsService;
+    private PostsService $postsService;
 
     public function __construct()
     {
         parent::__construct();
-        $this->postsService = new PostsService();
+
+        $this->postsService = app(PostsService::class);
     }
 
+    /* @return View|LengthAwarePaginator */
     public function index()
     {
         $channels = User::withCount(['posts', 'followers', 'shares'])
@@ -27,52 +29,46 @@ class UsersController extends Controller
             ->orderBy('followers_count', 'desc')
             ->paginate($this->postsService->perPage());
 
-        if (request()->expectsJson()) return $channels;
-
-        share([
-            'channels' => $channels
-        ]);
+        if (request()->expectsJson()) {
+            return $channels;
+        }
 
         $this->meta->prependTitle('Channels');
+
+        share(compact('channels'));
 
         return view('users.index');
     }
 
-    public function show(User $user, RssService $rssService, RssFeedsService $rssFeedsService)
+    public function show(User $user, RssService $rssService, RssFeedsService $rssFeedsService): View
     {
-        $user->loadCount('followers');
-        $channel = $user->channel;
-
         $this->meta->prependTitle($user->name);
 
+        $user->loadCount('followers');
+
+        $channel = $user->channel;
         $posts = $this->postsService->getUserPosts($user);
-
         $shared = $this->postsService->getShared($user);
-
         $categoriesWithPosts = $this->postsService->getUserCategories($user);
-
         $rssFeeds = $rssFeedsService->getActive($channel);
 
         $photos = [];
 
         if ($channel->instagram && $channel->instagram->is_actual) {
             $photos = \Cache::remember('instagram-' . $user->id, now()->addHour(), function () use ($channel) {
-                $client = new Client();
                 try {
-                    $response = $client->request('get', "https://graph.instagram.com/me/media", [
+                    $response = \Http::get("https://graph.instagram.com/me/media", [
                         'query' => [
                             'fields' => 'media_url,thumbnail_url,permalink',
                             'access_token' => $channel->instagram->token
                         ]
                     ]);
-                    $medias = json_decode($response->getBody()->getContents(), true)['data'];
+                    $medias = json_decode($response->body(), true, 512, JSON_THROW_ON_ERROR)['data'];
 
-                    return array_map(function ($media) {
-                        return [
-                            'src' => $media['thumbnail_url'] ?? $media['media_url'],
-                            'link' => $media['permalink']
-                        ];
-                    }, $medias);
+                    return array_map(fn($media) => [
+                        'src' => $media['thumbnail_url'] ?? $media['media_url'],
+                        'link' => $media['permalink']
+                    ], $medias);
                 } catch (\Exception $e) {
                     \Log::error('Instagram parsing error: ' . $e->getMessage());
                     return [];
@@ -89,6 +85,8 @@ class UsersController extends Controller
             'feeds_api' => config('mimedio.feeds_api')
         ]);
 
-        return view('users.show', compact('user', 'channel', 'posts', 'photos', 'categoriesWithPosts'));
+        return view(
+            'users.show', compact('user', 'channel', 'posts', 'photos', 'categoriesWithPosts')
+        );
     }
 }

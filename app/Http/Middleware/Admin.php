@@ -2,23 +2,22 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use \Auth;
+use Illuminate\Http\Request;
 
 class Admin
 {
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, \Closure $next)
     {
-        if (Auth::check() && Auth::user()->is_admin) {
+        if (\Auth::check() && \Auth::user()->is_admin) {
             return $next($request);
         }
-        abort(404);
+        abort(503);
     }
 }

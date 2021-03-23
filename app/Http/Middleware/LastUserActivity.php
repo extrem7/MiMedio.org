@@ -2,25 +2,19 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Auth;
-use Cache;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class LastUserActivity
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @return mixed
+     * @param Request $request
      */
-    public function handle($request, Closure $next)
+    public function handle($request, \Closure $next)
     {
-        if (Auth::check()) {
+        if (\Auth::check()) {
             $expiresAt = Carbon::now()->addWeek();
-            Cache::put('user-' . auth()->id() . '-last-activity', Carbon::now(), $expiresAt);
+            \Cache::put('user-' . auth()->id() . '-last-activity', Carbon::now(), $expiresAt);
         }
         return $next($request);
     }

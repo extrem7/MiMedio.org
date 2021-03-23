@@ -45,7 +45,7 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => '/comment/{comment}',
+    'prefix' => '/comment/{id}',
     'namespace' => 'Posts',
     'as' => 'comments.'
 ], function () {

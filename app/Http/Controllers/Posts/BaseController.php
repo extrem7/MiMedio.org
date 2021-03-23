@@ -7,11 +7,12 @@ use App\Services\PostsService;
 
 class BaseController extends Controller
 {
-    protected $postsService;
+    protected PostsService $postsService;
 
     public function __construct()
     {
         parent::__construct();
-        $this->postsService = new PostsService();
+
+        $this->postsService = app(PostsService::class);
     }
 }
