@@ -1,11 +1,13 @@
 <?php
 
 return [
-    'whitelist' => ['register',
+    'whitelist' => [
+        'register',
         'login',
         'poll.vote',
         'rss.toggle',
         'rss.sort',
+        'rss.posts.show',
         'messenger',
         'messenger.share',
         'comments.store',

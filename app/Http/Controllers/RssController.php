@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Services\RssService;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class RssController extends Controller
 {
@@ -30,7 +30,19 @@ class RssController extends Controller
         return view('rss.index', compact('rssItems'));
     }
 
-    public function toggle(int $id): ?Response
+    public function showPost(string $slug): View
+    {
+        $response = \Http::get(config('mimedio.feeds_api') . "/post/$slug");
+        $post = json_decode($response->body(), true, 512, JSON_THROW_ON_ERROR);
+
+        $this->meta->prependTitle($post['title']);
+
+        $post['date'] = Carbon::parse($post['date'])->format('d/m/Y');
+
+        return view('rss.post', compact('post'));
+    }
+
+    public function toggle(int $id): ?JsonResponse
     {
         if (!\Auth::user()->channel->saved_rss->contains($id)) {
             return $this->rssService->save($id);

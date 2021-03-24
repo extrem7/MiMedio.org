@@ -53,7 +53,6 @@ class RouteServiceProvider extends ServiceProvider
     public function mapLoggedRoutes(): void
     {
         Route::middleware(['web', 'auth'])
-            ->namespace($this->namespace)
             ->group(base_path('routes/web/logged.php'));
     }
 

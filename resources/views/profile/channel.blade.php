@@ -68,9 +68,9 @@
                         <option value="" selected>Choose</option>
                         @foreach($rssChannels as $rssChannel)
                             <option
-                                value="{{$rssChannel->id}}"
-                                {{selected(old('rss_to_show',$channel->rss_to_show)==$rssChannel->id)}}>
-                                {{$rssChannel->name}}
+                                value="{{$rssChannel['id']}}"
+                                {{selected(old('rss_to_show',$channel->rss_to_show)==$rssChannel['id'])}}>
+                                {{$rssChannel['name']}}
                             </option>
                         @endforeach
                     </select>

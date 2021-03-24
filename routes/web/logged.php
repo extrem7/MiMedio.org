@@ -1,72 +1,80 @@
 <?php
 
-Route::get('auth/instagram/login', 'Auth\SocialController@redirectInstagram')->name('auth.instagram.redirect');
-Route::get('auth/instagram', 'Auth\SocialController@instagram');
+use App\Http\Controllers\{Admin\MediaController,
+    Auth\LoginController,
+    Auth\SocialController,
+    ContactsController,
+    HomeController,
+    Posts\CommentsController,
+    Posts\LikesController,
+    Posts\PostsController,
+    Posts\ShareController,
+    Profile\ChannelController,
+    Profile\PlaylistController,
+    Profile\PollController,
+    Profile\PostController as ProfilePostController,
+    Profile\SettingsController,
+    RssController,
+    Users\FollowingsController
+};
+use App\Http\Middleware\NotSelf;
 
-Route::prefix('/profile')->group(function () {
+Route::get('auth/instagram/login', [SocialController::class, 'redirectInstagram'])->name('auth.instagram.redirect');
+Route::get('auth/instagram', [SocialController::class, 'instagram']);
 
-    Route::namespace('Profile')->group(function () {
-        Route::as('settings.')->group(function () {
-            Route::get('/settings', 'SettingsController@page')->name('page');
-            Route::patch('/settings', 'SettingsController@update')->name('update');
+Route::prefix('profile')->group(function () {
 
-            Route::get('/channel', 'ChannelController@page')->name('channel');
-            Route::patch('/channel', 'ChannelController@update')->name('channel.update');
+    Route::as('settings.')->group(function () {
+        Route::get('settings', [SettingsController::class, 'page'])->name('page');
+        Route::patch('settings', [SettingsController::class, 'update'])->name('update');
 
-            Route::get('/playlist', 'PlaylistController@page')->name('playlist');
-            Route::post('/playlist', 'PlaylistController@update')->name('playlist.update');
-        });
+        Route::get('channel', [ChannelController::class, 'page'])->name('channel');
+        Route::patch('channel', [ChannelController::class, 'update'])->name('channel.update');
 
-        Route::prefix('/poll')->name('poll.')->group(function () {
-            Route::get('', 'PollController@page')->name('page');
-            Route::post('', 'PollController@store')->name('create');
-            Route::post('/{poll}', 'PollController@vote')->name('vote');
-            Route::delete('', 'PollController@destroy')->name('destroy');
-        });
-        Route::get('/posts/{page?}', 'PostController@index')->name('profile.posts.index');
+        Route::get('playlist', [PlaylistController::class, 'page'])->name('playlist');
+        Route::post('playlist', [PlaylistController::class, 'update'])->name('playlist.update');
     });
 
-    Route::resource('/posts', 'Posts\PostsController', ['except' => ['index', 'show']])
+    Route::prefix('poll')->name('poll.')->group(function () {
+        Route::get('', [PollController::class, 'page'])->name('page');
+        Route::post('', [PollController::class, 'store'])->name('create');
+        Route::post('{poll}', [PollController::class, 'vote'])->name('vote');
+        Route::delete('', [PollController::class, 'destroy'])->name('destroy');
+    });
+    Route::get('posts/{page?}', [ProfilePostController::class, 'index'])->name('profile.posts.index');
+
+
+    Route::resource('posts', PostsController::class, ['except' => ['index', 'show']])
         ->middleware('author');
-    Route::post('/posts/image', 'Admin\MediaController@upload')->name('posts.image');
+    Route::post('posts/image', [MediaController::class, 'upload'])->name('posts.image');
 });
 
-Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::group([
-    'prefix' => '/post/{post}',
-    'namespace' => 'Posts'
-], function () {
-    Route::post('/like', 'LikesController@like')->name('posts.like');
-    Route::post('/dislike', 'LikesController@dislike')->name('posts.dislike');
+Route::prefix('post/{post}')->group(function () {
+    Route::post('like', [LikesController::class, 'like'])->name('posts.like');
+    Route::post('dislike', [LikesController::class, 'dislike'])->name('posts.dislike');
 
-    Route::post('/share', 'ShareController')->name('posts.share');
-    Route::post('/comment', 'CommentsController@store')->name('comments.store');
+    Route::post('share', ShareController::class)->name('posts.share');
+    Route::post('comment', [CommentsController::class, 'store'])->name('comments.store');
 });
 
-Route::group([
-    'prefix' => '/comment/{id}',
-    'namespace' => 'Posts',
-    'as' => 'comments.'
-], function () {
-    Route::post('/like', 'CommentsController@like')->name('like');
-    Route::post('/dislike', 'CommentsController@dislike')->name('dislike');
+Route::prefix('comment/{id}')->as('comments.')->group(function () {
+    Route::post('like', [CommentsController::class, 'like'])->name('like');
+    Route::post('dislike', [CommentsController::class, 'dislike'])->name('dislike');
 });
 
-Route::post('/user/{user}/follow', 'Users\FollowingsController')
-    ->name('user.follow')
-    ->middleware('not.self');
+Route::post('user/{user}/follow', FollowingsController::class)
+    ->middleware(NotSelf::class)
+    ->name('user.follow');
 
-Route::group([
-    'prefix' => '/rss',
-    'as' => 'rss.'
-], function () {
-    Route::post('/{id}/toggle', 'RssController@toggle')->name('toggle');
-    Route::post('/sort', 'RssController@sort')->name('sort');
+Route::prefix('rss')->as('rss.')->group(function () {
+    Route::post('{id}/toggle', [RssController::class, 'toggle'])->name('toggle');
+    Route::post('sort', [RssController::class, 'sort'])->name('sort');
 });
 
-Route::get('/messenger/{user?}', 'HomeController@messenger')->name('messenger');
-Route::get('/contacts', 'ContactsController@get');
-Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
-Route::post('/conversation/send', 'ContactsController@send');
-Route::post('/conversation/{user}/share', 'ContactsController@share')->name('messenger.share');
+Route::get('messenger/{user?}', [HomeController::class, 'messenger'])->name('messenger');
+Route::get('contacts', [ContactsController::class, 'get']);
+Route::get('conversation/{id}', [ContactsController::class, 'getMessagesFor']);
+Route::post('conversation/send', [ContactsController::class, 'send']);
+Route::post('conversation/{user}/share', [ContactsController::class, 'share'])->name('messenger.share');
