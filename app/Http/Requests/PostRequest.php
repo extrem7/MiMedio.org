@@ -17,7 +17,7 @@ class PostRequest extends FormRequest
             'body' => ['required', 'string'],
             'excerpt' => ['required', 'string'],
             'image' => ['nullable', 'image', 'max:2048|mimes:jpg,jpeg,bmp,png'],
-            'status' => ["in:$types','nullable"],
+            'status' => ["in:$types", 'nullable'],
         ];
     }
 
