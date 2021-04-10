@@ -128,7 +128,7 @@ return [
             'created' => 'El post ha sido creado.',
             'edit' => 'Editar post',
             'updated' => 'El post ha sido actualizado.',
-            'title' => 'Titulo',
+            'title' => 'Título del Post',
             'category' => 'Elige una categoría',
             'body' => 'Cuerpo del texto',
             'excerpt' => 'Extracto',

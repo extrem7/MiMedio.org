@@ -8,7 +8,7 @@
                   class="box-rounded form-wrapper">
                 @csrf
                 <div class="form-group">
-                    <label class="label mb-1" for="title">@lang('mimedio.profile.post.create')</label>
+                    <label class="label mb-1" for="title">@lang('mimedio.profile.post.title')</label>
                     <input type="text" id="title" name="title"
                            class="control-form mx-550 {{valid_class('title',$errors)}}" value="{{old('title')}}">
                     @include('includes.field-error',['error'=>'title'])
